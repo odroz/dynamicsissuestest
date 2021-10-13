@@ -88,17 +88,17 @@ window.addEventListener('load', reportTelemetry);
 						else
 						{
 						
-document.write('<script type="text/javascript" https://odroz.github.io/dynamicsissuestest/_static/_common/scripts/MicrosoftAjax.js?ver=-1036121454'+'"></'+'script>')
-document.write('<script type="text/javascript" https://odroz.github.io/dynamicsissuestest/_static/_common/scripts/EncodeDecode.js?ver=-1036121454'+'"></'+'script>')
-document.write('<script type="text/javascript" https://odroz.github.io/dynamicsissuestest/_static/_common/scripts/Microsoft.Crm.Client.Core.js?ver=-1036121454'+'"></'+'script>')
-document.write('<script type="text/javascript" https://odroz.github.io/dynamicsissuestest/_static/_common/scripts/crminternalutility.js?ver=-1036121454'+'"></'+'script>')
-document.write('<script type="text/javascript" https://odroz.github.io/dynamicsissuestest/_static/_common/scripts/jquery-2.1.1.min.js?ver=-1036121454'+'"></'+'script>')
+document.write('<script type="text/javascript" src="'+'https://odroz.github.io/dynamicsissuestest/_static/_common/scripts/MicrosoftAjax.js?ver=-1036121454'+'"></'+'script>')
+document.write('<script type="text/javascript" src="'+'https://odroz.github.io/dynamicsissuestest/_static/_common/scripts/EncodeDecode.js?ver=-1036121454'+'"></'+'script>')
+document.write('<script type="text/javascript" src="'+'https://odroz.github.io/dynamicsissuestest/_static/_common/scripts/Microsoft.Crm.Client.Core.js?ver=-1036121454'+'"></'+'script>')
+document.write('<script type="text/javascript" src="'+'https://odroz.github.io/dynamicsissuestest/_static/_common/scripts/crminternalutility.js?ver=-1036121454'+'"></'+'script>')
+document.write('<script type="text/javascript" src="'+'https://odroz.github.io/dynamicsissuestest/_static/_common/scripts/jquery-2.1.1.min.js?ver=-1036121454'+'"></'+'script>')
 document.write('<script type="text/javascript">jQuery.noConflict()</script>')
 document.write('<script id='sharedScript/_static/_common/scripts/CrmServiceProxy.js?ver=-1036121454' type='text/javascript'>Microsoft.Crm.Client.Core.SharedScript.load(window, '/_static/_common/scripts/CrmServiceProxy.js?ver=-1036121454', function(host){Type.registerNamespace('Microsoft.Crm.Client');Type.registerNamespace('Xrm');window.Microsoft.Crm.Client.Core = host.Microsoft.Crm.Client.Core;window.Xrm.Soap = host.Xrm.Soap;window.Xrm.Gen = host.Xrm.Gen;});</script>');
 document.write('<script id='sharedScript/_static/_common/scripts/CrmServiceProxyFramework.js?ver=-1036121454' type='text/javascript'>Microsoft.Crm.Client.Core.SharedScript.load(window, '/_static/_common/scripts/CrmServiceProxyFramework.js?ver=-1036121454', function(host){Type.registerNamespace('Microsoft.Crm.Client');Type.registerNamespace('Xrm');window.Microsoft.Crm.Client.Core = host.Microsoft.Crm.Client.Core;window.Xrm.Soap = host.Xrm.Soap;window.Xrm.Gen = host.Xrm.Gen;window.Xrm.Sdk = host.Xrm.Sdk;window.Xrm.Objects = host.Xrm.Objects;window._Math = host._Math;window._Script = host._Script;});</script>');
-document.write('<script type="text/javascript" https://odroz.github.io/dynamicsissuestest/_common/global.ashx?ver=-1036121454'+'"></'+'script>')
-document.write('<script type="text/javascript" https://odroz.github.io/dynamicsissuestest/_common/windowinformation/windowinformation.js.aspx?lcid=1033&ver=-1036121454'+'"></'+'script>')
-document.write('<script type="text/javascript" https://odroz.github.io/dynamicsissuestest/_common/entityproperties/entitypropertiesutil.js.aspx?lcid=1033&tstamp=867197467&ver=-1036121454'+'"></'+'script>')
+document.write('<script type="text/javascript" src="'+'https://odroz.github.io/dynamicsissuestest/_common/global.ashx?ver=-1036121454'+'"></'+'script>')
+document.write('<script type="text/javascript" src="'+'https://odroz.github.io/dynamicsissuestest/_common/windowinformation/windowinformation.js.aspx?lcid=1033&ver=-1036121454'+'"></'+'script>')
+document.write('<script type="text/javascript" src="'+'https://odroz.github.io/dynamicsissuestest/_common/entityproperties/entitypropertiesutil.js.aspx?lcid=1033&tstamp=867197467&ver=-1036121454'+'"></'+'script>')
 function GetGlobalContext(){return Xrm.Page.context};document.write('<link rel="stylesheet" href="'+'/_static/_common/styles/sessionmanagement.css/ver=1036121454'+'">')
 window.REMIND_AUTH_EXPIRATION=true;
 window.AUTH_EXPIRATION_REMINDER_TIME_IN_SECONDS=0;
@@ -109,9 +109,9 @@ window.DIALOG_REAUTH_EXPIRED_DESCRIPTION='Your session has expired. Any unsaved 
 window.DIALOG_REAUTH_SIGNIN_BUTTON='Sign in';
 window.DIALOG_REAUTH_CANCEL_BUTTON='Cancel';
 window.DIALOG_REAUTH_CLOSE_BUTTON='Close';
-document.write('<script type="text/javascript" https://odroz.github.io/dynamicsissuestest/dynamicsissuestest/_static/_common/scripts/MaxSessionMonitor.js?ver=1036121454'+'"></'+'script>')
+document.write('<script type="text/javascript" src="'+'https://odroz.github.io/dynamicsissuestest/dynamicsissuestest/_static/_common/scripts/MaxSessionMonitor.js?ver=1036121454'+'"></'+'script>')
 var xhr = new XMLHttpRequest();
-xhr.open("GET", "https://odroz.github.io/dynamicsissuestest/WebResources/ClientGlobalContext.js.aspx", false);
+xhr.open("GET", "src="'+'https://odroz.github.io/dynamicsissuestest/WebResources/ClientGlobalContext.js.aspx", false);
 if(xhr.addEventListener) {
    xhr.addEventListener('load',function(){if(xhr.status == 200){eval(xhr.responseText);}});
  } else { 
