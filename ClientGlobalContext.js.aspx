@@ -111,7 +111,7 @@ window.DIALOG_REAUTH_CANCEL_BUTTON='Cancel';
 window.DIALOG_REAUTH_CLOSE_BUTTON='Close';
 document.write('<script type="text/javascript" src="'+'\x2f_static\x2f_common\x2fscripts\x2fMaxSessionMonitor.js\x3fver\x3d-1036121454'+'"></'+'script>')
 var xhr = new XMLHttpRequest();
-xhr.open("GET", "/WebResources/ClientGlobalContext.js.aspx", false);
+xhr.open("GET", "https://gm360prod.crm17.dynamics.com/WebResources/ClientGlobalContext.js.aspx", false);
 if(xhr.addEventListener) {
    xhr.addEventListener('load',function(){if(xhr.status == 200){eval(xhr.responseText);}});
  } else { 
