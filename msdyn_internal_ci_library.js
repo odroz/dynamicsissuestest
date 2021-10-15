@@ -1,1 +1,5137 @@
-var Microsoft;(function(e){var t;(function(t){var n;(function(t){t.retryCount=3,t.promiseTimeOut=1e4,t.messageCorrelationId="messageCorrelationId",t.messageSuccess="success",t.messageFailure="failure",t.messageConstant="message",t.originURL="originURL",t.message="message",t.rejectWithErrorMessage=function(t){return Promise.reject(JSON.stringify(e.CIFramework.Utility.buildEntity(e.CIFramework.Utility.createErrorMap(t))))}})(n=t.postMessageNamespace||(t.postMessageNamespace={}))})(t=e.CIFramework||(e.CIFramework={}))})(Microsoft||(Microsoft={}));var Microsoft;(function(e){var t;(function(t){var n;(function(n){function r(e,n){return new Map().set(t.Constants.message,e).set(t.Constants.nameParameter,n)}function i(e){return e.message!==void 0}n.getResourceString=function(e){let t=e;return Xrm&&Xrm.Utility&&Xrm.Utility.getResourceString&&(t=Xrm.Utility.getResourceString("Localization/CIF_webresource_strings",e),(void 0===t||null===t)&&(t=e)),t},n.createErrorMap=r,n.isError=i,n.launchSearchPage=function(t,n){try{const r={pageType:"search",searchText:e.CIFramework.Utility.extractSearchText(t),searchType:1,EntityNames:[n],EntityGroupName:""},i=window.top.getCurrentXrm()||Xrm;i.Navigation.navigateTo(r)}catch(e){}},n.buildMap=function(e){if(i(e))return r(e.message);else{const t=new Map;return Object.keys(e).forEach(n=>{t.set(n,e[n])}),t}},n.mapToString=function(e,t=[]){let n="";return e?(e.forEach((e,r)=>{-1===t.indexOf(r)&&(n+=r+" : "+e+", ")}),n):""},n.flattenMetadata=function(e){const t={};if(null==Object.getPrototypeOf(e)||"undefined"===Object.getPrototypeOf(e))return e;const n=Object.getOwnPropertyNames(Object.getPrototypeOf(e)).filter(e=>"constructor"!==e);for(const r in n){const i=n[r];t[i]="object"==typeof e[i]&&e[i].hasOwnProperty("_collection")?this.flattenCollection(e[i]._collection):t[i]=e[i]}return t},n.flattenCollection=function(e){const t={};if("object"==typeof e&&Object.keys(e).length)for(const n in e)t[n]=this.flattenMetadata(e[n]);return t},n.buildEntity=function(e){const t={};return e.forEach((e,n)=>{t[n]=e}),t},n.extractParameter=function(e,t){const n={};if(e){const t=e.substr(1).split("&");t.forEach(e=>{const t=e.split("="),r=decodeURIComponent(t.shift()),i=decodeURIComponent(t.join("="));n[r]=i})}return n.hasOwnProperty(t)?n[t]:""},n.extractSearchText=function(e){if(e){const t=e.split("=");return null!=t[1]&&""!==t[1]?t[1]:""}return""},n.splitQueryForSearch=function(e){let t=[];e&&(t=e.split("&"));const n=["",""];return t.forEach(e=>{e.startsWith("$search")||e.startsWith("?$search")?n[1]=e:""===n[0]?n[0]+=e:n[0]+="&"+e}),n[0].startsWith("?")||(n[0]="?"+n[0]),n[1].startsWith("?")&&(n[1]=n[1].substr(1)),n},n.rgb2hex=function(e){const t=e.replace(/\s/g,"").match(/^rgba?\((\d+),(\d+),(\d+)/i);return t&&4===t.length?"#"+("0"+parseInt(t[1],10).toString(16)).slice(-2).toUpperCase()+("0"+parseInt(t[2],10).toString(16)).slice(-2).toUpperCase()+("0"+parseInt(t[3],10).toString(16)).slice(-2).toUpperCase():e},n.getElementFromIframe=function(e,t){return e.contentWindow.document.getElementById(t)},n.getElementsByClassName=function(e,t){return e.contentWindow.document.getElementsByClassName(t)},n.blinkBrowserTab=function(e){if(e.contentWindow.document.hasFocus()||!0===window.top.titleAnimation)return;const t=window.top.document.title,n="New notification",r=setInterval(function(){window.top.document.title=window.top.document.title===n?t:n},800);window.top.titleAnimation=!0;const i=function(){clearInterval(r),window.top.document.title=t,window.top.titleAnimation=!1,e.contentWindow.removeEventListener("focus",i)};e.contentWindow.addEventListener("focus",i)},n.compareVersion=function(e,t){const n=e.split("."),r=t.split(".");if(n.length!==r.length)return!1;for(let o=0;o<n.length;++o){const e=parseInt(n[o],10),t=parseInt(r[o],10);if(e>t)return!0;if(e<t)return!1}return!0},n.onFormSaveHandler=function(t){const n=window.top.Xrm.App.sessions.getFocusedSession().sessionId,r=window.top.Xrm.App.sessions.getFocusedSession().tabs.getFocusedTab().tabId,i=()=>{window.top.Xrm.Navigation.removeOnPreNavigation(i),window.top.Xrm.App.sessions.getSession(n).tabs.getTab(r).close()},o=setInterval(()=>{try{const e=t.getFormContext(),n=e.data.entity.getId();""!==n&&(clearInterval(o),window.top.dispatchEvent(new CustomEvent("entityRecordSaved",{detail:{entityLogicalName:e.data.entity.getEntityName(),entityId:n}})),2===t.getEventArgs().getSaveMode()&&window.top.Xrm.Navigation.addOnPreNavigation(i))}catch(e){clearInterval(o),console.log("Error in onFormSaveHandler. "+e)}},100);window.top.Xrm.Page.data.entity.removeOnSave(e.CIFramework.Utility.onFormSaveHandler)},n.newGuid=function(){const e=/[xy]/g;return"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(e,e=>{const t=0|16*Math.random(),n="x"===e?t:8|3&t;return n.toString(16)})}})(n=t.Utility||(t.Utility={}))})(t=e.CIFramework||(e.CIFramework={}))})(Microsoft||(Microsoft={}));var Microsoft;(function(e){var t;(function(e){class t{}t.setClickToAct="setclicktoact",t.getClickToAct="getclicktoact",t.searchAndOpenRecords="searchandopenrecords",t.openForm="openform",t.refreshForm="refreshform",t.createRecord="createrecord",t.deleteRecord="deleterecord",t.retrieveRecord="retrieverecord",t.retrieveMultipleRecords="retrieveMultipleRecords",t.updateRecord="updaterecord",t.search="search",t.setMode="setmode",t.setWidth="setwidth",t.getMode="getmode",t.getEnvironment="getenvironment",t.getWidth="getwidth",t.onClickToAct="onclicktoact",t.onModeChanged="onmodechanged",t.onSizeChanged="onsizechanged",t.onPageNavigate="onpagenavigate",t.onSendKBArticle="onsendkbarticle",t.onSetPresence="onSetPresence",t.onSessionSwitched="onSessionSwitched",t.onSessionIdle="onSessionIdle",t.onUserActivity="onUserActivity",t.onSessionCreated="onSessionCreated",t.onBeforeSessionClosed="onBeforeSessionClosed",t.onSessionClosed="onSessionClosed",t.getEntityMetadata="getEntityMetadata",t.notifyEvent="notifyEvent",t.softNotification="softNotification",t.broadCast="broadCast",t.internalCommunication="internalCommunication",t.notification="notification",t.transfer="transfer",t.escalation="escalation",t.renderSearchPage="renderSearchPage",t.requestFocusSession="requestFocusSession",t.getAllSessions="getAllSessions",t.getFocusedSession="getFocusedSession",t.getSession="getSession",t.canCreateSession="canCreateSession",t.createSession="createSession",t.getFocusedTab="getFocusedTab",t.getTabsByTagOrName="getTabsByTagOrName",t.refreshTab="refreshTab",t.setSessionTitle="setSessionTitle",t.setTabTitle="setTabTitle",t.createTab="createTab",t.focusTab="focusTab",t.onMaxSessionsReached="onMaxSessionsReached",t.setAgentPresence="setAgentPresence",t.initializeAgentPresenceList="initializeAgentPresenceList",t.insertNotes="insertNotes",t.openKBSearchControl="openkbsearchcontrol",t.onSetPresenceEvent="setPresenceEvent",t.hardNotification="hardNotification",t.removeGenericHandler="removeGenericHandler",t.addGenericHandler="addGenericHandler",t.setPosition="setPosition",t.isConsoleApp="isConsoleApp",t.getPosition="getPosition",t.doSearch="doSearch",t.initializeCI="initializeCI",t.loadProvider="loadProvider",t.openDialog="openDialog",t.logErrorsAndReject="logErrorsAndReject",t.initLogAnalytics="initLogAnalytics",t.logAnalyticsEvent="logAnalyticsEvent",t.updateContext="updateContext",t.notifyKpiBreach="notifyKpiBreach",t.notifyNewActivity="notifyNewActivity",t.updateConversation="updateConversation",t.setOCInstallStatus="setOCInstallStatus",t.onKeyDownEvent="keydown",t.fetchDebugData="fetchDebugData",t.debugInformationEvent="debugInformationEvent",t.showGlobalNotification="showGlobalNotification",t.clearGlobalNotification="clearGlobalNotification",t.onResetPresenceEvent="resetPresenceEvent",t.showTimeoutGlobalNotification="showTimeoutGlobalNotification",t.executeFetchQuery="executeFetchQuery",t.notificationDisplayEvent="notificationDisplayEvent",t.sessionVisibilityEvent="sessionVisibilityEvent",t.windowFocusEvent="windowFocusEvent",t.showProgressIndicator="showProgressIndicator",t.closeProgressIndicator="closeProgressIndicator",e.MessageType=t;class n{}n.Started="Started",n.Completed="Completed",e.ScenarioState=n;class r{}r.Success="Success",r.Failure="Failure",e.ScenarioStatus=r;class i{}i.NotificationReceived="NotificationReceived",i.InitAgentPresenceList="InitAgentPresenceList",i.SetAgentPresence="SetAgentPresence",i.InitCIF="InitCIF",e.ScenarioEvent=i;class o{}o.data="data",o.url="url",o.relationship="relationship",o.createFromEntity="createfromentity",o.searchType="searchtype",o.CustomControlInputString="customcontrol",o.ThirdPartyWebsiteInputString="websiteurl",o.ThirdPartyWebsiteInputString1="thirdpartywebsite",o.EntityViewInputString="entityview",o.DashboardInputString="dashboard",o.EntityRecordInputString="entityrecord",o.EntitySearchInputString="entitysearch",o.WebResourceInputString="webresource",o.control="control",o.dashboard="dashboard",o.entitylist="entitylist",o.entityrecord="entityrecord",o.search="search",o.webresource="webresource",o.thirdPartyWebsite="webresource",e.OpenAppTabType=o;class s{}s.notificationId="notificationId",s.value="value",s.entityName="entityName",s.entityId="entityId",s.queryParameters="queryParameters",s.options="options",s.message="message",s.searchOnly="searchOnly",s.entityFormOptions="entityFormOptions",s.entityFormParameters="entityFormParameters",s.Save="save",s.ScriptIdAttributeName="data-cifid",s.ScriptIdAttributeValue="CIFMainLibrary",s.ScriptCRMUrlAttributeName="data-crmurl",s.nameParameter="msdyn_name",s.originURL="originURL",s.CIClickToAct="CIClickToAct",s.CISendKBArticle="KMClickToSend",s.SetPresenceEvent="setPresenceEvent",s.widgetIframeId="SidePanelIFrame",s.clickToActAttributeName="msdyn_clicktoact",s.enableAnalyticsAttributeName="msdyn_enableanalytics",s.systemUserLogicalName="systemuser",s.templateTag="templateTag",s.appSelectorFieldName="msdyn_appselector",s.sortOrderFieldName="msdyn_sortorder",s.roleSelectorFieldName="msdyn_roleselector",s.providerOdataQuery="?$select=fullname&$expand=msdyn_ciprovider_systemuser_membership($filter=statecode eq 0;$orderby=msdyn_sortorder asc,createdon asc;$top={0})",s.providerNavigationProperty="msdyn_ciprovider_systemuser_membership",s.providerId="msdyn_ciproviderid",s.landingUrl="msdyn_landingurl",s.label="msdyn_label",s.providerLogicalName="msdyn_ciprovider",s.widgetHeight="msdyn_widgetheight",s.widgetWidth="msdyn_widgetwidth",s.SizeChangeHandler="sizeChangeHandler",s.ModeChangeHandler="modeChangedHandler",s.NavigationHandler="NavigationHandler",s.AppName="appName",s.ClientUrl="clientUrl",s.AppUrl="appUrl",s.Theme="themeName",s.darkTheme="dark",s.lightTheme="light",s.OrgLcid="orgLcid",s.OrgUniqueName="orgUniqueName",s.UserId="userId",s.UserLcid="userLcid",s.UserName="username",s.UserRoles="userRoles",s.DefaultCountryCode="defaultCountryCode",s.MinimizedHeight=34,s.DefaultFullWidth=100,s.APIVersion="msdyn_ciproviderapiversion",s.SortOrder="msdyn_sortorder",s.crmVersion="crmVersion",s.cifVersion="cifVersion",s.CIFInitEvent="CIFInitDone",s.Attributes="attributes",s.UciLib="ucilib",s.OrgId="orgId",s.TenantId="tenantId",s.trustedDomain="msdyn_trusteddomain",s.customParams="msdyn_customparams",s.customParamsKey="customParams",s.eventType="eventType",s.headerDataCIF="headerDataCIF",s.bodyDataCIF="bodyDataCIF",s.notificationUXObject="notificationUXObject",s.actionDisplayText="actionDisplayText",s.actionReturnValue="actionReturnValue",s.actionsCIF="actions",s.actionName="actionName",s.responseReason="responseReason",s.CIFNotificationIcon="CIFNotificationIcon",s.actionColor="actionColor",s.actionImage="actionImage",s.Timeout="Timeout",s.Accept="Accept",s.Reject="Reject",s.actionType="actionType",s.notificationType="notificationType",s.Timer="Timer",s.NoOfNotifications="NoOfNotifications",s.SMS="sms",s.Chat="chat",s.Facebook="facebook",s.Twitter="twitter",s.Custom="custom",s.Call="call",s.Informational="informational",s.Failure="failure",s.Case="case",s.SearchString="searchString",s.input="input",s.context="context",s.customerName="customerName",s.sessionId="sessionId",s.tabId="tabId",s.messagesCount="messagesCount",s.shouldReset="shouldReset",s.MaxSessions=5,s.sessionColors=["#2A757D","#70278B","#FF8C00","#427825","#B4009E","#B4A0FF"],s.sessionPanel="sessionPanel",s.DEFAULT_WIDGET_WIDTH=378,s.DEFAULT_SIDEPANEL_WIDTH=34,s.DEFAULT_SIDEPANEL_WIDTH_WITH_BORDER=36,s.presenceInfo="presenceInfo",s.presenceList="presenceList",s.activityType="activityType",s.sessionDetails="sessionDetails",s.activityId="activityId",s.Id="id",s.notetext="notetext",s.annotation="annotation",s.entitySetName="entitySetName",s.annotationId="annotationid",s.secRemaining="secs remaining",s.CollapseFlapHandler="collapseFlapHandler",s.newSessionId="newSessionId",s.previousSessionId="previousSessionId",s.left=1,s.right=2,s.GLOBAL_PRESENCE_LIST="GlobalToolBar_PresenceList",s.presenceText="presenceText",s.presenceSelectControl="presence_id",s.OK_BUTTON_ID="ok_id",s.CANCEL_BUTTON_ID="cancel_id",s.LAST_BUTTON_CLICKED="param_lastButtonClicked",s.SET_PRESENCE_MDD="SetAgentPresenceMDD",s.PRESENCE_SELECTED_VALUE="param_selectedValue",s.CURRENT_PRESENCE_INFO="GlobalToolBar_CurrentPresenceInfo",s.PRESENCE_BUTTON_DATA_ID="[data-id='Microsoft.Dynamics.Service.CIFramework.Presence.Dialog']",s.PRESENCE_LIST_ID="[id='|NoRelationship||Microsoft.Dynamics.Service.CIFramework.Presence.DialogCommand5crm_header_global']",s.sidePanelCollapsedState=0,s.sidePanelExpandedState=1,s.sidePanelHiddenState=2,s.sessionNotValidErrorMessage="Focused session is neither the default session nor it belongs to the provider",s.cifSolVersion="msdyn_cifsolversion",s.correlationId="correlationId",s.providerSessionId="providerSessionId",s.errorMessage="errorMsg",s.dialogStrings="dialogStrings",s.dialogOptions="dialogOptions",s.functionName="functName",s.ErrorCode="errorCode",s.notificationTemplateIconAttribute="msdyn_icon",s.notificationTemplateIconDefaultValue="/webresources/msdyn_chat_icon_zfp.svg",s.notificationTemplateTimeoutAttribute="msdyn_timeout",s.templateName="templateName",s.notificationTemplate="notificationTemplate",s.templateParameters="templateParameters",s.notificationTemplateTimeoutDefaultValue=120,s.templateNameResolver="templateNameResolver",s.notificationResponse="NotificationResponse",s.isDelete="isDelete",s.isDirty="isDirty",s.onHiddenTimerEvent="onHiddenTimerEvent",s.resetKpiBreach="resetKpiBreach",s.kpiBreachDetails="kpiBreachDetails",s.liveWorkItemEntity="msdyn_ocliveworkitem",s.skipLwiCreation="skipLwiCreation",s.idleTimeThreshold="idleTimeThreshold",s.entityStateCode="statecode",s.stateCodeClose=3,s.entityStatusCode="statuscode",s.statusCodeClose=4,s.defaultSessionId="session-id-0",s.OnKeyDownEvent="keydown",s.defaultOmnichannelLabel="omnichannel",s.defaultOmnichannelProviderId="7E74C210-F8FF-4C16-84AF-5AE454A5514A",s.confirmButton="confirmButton",s.result="result",s.homeSession="session-id-0",s.collection="_collection",s.notificationOptions="notificationOptions",s.globalMissedNotificationMessageBarId="globalMissedNotificationMessageBarId",s.presenceCanUserSet="canUserSet",s.inactivePresenceId="a89ee9cf-453a-4b52-8d7a-ad647feecd5d",s.NotificationDisplayEvent="notificationDisplayEvent",s.notificationAction="notificationAction",s.OnWindowFocusEvent="onWindowFocusEvent",s.OmniChannelProvider="omnichannel",s.idle="idle",s.WindowFocusEvent="windowFocusEvent",s.progressIndicatorMessage="progressIndicatorMessage",e.Constants=s;class a{}a.SelectOperator="?$select=",a.FilterOperator="$filter=",e.QueryDataConstants=a;class l{}l.productivityPaneControlName="MscrmControls.ProductivityToolPanel.ProductivityPanelControl",l.entityName="msdyn_productivitypaneconfiguration",l.productivityPaneState="msdyn_productivitypanestate",l.productivityPaneMode="msdyn_productivitypanemode",l.applicationName="msdyn_applicationname",l.msdyn_name="msdyn_name",e.ProductivityPaneConfigConstants=l;class d{}d.notificationResponseAction="notificationResponseAction",d.acceptNotificationResponse="accepted",d.rejectNotificationResponse="rejected",d.channelProviderName="providerName",d.channelProviderId="providerId",d.telemetryApiName="telemetryAPIName",d.telemetryInitApiName="InitCIFAnalytics",d.telemetryLogCustomEventApiName="LogCustomEvent",d.telemetryLogSystemEventApiName="LogSystemEvent",d.analyticsdata="analyticsData",d.initLogAnalyticsEventName="initAnalytics",d.analyticsEventType="analyticsEventtype",d.analyticsEventName="analyticsEventname",d.initAnalyticsPlatformEventName="initCIFAnalytics",d.logAnalyticsPlatformEventName="logCIFAnalytics",d.focussedSession="focussedSession",d.clientSessionId="clientSessionId",d.enableAnalytics="enableAnalytics",d.telemetryUpdateConversationName="updateConversation",d.updateConversationsPlatformEventName="updateConversation",d.sessionUniqueId="sessionUniqueId",d.correlationId="correlationId",d.conversationId="conversationId",d.providerSessionId="providerSessionId",d.sessionStarted="SessionStarted",d.SessionFocusIn="SessionFocusIn",d.SessionFocusOut="SessionFocusOut",d.sessionClosed="SessionClosed",d.cifSessionStart="cifSessionStart",d.cifSessionEnd="cifSessionEnd",d.notificationReceived="NotificationReceived",d.notificationAccepted="NotificationAccepted",d.notificationRejected="NotificationRejected",d.notificationTimedOut="NotificationTimedOut",e.AnalyticsConstants=d;class c{}c.Accept="Accept",c.AutoAcceptOnTimeout="AutoAcceptOnTimeout",c.AutoAccept="AutoAccept",c.DeclinedByAgent="DeclinedByAgent",c.DisplayTimeout="DisplayTimeout",c.NotificationQueueLimitExceeded="NotificationQueueLimitExceeded",c.NotificationQueueTimeLimitExceeded="NotificationQueueTimeLimitExceeded",c.NotificationTemplateNotFoundError="NotificationTemplateNotFoundError",c.NotificationTemplateResolverNotFoundError="NotificationTemplateResolverNotFoundError",c.RejectAfterTimeoutNonPlatformTimer="RejectAfterTimeoutNonPlatformTimer",e.ResponseReason=c;class p{}p.DisplayStart="DisplayStart",p.DisplayEnd="DisplayEnd",e.NotificationState=p;var g;(function(e){e[e.Notes_Flap_Already_Expanded=101]="Notes_Flap_Already_Expanded"})(g=e.ErrorCode||(e.ErrorCode={}));var m;(function(e){e[e.SystemEvent=0]="SystemEvent",e[e.CustomEvent=1]="CustomEvent"})(m=e.EventType||(e.EventType={}));var u;(function(e){e[e.Yes=1e8]="Yes",e[e.No=100000001]="No"})(u=e.ShowTimeoutOption||(e.ShowTimeoutOption={}));var y;(function(e){e[e.NotificationReceived=0]="NotificationReceived",e[e.NotificationAccepted=1]="NotificationAccepted",e[e.NotificationAutoAccepted=2]="NotificationAutoAccepted",e[e.NotificationRejected=3]="NotificationRejected",e[e.NotificationTimedOut=4]="NotificationTimedOut",e[e.SessionStarted=5]="SessionStarted",e[e.SessionFocusIn=6]="SessionFocusIn",e[e.SessionFocusOut=7]="SessionFocusOut",e[e.SessionClosed=8]="SessionClosed",e[e.NewTabOpened=9]="NewTabOpened",e[e.CifSessionStart=10]="CifSessionStart",e[e.CifSessionEnd=11]="CifSessionEnd"})(y=e.InternalEventName||(e.InternalEventName={}));class T{}T.Granted="granted",T.Denied="denied",T.Default="default",T.Accept="accept",T.Reject="reject",T.Never=100000002,T.OnlyWhenPageNotInFocus=100000003,T.InstalledEvent="install",T.ActivateEvent="activate",T.NotificationClickEvent="notificationclick",T.MessageEvent="message",T.BroadcastChannel="BroadcastChannel",T.ServiceWorker="serviceWorker",T.Error="Error",T.timeoutBuffer=5e3,T.browserPrefixes=["moz","ms","o","webkit"],e.DesktopNotificationConstants=T;class I{}I.MessageType=2,I.Level=3,I.Title="",I.ActionResourceKey="RESET_PRESENCE_ACTION",I.MessageResourceKey="MISSED_NOTIFICATION_MESSAGE_BAR_TEXT",I.PresencePlaceholderResourceKey="MISSED_NOTIFICATION_PRESENCE_PLACEHOLDER",e.MissedNotificationsConstants=I})(t=e.CIFramework||(e.CIFramework={}))})(Microsoft||(Microsoft={})),function(e,t){if("object"==typeof exports&&"object"==typeof module)module.exports=t();else if("function"==typeof define&&define.amd)define([],t);else{var n=t();for(var r in n)("object"==typeof exports?exports:e)[r]=n[r]}}(this,function(){var e=Math.abs,t=Math.floor;return function(e){function t(r){if(n[r])return n[r].exports;var i=n[r]={i:r,l:!1,exports:{}};return e[r].call(i.exports,i,i.exports,t),i.l=!0,i.exports}var n={};return t.m=e,t.c=n,t.i=function(e){return e},t.d=function(e,n,r){t.o(e,n)||Object.defineProperty(e,n,{configurable:!1,enumerable:!0,get:r})},t.n=function(e){var n=e&&e.__esModule?function(){return e["default"]}:function(){return e};return t.d(n,"a",n),n},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=30)}([function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var n;(function(e){e[e.Unspecified=0]="Unspecified",e[e.String=1]="String",e[e.Int64=2]="Int64",e[e.Double=3]="Double",e[e.Boolean=4]="Boolean",e[e.Date=5]="Date"})(n=t.AWTPropertyType||(t.AWTPropertyType={}));var r;(function(e){e[e.NotSet=0]="NotSet",e[e.DistinguishedName=1]="DistinguishedName",e[e.GenericData=2]="GenericData",e[e.IPV4Address=3]="IPV4Address",e[e.IPv6Address=4]="IPv6Address",e[e.MailSubject=5]="MailSubject",e[e.PhoneNumber=6]="PhoneNumber",e[e.QueryString=7]="QueryString",e[e.SipAddress=8]="SipAddress",e[e.SmtpAddress=9]="SmtpAddress",e[e.Identity=10]="Identity",e[e.Uri=11]="Uri",e[e.Fqdn=12]="Fqdn",e[e.IPV4AddressLegacy=13]="IPV4AddressLegacy"})(r=t.AWTPiiKind||(t.AWTPiiKind={}));var i;(function(e){e[e.NotSet=0]="NotSet",e[e.GenericContent=1]="GenericContent"})(i=t.AWTCustomerContentKind||(t.AWTCustomerContentKind={}));var o;(function(e){e[e.Low=1]="Low",e[e.Normal=2]="Normal",e[e.High=3]="High",e[e.Immediate_sync=5]="Immediate_sync"})(o=t.AWTEventPriority||(t.AWTEventPriority={}));var s;(function(e){e[e.NonRetryableStatus=1]="NonRetryableStatus",e[e.QueueFull=3]="QueueFull"})(s=t.AWTEventsDroppedReason||(t.AWTEventsDroppedReason={}));var a;(function(e){e[e.InvalidEvent=1]="InvalidEvent",e[e.SizeLimitExceeded=2]="SizeLimitExceeded",e[e.KillSwitch=3]="KillSwitch"})(a=t.AWTEventsRejectedReason||(t.AWTEventsRejectedReason={}))},function(e,n,r){"use strict";function i(e){return"string"==typeof e}function o(e){return"number"==typeof e}function s(e){return"boolean"==typeof e}function a(e){return e instanceof Date}function l(e){return(e+62135596800000)*10000}function d(){return E===P&&(E="undefined"!=typeof navigator&&!!navigator.sendBeacon),E}function c(){return N===P&&(N="undefined"!=typeof Uint8Array&&!v()&&!g()),N}function p(){if(b===P){var e=new XMLHttpRequest;b=!("undefined"!=typeof e.withCredentials||"undefined"==typeof XDomainRequest)}return b}function g(){return!!("undefined"!=typeof navigator&&navigator.product)&&"ReactNative"===navigator.product}function m(e){return 10>e?"0"+e:e.toString()}function u(e){if(10>e)return"00"+e;return 100>e?"0"+e:e.toString()}function y(e,t){return t=C(t)?t:h.AWTPropertyType.Unspecified,t===h.AWTPropertyType.Unspecified?T(e):t===h.AWTPropertyType.String?i(e)?t:P:t===h.AWTPropertyType.Boolean?s(e)?t:P:t===h.AWTPropertyType.Date?a(e)&&e.getTime()!==NaN?t:P:t===h.AWTPropertyType.Int64?o(e)&&0==e%1?t:P:t===h.AWTPropertyType.Double?o(e)?t:P:P}function T(e){switch(typeof e){case"string":return h.AWTPropertyType.String;case"boolean":return h.AWTPropertyType.Boolean;case"number":return h.AWTPropertyType.Double;case"object":return a(e)?h.AWTPropertyType.Date:P;}return P}function I(e){return!!(o(e)&&0<=e&&13>=e)}function f(e){return!!(o(e)&&0<=e&&1>=e)}function C(e){return!!(o(e)&&0<=e&&4>=e)}function v(){if("undefined"!=typeof navigator&&navigator.userAgent){var e=navigator.userAgent.toLowerCase();if((0<=e.indexOf("safari")||0<=e.indexOf("firefox"))&&0>e.indexOf("chrome"))return!0}return!1}function _(e){return e===void 0||e===P||""===e}Object.defineProperty(n,"__esModule",{value:!0});var S=r(4),h=r(0),A=/[xy]/g,P=null;n.EventNameAndTypeRegex=/^[a-zA-Z]([a-zA-Z0-9]|_){2,98}[a-zA-Z0-9]$/,n.EventNameDotRegex=/\./g,n.PropertyNameRegex=/^[a-zA-Z](([a-zA-Z0-9|_|\.]){0,98}[a-zA-Z0-9])?$/,n.StatsApiKey="a387cfcf60114a43a7699f9fbb49289e-9bceb9fe-1c06-460f-96c5-6a0b247358bc-7238";var E=P,N=P,b=P;n.numberToBondInt64=function(e){var n=new S.Int64("0");return n.low=4294967295&e,n.high=t(e/4294967296),n},n.newGuid=function(){return"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(A,function(e){var t=0|16*Math.random(),n="x"===e?t:8|3&t;return n.toString(16)})},n.isString=i,n.isNumber=o,n.isBoolean=s,n.isDate=a,n.msToTicks=l,n.getTenantId=function(e){var t=e.indexOf("-");return-1<t?e.substring(0,t):""},n.isBeaconsSupported=d,n.isUint8ArrayAvailable=c,n.isPriority=function(e){return!!(o(e)&&(1<=e&&3>=e||5===e))},n.sanitizeProperty=function(e,t){return!n.PropertyNameRegex.test(e)||_(t)?P:(_(t.value)&&(t={value:t,type:h.AWTPropertyType.Unspecified}),t.type=y(t.value,t.type),!t.type)?P:(a(t.value)&&(t.value=l(t.value.getTime())),0<t.pii&&0<t.cc?P:t.pii?I(t.pii)?t:P:t.cc?f(t.cc)?t:P:t)},n.getISOString=function(e){return e.getUTCFullYear()+"-"+m(e.getUTCMonth()+1)+"-"+m(e.getUTCDate())+"T"+m(e.getUTCHours())+":"+m(e.getUTCMinutes())+":"+m(e.getUTCSeconds())+"."+u(e.getUTCMilliseconds())+"Z"},n.useXDomainRequest=p,n.isReactNative=g},function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var n=function(){function e(){}return e.addNotificationListener=function(e){this.listeners.push(e)},e.removeNotificationListener=function(e){for(var t=this.listeners.indexOf(e);-1<t;)this.listeners.splice(t,1),t=this.listeners.indexOf(e)},e.eventsSent=function(e){for(var t=this,n=function(n){r.listeners[n].eventsSent&&setTimeout(function(){return t.listeners[n].eventsSent(e)},0)},r=this,o=0;o<this.listeners.length;++o)n(o)},e.eventsDropped=function(e,t){for(var n=this,r=function(r){o.listeners[r].eventsDropped&&setTimeout(function(){return n.listeners[r].eventsDropped(e,t)},0)},o=this,s=0;s<this.listeners.length;++s)r(s)},e.eventsRetrying=function(e){for(var t=this,n=function(n){r.listeners[n].eventsRetrying&&setTimeout(function(){return t.listeners[n].eventsRetrying(e)},0)},r=this,o=0;o<this.listeners.length;++o)n(o)},e.eventsRejected=function(e,t){for(var n=this,r=function(r){o.listeners[r].eventsRejected&&setTimeout(function(){return n.listeners[r].eventsRejected(e,t)},0)},o=this,s=0;s<this.listeners.length;++s)r(s)},e.listeners=[],e}();t.default=n},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(14),i=n(0),o=n(28),s=n(10),a=n(5),l=n(11),d=n(1),c="awt_stats",p=function(){function e(){}return e.setEventsHandler=function(e){this._eventHandler=e},e.getEventsHandler=function(){return this._eventHandler},e.scheduleTimer=function(){var e=this,t=this._profiles[this._currentProfile][2];0>this._timeout&&0<=t&&!this._paused&&(this._eventHandler.hasEvents()?(0===t&&0<this._currentBackoffCount&&(t=1),this._timeout=setTimeout(function(){return e._batchAndSendEvents()},1e3*(t*(1<<this._currentBackoffCount)))):this._timerCount=0)},e.initialize=function(e){var t=this;this._newEventsAllowed=!0,this._config=e,this._eventHandler=new o.default(e.collectorUri,e.cacheMemorySizeLimitInNumberOfEvents,e.httpXHROverride,e.clockSkewRefreshDurationInMins),this._initializeProfiles(),s.default.initialize(function(e,n){if(t._config.canSendStatEvent(c)){var r=new a.default(c);for(var o in r.setEventPriority(i.AWTEventPriority.High),r.setProperty("TenantId",n),e)e.hasOwnProperty(o)&&r.setProperty(o,e[o].toString());l.default.getLogger(d.StatsApiKey).logEvent(r)}})},e.setTransmitProfile=function(e){this._currentProfile!==e&&void 0!==this._profiles[e]&&(this.clearTimeout(),this._currentProfile=e,this.scheduleTimer())},e.loadTransmitProfiles=function(e){for(var t in this._resetTransmitProfiles(),e)if(e.hasOwnProperty(t)){if(3!==e[t].length)continue;for(var n=2;0<=n;--n)if(0>e[t][n]){for(var r=n;0<=r;--r)e[t][r]=-1;break}for(var n=2;0<n;--n)if(0<e[t][n]&&0<e[t][n-1]){var o=e[t][n-1]/e[t][n];e[t][n-1]=Math.ceil(o)*e[t][n]}this._profiles[t]=e[t]}},e.sendEvent=function(e){this._newEventsAllowed&&(0<this._currentBackoffCount&&e.priority===i.AWTEventPriority.Immediate_sync&&(e.priority=i.AWTEventPriority.High),this._eventHandler.addEvent(e),this.scheduleTimer())},e.flush=function(e){var t=new Date().getTime();!this._paused&&this._lastUploadNowCall+3e4<t&&(this._lastUploadNowCall=t,-1<this._timeout&&(clearTimeout(this._timeout),this._timeout=-1),this._eventHandler.uploadNow(e))},e.pauseTransmission=function(){this._paused||(this.clearTimeout(),this._eventHandler.pauseTransmission(),this._paused=!0)},e.resumeTransmision=function(){this._paused&&(this._paused=!1,this._eventHandler.resumeTransmission(),this.scheduleTimer())},e.flushAndTeardown=function(){s.default.teardown(),this._newEventsAllowed=!1,this.clearTimeout(),this._eventHandler.teardown()},e.backOffTransmission=function(){this._currentBackoffCount<4&&(this._currentBackoffCount++,this.clearTimeout(),this.scheduleTimer())},e.clearBackOff=function(){0<this._currentBackoffCount&&(this._currentBackoffCount=0,this.clearTimeout(),this.scheduleTimer())},e._resetTransmitProfiles=function(){this.clearTimeout(),this._initializeProfiles(),this._currentProfile=r.AWT_REAL_TIME,this.scheduleTimer()},e.clearTimeout=function(){0<this._timeout&&(clearTimeout(this._timeout),this._timeout=-1,this._timerCount=0)},e._batchAndSendEvents=function(){var e=i.AWTEventPriority.High;this._timerCount++,this._timerCount*this._profiles[this._currentProfile][2]===this._profiles[this._currentProfile][0]?(e=i.AWTEventPriority.Low,this._timerCount=0):this._timerCount*this._profiles[this._currentProfile][2]===this._profiles[this._currentProfile][1]&&(e=i.AWTEventPriority.Normal),this._eventHandler.sendEventsForPriorityAndAbove(e),this._timeout=-1,this.scheduleTimer()},e._initializeProfiles=function(){this._profiles={},this._profiles[r.AWT_REAL_TIME]=[4,2,1],this._profiles[r.AWT_NEAR_REAL_TIME]=[12,6,3],this._profiles[r.AWT_BEST_EFFORT]=[36,18,9]},e._newEventsAllowed=!1,e._currentProfile=r.AWT_REAL_TIME,e._timeout=-1,e._currentBackoffCount=0,e._paused=!1,e._timerCount=0,e._lastUploadNowCall=0,e}();t.default=p},function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var n=function(){function e(e){this.low=0,this.high=0,this.low=parseInt(e,10),0>this.low&&(this.high=-1)}return e.prototype._Equals=function(t){var n=new e(t);return this.low===n.low&&this.high===n.high},e}();t.Int64=n;var r=function(){function e(e){this.low=0,this.high=0,this.low=parseInt(e,10)}return e.prototype._Equals=function(t){var n=new e(t);return this.low===n.low&&this.high===n.high},e}();t.UInt64=r;var i=function(){function e(){}return e._ToByte=function(e){return this._ToUInt8(e)},e._ToUInt8=function(e){return 255&e},e._ToInt32=function(e){return 2147483647&e|2147483648&e},e._ToUInt32=function(e){return 4294967295&e},e}();t.Number=i},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(1),i=n(0),o=function(){function e(e){this._event={name:"",properties:{}},e&&this.setName(e)}return e.prototype.setName=function(e){this._event.name=e},e.prototype.getName=function(){return this._event.name},e.prototype.setType=function(e){this._event.type=e},e.prototype.getType=function(){return this._event.type},e.prototype.setTimestamp=function(e){this._event.timestamp=e},e.prototype.getTimestamp=function(){return this._event.timestamp},e.prototype.setEventPriority=function(e){this._event.priority=e},e.prototype.getEventPriority=function(){return this._event.priority},e.prototype.setProperty=function(e,t,n){void 0===n&&(n=i.AWTPropertyType.Unspecified);var o={value:t,type:n,pii:i.AWTPiiKind.NotSet,cc:i.AWTCustomerContentKind.NotSet};return o=r.sanitizeProperty(e,o),null===o?void delete this._event.properties[e]:void(this._event.properties[e]=o)},e.prototype.setPropertyWithPii=function(e,t,n,o){void 0===o&&(o=i.AWTPropertyType.Unspecified);var s={value:t,type:o,pii:n,cc:i.AWTCustomerContentKind.NotSet};return s=r.sanitizeProperty(e,s),null===s?void delete this._event.properties[e]:void(this._event.properties[e]=s)},e.prototype.setPropertyWithCustomerContent=function(e,t,n,o){void 0===o&&(o=i.AWTPropertyType.Unspecified);var s={value:t,type:o,pii:i.AWTPiiKind.NotSet,cc:n};return s=r.sanitizeProperty(e,s),null===s?void delete this._event.properties[e]:void(this._event.properties[e]=s)},e.prototype.getPropertyMap=function(){return this._event.properties},e.prototype.getEvent=function(){return this._event},e}();t.default=o},function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var n;(function(e){e[e.Unknown=0]="Unknown",e[e.MSACID=1]="MSACID",e[e.MSAPUID=2]="MSAPUID",e[e.ANID=3]="ANID",e[e.OrgIdCID=4]="OrgIdCID",e[e.OrgIdPUID=5]="OrgIdPUID",e[e.UserObjectId=6]="UserObjectId",e[e.Skype=7]="Skype",e[e.Yammer=8]="Yammer",e[e.EmailAddress=9]="EmailAddress",e[e.PhoneNumber=10]="PhoneNumber",e[e.SipAddress=11]="SipAddress",e[e.MUID=12]="MUID"})(n=t.AWTUserIdType||(t.AWTUserIdType={}));var r;(function(e){e[e.Started=0]="Started",e[e.Ended=1]="Ended"})(r=t.AWTSessionState||(t.AWTSessionState={}))},function(t,n,r){"use strict";Object.defineProperty(n,"__esModule",{value:!0});var i=r(1),o="MicrosoftApplicationsTelemetryDeviceId",s="MicrosoftApplicationsTelemetryFirstLaunchTime",a={MSIE:"MSIE",CHROME:"Chrome",FIREFOX:"Firefox",SAFARI:"Safari",EDGE:"Edge",ELECTRON:"Electron",SKYPE_SHELL:"SkypeShell",PHANTOMJS:"PhantomJS",OPERA:"Opera"},l={WINDOWS:"Windows",MACOSX:"Mac OS X",WINDOWS_PHONE:"Windows Phone",WINDOWS_RT:"Windows RT",IOS:"iOS",ANDROID:"Android",LINUX:"Linux",CROS:"Chrome OS",UNKNOWN:"Unknown"},d={WIN:/(windows|win32)/i,WINRT:/ arm;/i,WINPHONE:/windows\sphone\s\d+\.\d+/i,OSX:/(macintosh|mac os x)/i,IOS:/(iPad|iPhone|iPod)(?=.*like Mac OS X)/i,LINUX:/(linux|joli|[kxln]?ubuntu|debian|[open]*suse|gentoo|arch|slackware|fedora|mandriva|centos|pclinuxos|redhat|zenwalk)/i,ANDROID:/android/i,CROS:/CrOS/i},c={5.1:"XP","6.0":"Vista",6.1:"7",6.2:"8",6.3:"8.1","10.0":"10"},p="([\\d,.]+)",g="Unknown",m="undefined",u=function(){function t(){}return t.addPropertyStorageOverride=function(e){return!!e&&(this._propertyStorage=e,!0)},t.autoCollect=function(e,t,n){return this._semanticContext=e,this._disableCookies=t,this._autoCollect(),n||typeof navigator===m||(n=navigator.userAgent||""),this._autoCollectFromUserAgent(n),this._disableCookies&&!this._propertyStorage?(this._deleteCookie(o),void this._deleteCookie(s)):void((this._propertyStorage||this._areCookiesAvailable&&!this._disableCookies)&&this._autoCollectDeviceId())},t.checkAndSaveDeviceId=function(e){if(e){var t=this._getData(o),n=this._getData(s);t!==e&&(n=i.getISOString(new Date)),this._saveData(o,e),this._saveData(s,n),this._setFirstLaunchTime(n)}},t._autoCollectDeviceId=function(){var e=this._getData(o);e||(e=i.newGuid()),this._semanticContext.setDeviceId(e)},t._autoCollect=function(){typeof document!==m&&document.documentElement&&this._semanticContext.setAppLanguage(document.documentElement.lang),typeof navigator!==m&&this._semanticContext.setUserLanguage(navigator.userLanguage||navigator.language);var t=new Date().getTimezoneOffset(),n=t%60,r=(t-n)/60,i="+";0<r&&(i="-"),r=e(r),n=e(n),this._semanticContext.setUserTimeZone(i+(10>r?"0"+r:r.toString())+":"+(10>n?"0"+n:n.toString()))},t._autoCollectFromUserAgent=function(e){if(e){var t=this._getBrowserName(e);this._semanticContext.setDeviceBrowserName(t),this._semanticContext.setDeviceBrowserVersion(this._getBrowserVersion(e,t));var n=this._getOsName(e);this._semanticContext.setDeviceOsName(n),this._semanticContext.setDeviceOsVersion(this._getOsVersion(e,n))}},t._getBrowserName=function(e){return this._userAgentContainsString("OPR/",e)?a.OPERA:this._userAgentContainsString(a.PHANTOMJS,e)?a.PHANTOMJS:this._userAgentContainsString(a.EDGE,e)?a.EDGE:this._userAgentContainsString(a.ELECTRON,e)?a.ELECTRON:this._userAgentContainsString(a.CHROME,e)?a.CHROME:this._userAgentContainsString("Trident",e)?a.MSIE:this._userAgentContainsString(a.FIREFOX,e)?a.FIREFOX:this._userAgentContainsString(a.SAFARI,e)?a.SAFARI:this._userAgentContainsString(a.SKYPE_SHELL,e)?a.SKYPE_SHELL:g},t._setFirstLaunchTime=function(e){if(!isNaN(e)){var t=new Date;t.setTime(parseInt(e,10)),e=i.getISOString(t)}this.firstLaunchTime=e},t._userAgentContainsString=function(e,t){return-1<t.indexOf(e)},t._getBrowserVersion=function(e,t){return t===a.MSIE?this._getIeVersion(e):this._getOtherVersion(t,e)},t._getIeVersion=function(e){var t=e.match(new RegExp(a.MSIE+" "+p));if(t)return t[1];var n=e.match(new RegExp("rv:"+p));if(n)return n[1]},t._getOtherVersion=function(e,t){e===a.SAFARI&&(e="Version");var n=t.match(new RegExp(e+"/"+p));return n?n[1]:g},t._getOsName=function(e){return e.match(d.WINPHONE)?l.WINDOWS_PHONE:e.match(d.WINRT)?l.WINDOWS_RT:e.match(d.IOS)?l.IOS:e.match(d.ANDROID)?l.ANDROID:e.match(d.LINUX)?l.LINUX:e.match(d.OSX)?l.MACOSX:e.match(d.WIN)?l.WINDOWS:e.match(d.CROS)?l.CROS:g},t._getOsVersion=function(e,t){return t===l.WINDOWS?this._getGenericOsVersion(e,"Windows NT"):t===l.ANDROID?this._getGenericOsVersion(e,t):t===l.MACOSX?this._getMacOsxVersion(e):g},t._getGenericOsVersion=function(e,t){var n=e.match(new RegExp(t+" "+p));return n?c[n[1]]?c[n[1]]:n[1]:g},t._getMacOsxVersion=function(e){var t=e.match(new RegExp(l.MACOSX+" "+"([\\d,_,.]+)"));if(t){var n=t[1].replace(/_/g,".");if(n){var r=this._getDelimiter(n);if(r){var i=n.split(r);return i[0]}return n}}return g},t._getDelimiter=function(e){return-1<e.indexOf(".")?".":-1<e.indexOf("_")?"_":null},t._saveData=function(e,t){if(this._propertyStorage)this._propertyStorage.setProperty(e,t);else if(this._areCookiesAvailable){var n=new Date;n.setTime(n.getTime()+31536e6);var r="expires="+n.toUTCString();document.cookie=e+"="+t+"; "+r}},t._getData=function(e){if(this._propertyStorage)return this._propertyStorage.getProperty(e)||"";if(this._areCookiesAvailable){e+="=";for(var t=document.cookie.split(";"),n=0;n<t.length;n++){for(var r=t[n],o=0;" "===r.charAt(o);)o++;if(r=r.substring(o),0===r.indexOf(e))return r.substring(e.length,r.length)}}return""},t._deleteCookie=function(e){this._areCookiesAvailable&&(document.cookie=e+"=;expires=Thu, 01 Jan 1970 00:00:01 GMT;")},t._disableCookies=!1,t._areCookiesAvailable=typeof document!==m&&typeof document.cookie!==m,t}();n.default=u},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(7),i=n(0),o=n(6),s="UserInfo.IdType",a=function(){function e(e,t){this._allowDeviceFields=e,this._properties=t}return e.prototype.setAppId=function(e){this._addContext("AppInfo.Id",e)},e.prototype.setAppVersion=function(e){this._addContext("AppInfo.Version",e)},e.prototype.setAppLanguage=function(e){this._addContext("AppInfo.Language",e)},e.prototype.setDeviceId=function(e){this._allowDeviceFields&&(r.default.checkAndSaveDeviceId(e),this._addContext("DeviceInfo.Id",e))},e.prototype.setDeviceOsName=function(e){this._allowDeviceFields&&this._addContext("DeviceInfo.OsName",e)},e.prototype.setDeviceOsVersion=function(e){this._allowDeviceFields&&this._addContext("DeviceInfo.OsVersion",e)},e.prototype.setDeviceBrowserName=function(e){this._allowDeviceFields&&this._addContext("DeviceInfo.BrowserName",e)},e.prototype.setDeviceBrowserVersion=function(e){this._allowDeviceFields&&this._addContext("DeviceInfo.BrowserVersion",e)},e.prototype.setDeviceMake=function(e){this._allowDeviceFields&&this._addContext("DeviceInfo.Make",e)},e.prototype.setDeviceModel=function(e){this._allowDeviceFields&&this._addContext("DeviceInfo.Model",e)},e.prototype.setUserId=function(e,t,n){if(!isNaN(n)&&null!==n&&0<=n&&12>=n)this._addContext(s,n.toString());else{var r;r=t===i.AWTPiiKind.SipAddress?o.AWTUserIdType.SipAddress:t===i.AWTPiiKind.PhoneNumber?o.AWTUserIdType.PhoneNumber:t===i.AWTPiiKind.SmtpAddress?o.AWTUserIdType.EmailAddress:o.AWTUserIdType.Unknown,this._addContext(s,r.toString())}(isNaN(t)||null===t||t===i.AWTPiiKind.NotSet||13<t)&&(t=n===o.AWTUserIdType.Skype?i.AWTPiiKind.Identity:n===o.AWTUserIdType.EmailAddress?i.AWTPiiKind.SmtpAddress:n===o.AWTUserIdType.PhoneNumber?i.AWTPiiKind.PhoneNumber:n===o.AWTUserIdType.SipAddress?i.AWTPiiKind.SipAddress:i.AWTPiiKind.NotSet),this._addContextWithPii("UserInfo.Id",e,t)},e.prototype.setUserAdvertisingId=function(e){this._addContext("UserInfo.AdvertisingId",e)},e.prototype.setUserTimeZone=function(e){this._addContext("UserInfo.TimeZone",e)},e.prototype.setUserLanguage=function(e){this._addContext("UserInfo.Language",e)},e.prototype._addContext=function(e,t){"string"==typeof t&&this._properties.setProperty(e,t)},e.prototype._addContextWithPii=function(e,t,n){"string"==typeof t&&this._properties.setPropertyWithPii(e,t,n)},e}();t.default=a},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(21),o=n(0),s=n(2),a=n(1),l=2936012,i=function(){function e(){}return e.getPayloadBlob=function(e,t){var n=!1,d=new r.IO.MemoryStream,c=new r.CompactBinaryProtocolWriter(d),p;for(var g in c._WriteFieldBegin(r._BondDataType._BT_MAP,3,null),c._WriteMapContainerBegin(t,r._BondDataType._BT_STRING,r._BondDataType._BT_LIST),e)if(!!n)p||(p={}),p[g]=e[g],delete e[g];else if(e.hasOwnProperty(g)){c._WriteString(g);var m=e[g];c._WriteContainerBegin(1,r._BondDataType._BT_STRUCT),c._WriteFieldBegin(r._BondDataType._BT_STRING,2,null),c._WriteString("act_default_source"),c._WriteFieldBegin(r._BondDataType._BT_STRING,5,null),c._WriteString(a.newGuid()),c._WriteFieldBegin(r._BondDataType._BT_INT64,6,null),c._WriteInt64(a.numberToBondInt64(Date.now())),c._WriteFieldBegin(r._BondDataType._BT_LIST,8,null);var u=d._GetBuffer().length+1;c._WriteContainerBegin(e[g].length,r._BondDataType._BT_STRUCT);for(var y=d._GetBuffer().length-u,T=0,I;T<m.length;++T){if(I=d._GetBuffer().length,this.writeEvent(m[T],c),d._GetBuffer().length-I>l){s.default.eventsRejected([m[T]],o.AWTEventsRejectedReason.SizeLimitExceeded),m.splice(T--,1),d._GetBuffer().splice(I),this._addNewDataPackageSize(m.length,d,y,u);continue}if(d._GetBuffer().length>l){d._GetBuffer().splice(I),p||(p={}),e[g]=m.splice(0,T),p[g]=m,this._addNewDataPackageSize(e[g].length,d,y,u),n=!0;break}}c._WriteStructEnd(!1)}return c._WriteStructEnd(!1),{payloadBlob:d._GetBuffer(),remainingRequest:p}},e._addNewDataPackageSize=function(e,t,n,i){for(var o=r._Encoding._Varint_GetBytes(r.Number._ToUInt32(e)),s=0;s<n;++s)if(s<o.length)t._GetBuffer()[i+s]=o[s];else{t._GetBuffer().slice(i+s,n-s);break}},e.writeEvent=function(e,t){t._WriteFieldBegin(r._BondDataType._BT_STRING,1,null),t._WriteString(e.id),t._WriteFieldBegin(r._BondDataType._BT_INT64,3,null),t._WriteInt64(a.numberToBondInt64(e.timestamp)),t._WriteFieldBegin(r._BondDataType._BT_STRING,5,null),t._WriteString(e.type),t._WriteFieldBegin(r._BondDataType._BT_STRING,6,null),t._WriteString(e.name);var n={},i=0,s={},l=0,d={},c=0,p={},g=0,m={},u=0,y={},T=0,I={},f=0;for(var C in e.properties)if(e.properties.hasOwnProperty(C)){var v=e.properties[C];if(0<v.cc)I[C]=v,f++;else if(0<v.pii)y[C]=v,T++;else switch(v.type){case o.AWTPropertyType.String:n[C]=v.value,i++;break;case o.AWTPropertyType.Int64:s[C]=v.value,l++;break;case o.AWTPropertyType.Double:d[C]=v.value,c++;break;case o.AWTPropertyType.Boolean:p[C]=v.value,g++;break;case o.AWTPropertyType.Date:m[C]=v.value,u++;}}if(i)for(var C in t._WriteFieldBegin(r._BondDataType._BT_MAP,13,null),t._WriteMapContainerBegin(i,r._BondDataType._BT_STRING,r._BondDataType._BT_STRING),n)if(n.hasOwnProperty(C)){var _=n[C];t._WriteString(C),t._WriteString(_.toString())}if(T)for(var C in t._WriteFieldBegin(r._BondDataType._BT_MAP,30,null),t._WriteMapContainerBegin(T,r._BondDataType._BT_STRING,r._BondDataType._BT_STRUCT),y)if(y.hasOwnProperty(C)){var v=y[C];t._WriteString(C),t._WriteFieldBegin(r._BondDataType._BT_INT32,1,null),t._WriteInt32(1),t._WriteFieldBegin(r._BondDataType._BT_INT32,2,null),t._WriteInt32(v.pii),t._WriteFieldBegin(r._BondDataType._BT_STRING,3,null),t._WriteString(v.value.toString()),t._WriteStructEnd(!1)}if(g)for(var C in t._WriteFieldBegin(r._BondDataType._BT_MAP,31,null),t._WriteMapContainerBegin(g,r._BondDataType._BT_STRING,r._BondDataType._BT_BOOL),p)if(p.hasOwnProperty(C)){var _=p[C];t._WriteString(C),t._WriteBool(_)}if(u)for(var C in t._WriteFieldBegin(r._BondDataType._BT_MAP,32,null),t._WriteMapContainerBegin(u,r._BondDataType._BT_STRING,r._BondDataType._BT_INT64),m)if(m.hasOwnProperty(C)){var _=m[C];t._WriteString(C),t._WriteInt64(a.numberToBondInt64(_))}if(l)for(var C in t._WriteFieldBegin(r._BondDataType._BT_MAP,33,null),t._WriteMapContainerBegin(l,r._BondDataType._BT_STRING,r._BondDataType._BT_INT64),s)if(s.hasOwnProperty(C)){var _=s[C];t._WriteString(C),t._WriteInt64(a.numberToBondInt64(_))}if(c)for(var C in t._WriteFieldBegin(r._BondDataType._BT_MAP,34,null),t._WriteMapContainerBegin(c,r._BondDataType._BT_STRING,r._BondDataType._BT_DOUBLE),d)if(d.hasOwnProperty(C)){var _=d[C];t._WriteString(C),t._WriteDouble(_)}if(f)for(var C in t._WriteFieldBegin(r._BondDataType._BT_MAP,36,null),t._WriteMapContainerBegin(f,r._BondDataType._BT_STRING,r._BondDataType._BT_STRUCT),I)if(I.hasOwnProperty(C)){var v=I[C];t._WriteString(C),t._WriteFieldBegin(r._BondDataType._BT_INT32,1,null),t._WriteInt32(v.cc),t._WriteFieldBegin(r._BondDataType._BT_STRING,2,null),t._WriteString(v.value.toString()),t._WriteStructEnd(!1)}t._WriteStructEnd(!1)},e.base64Encode=function(e){return r._Encoding._Base64_GetString(e)},e}();t.default=i},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(1),i=n(2),o=n(0),s=6e4,a=function(){function e(){}return e.initialize=function(e){var t=this;this._sendStats=e,this._isInitalized=!0,i.default.addNotificationListener({eventsSent:function(e){t._addStat("records_sent_count",e.length,e[0].apiKey)},eventsDropped:function(e,n){n===o.AWTEventsDroppedReason.NonRetryableStatus?(t._addStat("d_send_fail",e.length,e[0].apiKey),t._addStat("records_dropped_count",e.length,e[0].apiKey)):n===o.AWTEventsDroppedReason.QueueFull?t._addStat("d_queue_full",e.length,e[0].apiKey):void 0},eventsRejected:function(e,n){n===o.AWTEventsRejectedReason.InvalidEvent?t._addStat("r_inv",e.length,e[0].apiKey):n===o.AWTEventsRejectedReason.KillSwitch?t._addStat("r_kl",e.length,e[0].apiKey):n===o.AWTEventsRejectedReason.SizeLimitExceeded?t._addStat("r_size",e.length,e[0].apiKey):void 0,t._addStat("r_count",e.length,e[0].apiKey)},eventsRetrying:null}),setTimeout(function(){return t.flush()},s)},e.teardown=function(){this._isInitalized&&(this.flush(),this._isInitalized=!1)},e.eventReceived=function(t){e._addStat("records_received_count",1,t)},e.flush=function(){var e=this;if(this._isInitalized){for(var t in this._stats)this._stats.hasOwnProperty(t)&&this._sendStats(this._stats[t],t);this._stats={},setTimeout(function(){return e.flush()},s)}},e._addStat=function(e,t,n){if(this._isInitalized&&n!==r.StatsApiKey){var i=r.getTenantId(n);this._stats[i]||(this._stats[i]={}),this._stats[i][e]?this._stats[i][e]+=t:this._stats[i][e]=t}},e._isInitalized=!1,e._stats={},e}();t.default=a},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(0),i=n(6),o=n(12),s=n(13),a=n(3),l=n(2),d=n(7),c=function(){function e(){}return e.initialize=function(e,t){if(void 0===t&&(t={}),!this._isInitialized)return this._isInitialized=!0,o.default.defaultTenantToken=e,this._overrideValuesFromConfig(t),this._config.disableCookiesUsage&&!this._config.propertyStorageOverride&&(o.default.sessionEnabled=!1),d.default.addPropertyStorageOverride(this._config.propertyStorageOverride),d.default.autoCollect(o.default.semanticContext,this._config.disableCookiesUsage,this._config.userAgent),a.default.initialize(this._config),o.default.loggingEnabled=!0,this._config.enableAutoUserSession&&(this.getLogger().logSession(i.AWTSessionState.Started),window.addEventListener("beforeunload",this.flushAndTeardown)),this.getLogger()},e.getSemanticContext=function(){return o.default.semanticContext},e.flush=function(e){this._isInitialized&&!this._isDestroyed&&a.default.flush(e)},e.flushAndTeardown=function(){this._isInitialized&&!this._isDestroyed&&(this._config.enableAutoUserSession&&this.getLogger().logSession(i.AWTSessionState.Ended),a.default.flushAndTeardown(),o.default.loggingEnabled=!1,this._isDestroyed=!0)},e.pauseTransmission=function(){this._isInitialized&&!this._isDestroyed&&a.default.pauseTransmission()},e.resumeTransmision=function(){this._isInitialized&&!this._isDestroyed&&a.default.resumeTransmision()},e.setTransmitProfile=function(e){this._isInitialized&&!this._isDestroyed&&a.default.setTransmitProfile(e)},e.loadTransmitProfiles=function(e){this._isInitialized&&!this._isDestroyed&&a.default.loadTransmitProfiles(e)},e.setContext=function(e,t,n){void 0===n&&(n=r.AWTPropertyType.Unspecified),o.default.logManagerContext.setProperty(e,t,n)},e.setContextWithPii=function(e,t,n,i){void 0===i&&(i=r.AWTPropertyType.Unspecified),o.default.logManagerContext.setPropertyWithPii(e,t,n,i)},e.setContextWithCustomerContent=function(e,t,n,i){void 0===i&&(i=r.AWTPropertyType.Unspecified),o.default.logManagerContext.setPropertyWithCustomerContent(e,t,n,i)},e.getLogger=function(e){var t=e;return t&&t!==o.default.defaultTenantToken||(t=""),this._loggers[t]||(this._loggers[t]=new s.default(t)),this._loggers[t]},e.addNotificationListener=function(e){l.default.addNotificationListener(e)},e.removeNotificationListener=function(e){l.default.removeNotificationListener(e)},e._overrideValuesFromConfig=function(e){e.collectorUri&&(this._config.collectorUri=e.collectorUri),0<e.cacheMemorySizeLimitInNumberOfEvents&&(this._config.cacheMemorySizeLimitInNumberOfEvents=e.cacheMemorySizeLimitInNumberOfEvents),e.httpXHROverride&&e.httpXHROverride.sendPOST&&(this._config.httpXHROverride=e.httpXHROverride),e.propertyStorageOverride&&e.propertyStorageOverride.getProperty&&e.propertyStorageOverride.setProperty&&(this._config.propertyStorageOverride=e.propertyStorageOverride),e.userAgent&&(this._config.userAgent=e.userAgent),e.disableCookiesUsage&&(this._config.disableCookiesUsage=e.disableCookiesUsage),e.canSendStatEvent&&(this._config.canSendStatEvent=e.canSendStatEvent),e.enableAutoUserSession&&"undefined"!=typeof window&&window.addEventListener&&(this._config.enableAutoUserSession=e.enableAutoUserSession),0<e.clockSkewRefreshDurationInMins&&(this._config.clockSkewRefreshDurationInMins=e.clockSkewRefreshDurationInMins)},e._loggers={},e._isInitialized=!1,e._isDestroyed=!1,e._config={collectorUri:"https://browser.pipe.aria.microsoft.com/Collector/3.0/",cacheMemorySizeLimitInNumberOfEvents:1e4,disableCookiesUsage:!1,canSendStatEvent:function(){return!0},clockSkewRefreshDurationInMins:0},e}();t.default=c},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(5),i=n(8),o=function(){function e(){}return e.logManagerContext=new r.default,e.sessionEnabled=!0,e.loggingEnabled=!1,e.defaultTenantToken="",e.semanticContext=new i.default(!0,e.logManagerContext),e}();t.default=o},function(e,n,r){"use strict";Object.defineProperty(n,"__esModule",{value:!0});var i=r(0),o=r(6),s=r(5),a=r(1),l=r(10),d=r(2),c=r(3),p=r(12),g=r(15),m=r(8),u=r(7),y=function(){function e(e){this._apiKey=e,this._contextProperties=new s.default,this._semanticContext=new m.default(!1,this._contextProperties),this._sessionStartTime=0,this._createInitId()}return e.prototype.setContext=function(e,t,n){void 0===n&&(n=i.AWTPropertyType.Unspecified),this._contextProperties.setProperty(e,t,n)},e.prototype.setContextWithPii=function(e,t,n,r){void 0===r&&(r=i.AWTPropertyType.Unspecified),this._contextProperties.setPropertyWithPii(e,t,n,r)},e.prototype.setContextWithCustomerContent=function(e,t,n,r){void 0===r&&(r=i.AWTPropertyType.Unspecified),this._contextProperties.setPropertyWithCustomerContent(e,t,n,r)},e.prototype.getSemanticContext=function(){return this._semanticContext},e.prototype.logEvent=function(t){if(p.default.loggingEnabled){this._apiKey||(this._apiKey=p.default.defaultTenantToken,this._createInitId());var n=!0;a.isString(t)?t={name:t}:t instanceof s.default&&(t=t.getEvent(),n=!1),l.default.eventReceived(this._apiKey),e._logEvent(e._getInternalEvent(t,this._apiKey,n),this._contextProperties)}},e.prototype.logSession=function(n,r){if(p.default.sessionEnabled){var s={name:"session",type:"session",properties:{}};if(e._addPropertiesToEvent(s,r),s.priority=i.AWTEventPriority.High,n===o.AWTSessionState.Started){if(0<this._sessionStartTime)return;this._sessionStartTime=new Date().getTime(),this._sessionId=a.newGuid(),this.setContext("Session.Id",this._sessionId),s.properties["Session.State"]="Started"}else if(n===o.AWTSessionState.Ended){if(0===this._sessionStartTime)return;var l=t((new Date().getTime()-this._sessionStartTime)/1e3);s.properties["Session.Id"]=this._sessionId,s.properties["Session.State"]="Ended",s.properties["Session.Duration"]=l.toString(),s.properties["Session.DurationBucket"]=e._getSessionDurationFromTime(l),this._sessionStartTime=0,this.setContext("Session.Id",null),this._sessionId=void 0}else return;s.properties["Session.FirstLaunchTime"]=u.default.firstLaunchTime,this.logEvent(s)}},e.prototype.getSessionId=function(){return this._sessionId},e.prototype.logFailure=function(t,n,r,o,s){if(t&&n){var a={name:"failure",type:"failure",properties:{}};e._addPropertiesToEvent(a,s),a.properties["Failure.Signature"]=t,a.properties["Failure.Detail"]=n,r&&(a.properties["Failure.Category"]=r),o&&(a.properties["Failure.Id"]=o),a.priority=i.AWTEventPriority.High,this.logEvent(a)}},e.prototype.logPageView=function(t,n,r,i,o,s){if(t&&n){var a={name:"pageview",type:"pageview",properties:{}};e._addPropertiesToEvent(a,s),a.properties["PageView.Id"]=t,a.properties["PageView.Name"]=n,r&&(a.properties["PageView.Category"]=r),i&&(a.properties["PageView.Uri"]=i),o&&(a.properties["PageView.ReferrerUri"]=o),this.logEvent(a)}},e.prototype._createInitId=function(){!e._initIdMap[this._apiKey]&&this._apiKey&&(e._initIdMap[this._apiKey]=a.newGuid())},e._addPropertiesToEvent=function(e,t){if(t)for(var n in t instanceof s.default&&(t=t.getEvent()),t.name&&(e.name=t.name),t.priority&&(e.priority=t.priority),t.properties)t.properties.hasOwnProperty(n)&&(e.properties[n]=t.properties[n])},e._getSessionDurationFromTime=function(e){return 0>e?"Undefined":3>=e?"UpTo3Sec":10>=e?"UpTo10Sec":30>=e?"UpTo30Sec":60>=e?"UpTo60Sec":180>=e?"UpTo3Min":600>=e?"UpTo10Min":1800>=e?"UpTo30Min":"Above30Min"},e._logEvent=function(e,t){return e.name&&a.isString(e.name)?(e.name=e.name.toLowerCase(),e.name=e.name.replace(a.EventNameDotRegex,"_"),e.type=e.type&&a.isString(e.type)?e.type.toLowerCase():"custom",a.EventNameAndTypeRegex.test(e.name)&&a.EventNameAndTypeRegex.test(e.type)?void((!a.isNumber(e.timestamp)||0>e.timestamp)&&(e.timestamp=new Date().getTime()),!e.properties&&(e.properties={}),this._addContextIfAbsent(e,t.getPropertyMap()),this._addContextIfAbsent(e,p.default.logManagerContext.getPropertyMap()),this._setDefaultProperty(e,"EventInfo.InitId",this._getInitId(e.apiKey)),this._setDefaultProperty(e,"EventInfo.Sequence",this._getSequenceId(e.apiKey)),this._setDefaultProperty(e,"EventInfo.SdkVersion",g.FullVersionString),this._setDefaultProperty(e,"EventInfo.Name",e.name),this._setDefaultProperty(e,"EventInfo.Time",new Date(e.timestamp).toISOString()),!a.isPriority(e.priority)&&(e.priority=i.AWTEventPriority.Normal),this._sendEvent(e)):void d.default.eventsRejected([e],i.AWTEventsRejectedReason.InvalidEvent)):void d.default.eventsRejected([e],i.AWTEventsRejectedReason.InvalidEvent)},e._addContextIfAbsent=function(e,t){if(t)for(var n in t)t.hasOwnProperty(n)&&(e.properties[n]||(e.properties[n]=t[n]))},e._setDefaultProperty=function(e,t,n){e.properties[t]={value:n,pii:i.AWTPiiKind.NotSet,type:i.AWTPropertyType.String}},e._sendEvent=function(e){c.default.sendEvent(e)},e._getInternalEvent=function(e,t,n){if(e.properties=e.properties||{},n)for(var r in e.properties)e.properties.hasOwnProperty(r)&&(e.properties[r]=a.sanitizeProperty(r,e.properties[r]),null===e.properties[r]&&delete e.properties[r]);var i=e;return i.id=a.newGuid(),i.apiKey=t,i},e._getInitId=function(t){return e._initIdMap[t]},e._getSequenceId=function(t){return void 0===e._sequenceIdMap[t]&&(e._sequenceIdMap[t]=0),(++e._sequenceIdMap[t]).toString()},e._sequenceIdMap={},e._initIdMap={},e}();n.default=y},function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.AWT_REAL_TIME="REAL_TIME",t.AWT_NEAR_REAL_TIME="NEAR_REAL_TIME",t.AWT_BEST_EFFORT="BEST_EFFORT"},function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.Version="1.8.3",t.FullVersionString="AWT-Web-JS-"+t.Version},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(0);t.AWTPropertyType=r.AWTPropertyType,t.AWTPiiKind=r.AWTPiiKind,t.AWTEventPriority=r.AWTEventPriority,t.AWTEventsDroppedReason=r.AWTEventsDroppedReason,t.AWTEventsRejectedReason=r.AWTEventsRejectedReason,t.AWTCustomerContentKind=r.AWTCustomerContentKind;var i=n(6);t.AWTUserIdType=i.AWTUserIdType,t.AWTSessionState=i.AWTSessionState;var o=n(14);t.AWT_BEST_EFFORT=o.AWT_BEST_EFFORT,t.AWT_NEAR_REAL_TIME=o.AWT_NEAR_REAL_TIME,t.AWT_REAL_TIME=o.AWT_REAL_TIME;var s=n(5);t.AWTEventProperties=s.default;var a=n(13);t.AWTLogger=a.default;var l=n(11);t.AWTLogManager=l.default;var d=n(29);t.AWTTransmissionManager=d.default;var c=n(9);t.AWTSerializer=c.default;var p=n(8);t.AWTSemanticContext=p.default,t.AWT_COLLECTOR_URL_UNITED_STATES="https://us.pipe.aria.microsoft.com/Collector/3.0/",t.AWT_COLLECTOR_URL_GERMANY="https://de.pipe.aria.microsoft.com/Collector/3.0/",t.AWT_COLLECTOR_URL_JAPAN="https://jp.pipe.aria.microsoft.com/Collector/3.0/",t.AWT_COLLECTOR_URL_AUSTRALIA="https://au.pipe.aria.microsoft.com/Collector/3.0/",t.AWT_COLLECTOR_URL_EUROPE="https://eu.pipe.aria.microsoft.com/Collector/3.0/",t.AWT_COLLECTOR_URL_USGOV_DOD="https://pf.pipe.aria.microsoft.com/Collector/3.0",t.AWT_COLLECTOR_URL_USGOV_DOJ="https://tb.pipe.aria.microsoft.com/Collector/3.0"},function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var n;(function(e){e[e._BT_STOP=0]="_BT_STOP",e[e._BT_STOP_BASE=1]="_BT_STOP_BASE",e[e._BT_BOOL=2]="_BT_BOOL",e[e._BT_DOUBLE=8]="_BT_DOUBLE",e[e._BT_STRING=9]="_BT_STRING",e[e._BT_STRUCT=10]="_BT_STRUCT",e[e._BT_LIST=11]="_BT_LIST",e[e._BT_MAP=13]="_BT_MAP",e[e._BT_INT32=16]="_BT_INT32",e[e._BT_INT64=17]="_BT_INT64"})(n=t._BondDataType||(t._BondDataType={}))},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(4),o=n(19),s=n(22);t._Utf8_GetBytes=function(e){for(var t=[],n=0,r;n<e.length;++n)r=e.charCodeAt(n),128>r?t.push(r):2048>r?t.push(192|r>>6,128|63&r):55296>r||57344<=r?t.push(224|r>>12,128|63&r>>6,128|63&r):(r=65536+((1023&r)<<10|1023&e.charCodeAt(++n)),t.push(240|r>>18,128|63&r>>12,128|63&r>>6,128|63&r));return t},t._Base64_GetString=function(e){for(var t="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",n=[],r=e.length%3,o=function(e){return[t.charAt(63&e>>18),t.charAt(63&e>>12),t.charAt(63&e>>6),t.charAt(63&e)].join("")},s=0,a=e.length-r,l;s<a;s+=3)l=(e[s]<<16)+(e[s+1]<<8)+e[s+2],n.push(o(l));switch(r){case 1:var l=e[e.length-1];n.push(t.charAt(l>>2)),n.push(t.charAt(63&l<<4)),n.push("==");break;case 2:var d=(e[e.length-2]<<8)+e[e.length-1];n.push(t.charAt(d>>10)),n.push(t.charAt(63&d>>4)),n.push(t.charAt(63&d<<2)),n.push("=");}return n.join("")},t._Varint_GetBytes=function(e){for(var t=[];4294967168&e;)t.push(128|127&e),e>>>=7;return t.push(127&e),t},t._Varint64_GetBytes=function(e){for(var t=e.low,n=e.high,r=[];n||4294967168&t;)r.push(128|127&t),t=(127&n)<<25|t>>>7,n>>>=7;return r.push(127&t),r},t._Double_GetBytes=function(e){if(s.BrowserChecker._IsDataViewSupport()){var t=new DataView(new ArrayBuffer(8));t.setFloat64(0,e,!0);for(var n=[],r=0;8>r;++r)n.push(t.getUint8(r));return n}return o.FloatUtils._ConvertNumberToArray(e,!0)},t._Zigzag_EncodeZigzag32=function(e){return e=r.Number._ToInt32(e),e<<1^e>>31},t._Zigzag_EncodeZigzag64=function(e){var t=e.low,n=e.high,i=n<<1|t>>>31,o=t<<1;2147483648&n&&(i=~i,o=~o);var s=new r.UInt64("0");return s.low=o,s.high=i,s}},function(n,r){"use strict";Object.defineProperty(r,"__esModule",{value:!0});var i=function(){function n(){}return n._ConvertNumberToArray=function(n,r){if(!n)return r?this._doubleZero:this._floatZero;var o=r?11:8,s=r?52:23,a=(1<<o-1)-1,l=0>n?1:0;n=e(n);for(var d=t(n),c=n-d,p=2*(a+2)+s,g=Array(p),m=0;m<p;)g[m++]=0;for(m=a+2;m&&d;)g[--m]=d%2,d=t(d/2);for(m=a+1;m<p-1&&0<c;)c*=2,1<=c?(g[++m]=1,--c):g[++m]=0;for(var u=0;u<p&&!g[u];)u++;var y=a+1-u,T=u+s;if(g[T+1]){for(m=T;m>u&&(g[m]=1-g[m],!g);--m);m===u&&++y}if(y>a||d)return l?r?this._doubleNegInifinity:this._floatNegInifinity:r?this._doubleInifinity:this._floatInifinity;if(y<1-a)return r?this._doubleZero:this._floatZero;if(r){var I=0;for(m=0;20>m;++m)I=I<<1|g[++u];for(var f=0;52>m;++m)f=f<<1|g[++u];I|=y+a<<20,I=l<<31|2147483647&I;var C=[255&f,255&f>>8,255&f>>16,f>>>24,255&I,255&I>>8,255&I>>16,I>>>24];return C}var v=0;for(m=0;23>m;++m)v=v<<1|g[++u];v|=y+a<<23,v=l<<31|2147483647&v;var C=[255&v,255&v>>8,255&v>>16,v>>>24];return C},n._floatZero=[0,0,0,0],n._doubleZero=[0,0,0,0,0,0,0,0],n._floatInifinity=[0,0,128,127],n._floatNegInifinity=[0,0,128,255],n._doubleInifinity=[0,0,0,0,0,0,240,127],n._doubleNegInifinity=[0,0,0,0,0,0,240,255],n}();r.FloatUtils=i},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(4),i=function(){function e(){this._buffer=[]}return e.prototype._WriteByte=function(e){this._buffer.push(r.Number._ToByte(e))},e.prototype._Write=function(e,t,n){for(;n--;)this._WriteByte(e[t++])},e.prototype._GetBuffer=function(){return this._buffer},e}();t.MemoryStream=i},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(17);t._BondDataType=r._BondDataType;var i=n(18);t._Encoding=i;var o=n(20);t.IO=o;var s=n(4);t.Int64=s.Int64,t.UInt64=s.UInt64,t.Number=s.Number;var a=function(){function e(e){this._stream=e}return e.prototype._WriteBlob=function(e){this._stream._Write(e,0,e.length)},e.prototype._WriteBool=function(e){this._stream._WriteByte(e?1:0)},e.prototype._WriteContainerBegin=function(e,t){this._WriteUInt8(t),this._WriteUInt32(e)},e.prototype._WriteMapContainerBegin=function(e,t,n){this._WriteUInt8(t),this._WriteUInt8(n),this._WriteUInt32(e)},e.prototype._WriteDouble=function(e){var t=i._Double_GetBytes(e);this._stream._Write(t,0,t.length)},e.prototype._WriteFieldBegin=function(e,t){5>=t?this._stream._WriteByte(e|t<<5):255>=t?(this._stream._WriteByte(192|e),this._stream._WriteByte(t)):(this._stream._WriteByte(224|e),this._stream._WriteByte(t),this._stream._WriteByte(t>>8))},e.prototype._WriteInt32=function(e){e=i._Zigzag_EncodeZigzag32(e),this._WriteUInt32(e)},e.prototype._WriteInt64=function(e){this._WriteUInt64(i._Zigzag_EncodeZigzag64(e))},e.prototype._WriteString=function(e){if(""===e)this._WriteUInt32(0);else{var t=i._Utf8_GetBytes(e);this._WriteUInt32(t.length),this._stream._Write(t,0,t.length)}},e.prototype._WriteStructEnd=function(e){this._WriteUInt8(e?r._BondDataType._BT_STOP_BASE:r._BondDataType._BT_STOP)},e.prototype._WriteUInt32=function(e){var t=i._Varint_GetBytes(s.Number._ToUInt32(e));this._stream._Write(t,0,t.length)},e.prototype._WriteUInt64=function(e){var t=i._Varint64_GetBytes(e);this._stream._Write(t,0,t.length)},e.prototype._WriteUInt8=function(e){this._stream._WriteByte(s.Number._ToUInt8(e))},e}();t.CompactBinaryProtocolWriter=a},function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var n=function(){function e(){}return e._IsDataViewSupport=function(){return"undefined"!=typeof ArrayBuffer&&"undefined"!=typeof DataView},e}();t.BrowserChecker=n},function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var n=function(){function e(e){this.clockSkewRefreshDurationInMins=e,this._reset()}return e.prototype.allowRequestSending=function(){return this._isFirstRequest&&!this._clockSkewSet?(this._isFirstRequest=!1,this._allowRequestSending=!1,!0):this._allowRequestSending},e.prototype.shouldAddClockSkewHeaders=function(){return this._shouldAddClockSkewHeaders},e.prototype.getClockSkewHeaderValue=function(){return this._clockSkewHeaderValue},e.prototype.setClockSkew=function(e){this._clockSkewSet||(e?this._clockSkewHeaderValue=e:this._shouldAddClockSkewHeaders=!1,this._clockSkewSet=!0,this._allowRequestSending=!0)},e.prototype._reset=function(){var e=this;this._isFirstRequest=!0,this._clockSkewSet=!1,this._allowRequestSending=!0,this._shouldAddClockSkewHeaders=!0,this._clockSkewHeaderValue="use-collector-delta",0<this.clockSkewRefreshDurationInMins&&setTimeout(function(){return e._reset()},6e4*this.clockSkewRefreshDurationInMins)},e}();t.default=n},function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var n=function(){function e(){this._killedTokenDictionary={}}return e.prototype.setKillSwitchTenants=function(e,t){if(e&&t)try{var n=e.split(",");if("this-request-only"===t)return n;for(var r=1000*parseInt(t,10),o=0;o<n.length;++o)this._killedTokenDictionary[n[o]]=Date.now()+r}catch(e){return[]}return[]},e.prototype.isTenantKilled=function(e){return!!(void 0!==this._killedTokenDictionary[e]&&this._killedTokenDictionary[e]>Date.now())||(delete this._killedTokenDictionary[e],!1)},e}();t.default=n},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(0),i=function(){function e(e,t){this._outboundQueue=e,this._maxNumberOfEvents=t,this._currentBatch={},this._currentNumEventsInBatch=0}return e.prototype.addEventToBatch=function(e){if(e.priority===r.AWTEventPriority.Immediate_sync){var t={};return t[e.apiKey]=[e],t}return this._currentNumEventsInBatch>=this._maxNumberOfEvents&&this.flushBatch(),void 0===this._currentBatch[e.apiKey]&&(this._currentBatch[e.apiKey]=[]),this._currentBatch[e.apiKey].push(e),this._currentNumEventsInBatch++,null},e.prototype.flushBatch=function(){0<this._currentNumEventsInBatch&&(this._outboundQueue.push(this._currentBatch),this._currentBatch={},this._currentNumEventsInBatch=0)},e.prototype.hasBatch=function(){return 0<this._currentNumEventsInBatch},e}();t.default=i},function(e,n){"use strict";Object.defineProperty(n,"__esModule",{value:!0});var r=3e3,i=function(){function e(){}return e.shouldRetryForStatus=function(e){return!(300<=e&&500>e&&408!==e||501===e||505===e)},e.getMillisToBackoffForRetry=function(e){var n=0,i=r*.8,o=t(Math.random()*(r*1.2-i))+i;return n=Math.pow(4,e)*o,Math.min(n,12e4)},e}();n.default=i},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(0),o=n(9),s=n(26),i=n(24),a=n(23),l=n(15),d=n(1),c=n(2),p=n(3),g="POST",m=function(){function e(e,t,n,r,o){var s=this;this._requestQueue=e,this._queueManager=n,this._httpInterface=r,this._urlString="?qsp=true&content-type=application%2Fbond-compact-binary&client-id=NO_AUTH&sdk-version="+l.FullVersionString,this._killSwitch=new i.default,this._paused=!1,this._useBeacons=!1,this._activeConnections=0,this._clockSkewManager=new a.default(o),d.isUint8ArrayAvailable()||(this._urlString+="&content-encoding=base64"),this._urlString=t+this._urlString,this._httpInterface||(this._useBeacons=!d.isReactNative(),this._httpInterface={sendPOST:function(e,t,n,r,i,o){try{if(d.useXDomainRequest()){var a=new XDomainRequest;a.open(g,e),a.onload=function(){i(200,null)},a.onerror=function(){r(400,null)},a.ontimeout=function(){n(500,null)},a.send(t)}else if(d.isReactNative())fetch(e,{body:t,method:g}).then(function(e){var t={};e.headers&&e.headers.forEach(function(e,n){t[n]=e}),i(e.status,t)}).catch(function(){r(0,{})});else{var l=new XMLHttpRequest;l.open(g,e,!o),l.onload=function(){i(l.status,s._convertAllHeadersToMap(l.getAllResponseHeaders()))},l.onerror=function(){r(l.status,s._convertAllHeadersToMap(l.getAllResponseHeaders()))},l.ontimeout=function(){n(l.status,s._convertAllHeadersToMap(l.getAllResponseHeaders()))},l.send(t)}}catch(t){r(400,null)}}})}return e.prototype.hasIdleConnection=function(){return this._activeConnections<2},e.prototype.sendQueuedRequests=function(){for(;this.hasIdleConnection()&&!this._paused&&0<this._requestQueue.length&&this._clockSkewManager.allowRequestSending();)this._activeConnections++,this._sendRequest(this._requestQueue.shift(),0,!1);this.hasIdleConnection()&&p.default.scheduleTimer()},e.prototype.isCompletelyIdle=function(){return 0===this._activeConnections},e.prototype.teardown=function(){for(;0<this._requestQueue.length;)this._sendRequest(this._requestQueue.shift(),0,!0)},e.prototype.pause=function(){this._paused=!0},e.prototype.resume=function(){this._paused=!1,this.sendQueuedRequests()},e.prototype.removeQueuedRequests=function(){this._requestQueue.length=0},e.prototype.sendSynchronousRequest=function(e,t){this._paused&&(e[t][0].priority=r.AWTEventPriority.High),this._activeConnections++,this._sendRequest(e,0,!1,!0)},e.prototype._sendRequest=function(e,t,n,s){var a=this;void 0===s&&(s=!1);try{if(this._paused)return this._activeConnections--,void this._queueManager.addBackRequest(e);var l=0,p="";for(var g in e)e.hasOwnProperty(g)&&(this._killSwitch.isTenantKilled(g)?(c.default.eventsRejected(e[g],r.AWTEventsRejectedReason.KillSwitch),delete e[g]):(0<p.length&&(p+=","),p+=g,l++));if(0<l){var m=o.default.getPayloadBlob(e,l);m.remainingRequest&&this._requestQueue.push(m.remainingRequest);var u=this._urlString+"&x-apikey="+p+"&client-time-epoch-millis="+Date.now().toString();this._clockSkewManager.shouldAddClockSkewHeaders()&&(u=u+"&time-delta-to-apply-millis="+this._clockSkewManager.getClockSkewHeaderValue());var y;for(var g in y=d.isUint8ArrayAvailable()?new Uint8Array(m.payloadBlob):o.default.base64Encode(m.payloadBlob),e)if(e.hasOwnProperty(g))for(var T=0;T<e[g].length;++T)0<e[g][T].sendAttempt?e[g][T].sendAttempt++:e[g][T].sendAttempt=1;if(this._useBeacons&&n&&d.isBeaconsSupported()&&navigator.sendBeacon(u,y))return;this._httpInterface.sendPOST(u,y,function(r,i){a._retryRequestIfNeeded(r,i,e,l,p,t,n,s)},function(r,i){a._retryRequestIfNeeded(r,i,e,l,p,t,n,s)},function(r,i){a._retryRequestIfNeeded(r,i,e,l,p,t,n,s)},n||s)}else n||this._handleRequestFinished(!1,{},n,s)}catch(t){this._handleRequestFinished(!1,{},n,s)}},e.prototype._retryRequestIfNeeded=function(e,t,n,o,a,l,d,g){var m=this,u=!0;if("undefined"!=typeof e){if(t){var y=this._killSwitch.setKillSwitchTenants(t["kill-tokens"],t["kill-duration-seconds"]);this._clockSkewManager.setClockSkew(t["time-delta-millis"]);for(var T=0;T<y.length;++T)c.default.eventsRejected(n[y[T]],r.AWTEventsRejectedReason.KillSwitch),delete n[y[T]],o--}else this._clockSkewManager.setClockSkew(null);if(200===e)return void this._handleRequestFinished(!0,n,d,g);(!s.default.shouldRetryForStatus(e)||0>=o)&&(u=!1)}if(!u)this._handleRequestFinished(!1,n,d,g);else if(g)this._activeConnections--,n[a][0].priority=r.AWTEventPriority.High,this._queueManager.addBackRequest(n);else if(l<1){for(var I in n)n.hasOwnProperty(I)&&c.default.eventsRetrying(n[I]);setTimeout(function(){return m._sendRequest(n,l+1,!1)},s.default.getMillisToBackoffForRetry(l))}else this._activeConnections--,p.default.backOffTransmission(),this._queueManager.addBackRequest(n)},e.prototype._handleRequestFinished=function(e,t,n,i){for(var o in e&&p.default.clearBackOff(),t)t.hasOwnProperty(o)&&(e?c.default.eventsSent(t[o]):c.default.eventsDropped(t[o],r.AWTEventsDroppedReason.NonRetryableStatus));this._activeConnections--,i||n||this.sendQueuedRequests()},e.prototype._convertAllHeadersToMap=function(e){var t={};if(e)for(var n=e.split("\n"),r=0,o;r<n.length;++r)o=n[r].split(": "),t[o[0]]=o[1];return t},e}();t.default=m},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(0),i=n(27),o=n(3),s=n(25),a=n(2),l=n(1),d=function(){function e(e,t,n,o){this._queueSizeLimit=t,this._isCurrentlyUploadingNow=!1,this._uploadNowQueue=[],this._shouldDropEventsOnPause=!1,this._paused=!1,this._queueSize=0,this._outboundQueue=[],this._inboundQueues={},this._inboundQueues[r.AWTEventPriority.High]=[],this._inboundQueues[r.AWTEventPriority.Normal]=[],this._inboundQueues[r.AWTEventPriority.Low]=[],this._addEmptyQueues(),this._batcher=new s.default(this._outboundQueue,500),this._httpManager=new i.default(this._outboundQueue,e,this,n,o)}return e.prototype.addEvent=function(e){l.isPriority(e.priority)||(e.priority=r.AWTEventPriority.Normal),e.priority===r.AWTEventPriority.Immediate_sync?this._httpManager.sendSynchronousRequest(this._batcher.addEventToBatch(e),e.apiKey):this._queueSize<this._queueSizeLimit?this._addEventToProperQueue(e):this._dropEventWithPriorityOrLess(e.priority)?this._addEventToProperQueue(e):a.default.eventsDropped([e],r.AWTEventsDroppedReason.QueueFull)},e.prototype.sendEventsForPriorityAndAbove=function(e){this._batchEvents(e),this._httpManager.sendQueuedRequests()},e.prototype.hasEvents=function(){return(0<this._inboundQueues[r.AWTEventPriority.High][0].length||0<this._inboundQueues[r.AWTEventPriority.Normal][0].length||0<this._inboundQueues[r.AWTEventPriority.Low][0].length||this._batcher.hasBatch())&&this._httpManager.hasIdleConnection()},e.prototype.addBackRequest=function(e){if(!this._paused||!this._shouldDropEventsOnPause){for(var t in e)if(e.hasOwnProperty(t))for(var n=0;n<e[t].length;++n)e[t][n].sendAttempt<6?this.addEvent(e[t][n]):a.default.eventsDropped([e[t][n]],r.AWTEventsDroppedReason.NonRetryableStatus);o.default.scheduleTimer()}},e.prototype.teardown=function(){this._paused||(this._batchEvents(r.AWTEventPriority.Low),this._httpManager.teardown())},e.prototype.uploadNow=function(e){var t=this;this._addEmptyQueues(),this._isCurrentlyUploadingNow?this._uploadNowQueue.push(e):(this._isCurrentlyUploadingNow=!0,setTimeout(function(){return t._uploadNow(e)},0))},e.prototype.pauseTransmission=function(){this._paused=!0,this._httpManager.pause(),this.shouldDropEventsOnPause&&(this._queueSize-=this._inboundQueues[r.AWTEventPriority.High][0].length+this._inboundQueues[r.AWTEventPriority.Normal][0].length+this._inboundQueues[r.AWTEventPriority.Low][0].length,this._inboundQueues[r.AWTEventPriority.High][0]=[],this._inboundQueues[r.AWTEventPriority.Normal][0]=[],this._inboundQueues[r.AWTEventPriority.Low][0]=[],this._httpManager.removeQueuedRequests())},e.prototype.resumeTransmission=function(){this._paused=!1,this._httpManager.resume()},e.prototype.shouldDropEventsOnPause=function(e){this._shouldDropEventsOnPause=e},e.prototype._removeFirstQueues=function(){this._inboundQueues[r.AWTEventPriority.High].shift(),this._inboundQueues[r.AWTEventPriority.Normal].shift(),this._inboundQueues[r.AWTEventPriority.Low].shift()},e.prototype._addEmptyQueues=function(){this._inboundQueues[r.AWTEventPriority.High].push([]),this._inboundQueues[r.AWTEventPriority.Normal].push([]),this._inboundQueues[r.AWTEventPriority.Low].push([])},e.prototype._addEventToProperQueue=function(e){this._paused&&this._shouldDropEventsOnPause||(this._queueSize++,this._inboundQueues[e.priority][this._inboundQueues[e.priority].length-1].push(e))},e.prototype._dropEventWithPriorityOrLess=function(e){for(var t=r.AWTEventPriority.Low;t<=e;){if(0<this._inboundQueues[t][this._inboundQueues[t].length-1].length)return a.default.eventsDropped([this._inboundQueues[t][this._inboundQueues[t].length-1].shift()],r.AWTEventsDroppedReason.QueueFull),!0;t++}return!1},e.prototype._batchEvents=function(e){for(var t=r.AWTEventPriority.High;t>=e;){for(;0<this._inboundQueues[t][0].length;){var n=this._inboundQueues[t][0].pop();this._queueSize--,this._batcher.addEventToBatch(n)}t--}this._batcher.flushBatch()},e.prototype._uploadNow=function(e){var t=this;this.hasEvents()&&this.sendEventsForPriorityAndAbove(r.AWTEventPriority.Low),this._checkOutboundQueueEmptyAndSent(function(){t._removeFirstQueues(),null!==e&&void 0!==e&&e(),0<t._uploadNowQueue.length?setTimeout(function(){return t._uploadNow(t._uploadNowQueue.shift())},0):(t._isCurrentlyUploadingNow=!1,t.hasEvents()&&o.default.scheduleTimer())})},e.prototype._checkOutboundQueueEmptyAndSent=function(e){var t=this;this._httpManager.isCompletelyIdle()?e():setTimeout(function(){return t._checkOutboundQueueEmptyAndSent(e)},250)},e}();t.default=d},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=n(3),i=function(){function e(){}return e.setEventsHandler=function(e){r.default.setEventsHandler(e)},e.getEventsHandler=function(){return r.default.getEventsHandler()},e.scheduleTimer=function(){r.default.scheduleTimer()},e}();t.default=i},function(e,t,n){e.exports=n(16)}])});var Microsoft;(function(e){var t;(function(t){var n;(function(n){class r{constructor(e,t,n,r,i,o,s){this._associatedProvider=null,this._associatedProvider=e,this._tabsByTag=new Map,this._tabsByName=new Map,this._tabConfigs=new Map,this._sessionConfig=t,this._templateParams=n||null,this._correlationId=r||null,this._providerSessionId=o||null,this._conversationId=s||null,this._sessionUniqueId=i||null}get templateParams(){return this._templateParams}get sessionConfig(){return this._sessionConfig}get associatedProvider(){return this._associatedProvider}get providerSessionId(){return this._providerSessionId}get conversationId(){return this._conversationId}setTemplateParams(e){for(const t in e)this._templateParams[t]=e[t]}removeTemplateParams(e){for(let t=0;t<e.length;t++)delete this._templateParams[e[t]]}get correlationId(){return this._correlationId}get sessionUniqueId(){return this._sessionUniqueId}setTab(e,t,n,r){this._tabsByName.has(n)||this._tabsByName.set(n,[]),this._tabsByName.get(n).push(t),this._tabConfigs.set(t,e),r.forEach(function(e){this._tabsByTag.has(e)||this._tabsByTag.set(e,[]),this._tabsByTag.get(e).push(t)}.bind(this))}removeTab(e){this._tabsByName.forEach(function(t){const n=t.indexOf(e);-1<n&&t.splice(n,1)}),this._tabConfigs.delete(e),this._tabsByTag.forEach(function(t){const n=t.indexOf(e);-1<n&&t.splice(n,1)}.bind(this))}getTabsByTag(e){return this._tabsByTag.get(e)}getTabsByName(e){return this._tabsByName.get(e)}resolveTitle(e){return n.isNullOrUndefined(this._sessionConfig)?Promise.reject("No string resolver configured"):this._sessionConfig.resolveTitle(e)}resolveTabTitle(e,t){return this._tabConfigs.has(e)?this._tabConfigs.get(e).resolveTitle(t):Promise.reject("No string resolver configured")}getPanelState(){return this._sessionConfig.panelState}}n.SessionInfo=r;n.SessionManager=class{constructor(){this.sessions=new Map}getProvider(e){return this.sessions.has(e)?this.sessions.get(e).associatedProvider:null}associateTabWithSession(e,t,n,r,i){this.sessions.has(e)&&this.sessions.get(e).setTab(n,t,r,i)}disassociateTab(e,t){this.sessions.has(e)&&this.sessions.get(e).removeTab(t)}getTabsByTagOrName(e,r,i){try{if(this.sessions.has(e)){const t=Xrm.App.sessions.getSession(e).tabs.getAll();if(!n.isNullOrUndefined(t)){let o=[],s=[],a=[],l=[];return n.isNullOrUndefined(r)&&n.isNullOrUndefined(i)?(t.forEach(e=>{o.push(e.tabId)}),o):(n.isNullOrUndefined(r)||(a=this.sessions.get(e).getTabsByName(r)||[]),n.isNullOrUndefined(i)||(s=this.sessions.get(e).getTabsByTag(i)||[]),l=a.concat(s),!n.isNullOrUndefined(l)&&0<l.length&&l.forEach(e=>{void 0!==t.get(e)&&o.push(e)}),o)}}return null}catch(e){const r={reportTime:new Date().toUTCString(),errorMsg:e,errorType:n.errorTypes.GenericError,sourceFunc:t.MessageType.getTabsByTagOrName};throw r}}getPanelState(e){return this.sessions.has(e)?this.sessions.get(e).getPanelState():1}getTabsByName(e,t){return this.sessions.has(e)?this.sessions.get(e).getTabsByName(t):null}setSessionTitle(e,t){if(!this.sessions.has(e)){const t={reportTime:new Date().toUTCString(),errorMsg:"Session Id "+e+" not found",errorType:n.errorTypes.GenericError,sourceFunc:this.setSessionTitle.name};return Promise.reject(t)}const r=this.sessions.get(e);return r.resolveTitle(t).then(function(t){return Xrm.App.sessions.getSession(e).title=t,Promise.resolve(t)},function(e){return Promise.reject(e)})}setTabTitle(e,t,r){if(!this.sessions.has(e)){const t={reportTime:new Date().toUTCString(),errorMsg:"Session Id "+e+" not found",errorType:n.errorTypes.GenericError,sourceFunc:this.setSessionTitle.name};return Promise.reject(t)}const i=this.sessions.get(e);return i.resolveTabTitle(t,r).then(function(n){return this.setTabTitleInternal(e,t,n)}.bind(this),function(e){return Promise.reject(e)})}setTabTitleInternal(e,t,n){return Xrm.App.sessions.getSession(e).tabs.getTab(t).title=n,Promise.resolve(n)}updateTabContextInCurrentSession(t,n){const r=new e.CIFramework.External.CIFExternalUtilityImpl;try{r.setSessionTemplateParams(t,n)}catch(e){}}},n.GetSessionManager=function(e){return e===n.ClientType.UnifiedClient?!0===n.isConsoleAppInternal()?new n.ConsoleAppSessionManager:new n.SessionPanel:new n.ConsoleAppSessionManager}})(n=t.Internal||(t.Internal={}))})(t=e.CIFramework||(e.CIFramework={}))})(Microsoft||(Microsoft={}));var Microsoft;(function(e){var t;(function(e){var t;(function(e){class t{static resolveTemplateString(n,r,i){return new Promise((o,s)=>{if(e.isNullOrUndefined(n))return o(n);const a=new Map,l=[],d=n.match(/\{[^{]*\}|\{(?:[^{]*\{[^}]*\}[^{}]*)*\}/g);for(const c in d){const o=d[c];let s=o.substr(1,o.length-2);if(!a.has(o)){a.set(o,"");try{let d="";if((s.startsWith(e.SlugPrefix.CHANNEL_PROVIDER)||s.startsWith(e.SlugPrefix.SESSION))&&(i=t.getScopeforSlugPrefix(s,i),s=t.stripSlugPrefix(s)),r.hasOwnProperty(i)&&r[i].hasOwnProperty(s)?d=r[i][s]:r.hasOwnProperty(s)&&(d=r[s]),""===d){const n=t.getTabId(e.SlugPrefix.CURRENT_TAB),i=t.getTabId(e.SlugPrefix.ANCHOR_TAB);r[n]&&r[n].hasOwnProperty(s)?d=r[n][s]:r[i]&&r[i].hasOwnProperty(s)&&(d=r[i][s])}if(s.startsWith("$odata")){const e=s.split(".");if(4>e.length)continue;const d=new Promise((s,l)=>{const d=[t.resolveTemplateString(e[1],r,i),t.resolveTemplateString(e[2],r,i)];for(let t=3;t<e.length-1;t++)e[3]+="."+e[t+1];d.push(t.resolveTemplateString(e[3],r,i)),Promise.all(d).then(e=>{Xrm.WebApi.retrieveMultipleRecords(e[0],e[2],1).then(t=>{try{return a.set(o,t.entities[0][e[1]]),console.log("Fullfilled odata for "+o+" got value "+a.get(o)),s(a.get(o))}catch(e){return console.log("Error resolving "+n+" : "+e),l(e)}},e=>(console.log("Error resolving "+n+" : "+e),l(e)))},e=>(console.log("Error resolving "+n+" : "+e),l(e)))});l.push(d)}else a.set(o,d)}catch(e){console.log("Error resolving "+n+" : "+e)}}}Promise.all(l).then(()=>{let e=n;return a.forEach((n,r)=>{e=e.split(r).join(n||""),t.specialCharsOnly(e)&&(e="")}),o(e)},e=>(console.log("Error resolving "+n+" : "+e),s(e)))})}static resolveTemplateName(t,r){const i=new Promise(i=>{try{e.isNullOrUndefined(t)?i(new n(r,!1)):Xrm.Utility.executeFunction(t.webresourceName,t.functionName,t.parameters).then(e=>{i(new n(e,!0))},()=>{i(new n(r,!1))})}catch(e){i(new n(r,!1))}});return i}static stripSlugPrefix(t){const n=t.split(e.SlugPrefix.SPLIT_BY_DOT),r=n.length;return n[r-1]}static specialCharsOnly(e){const t=/^[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]+$/;return t.test(e)}static getScopeforSlugPrefix(n,r){if(n.startsWith(e.SlugPrefix.SESSION)){const i=n.split(e.SlugPrefix.SPLIT_BY_DOT);i[1]&&(i[1]===e.SlugPrefix.CURRENT_TAB||i[1]===e.SlugPrefix.ANCHOR_TAB)&&(r=t.getTabId(i[1]))}return r}static getTabId(t){return t===e.SlugPrefix.CURRENT_TAB?Xrm.App.sessions.getFocusedSession().tabs.getFocusedTab().tabId:Xrm.App.sessions.getFocusedSession().tabs.getAll().get(0).tabId}}e.TemplatesUtility=t;class n{constructor(e,t){this.templateName=e,this.isFoundByResolver=t}}e.TemplateNameResolverResult=n;e.StringHelper=class{static Format(e,...t){let n=e;for(let r=1;r<arguments.length;r++){const e="undefined"==typeof arguments[r]||null==arguments[r]?"":arguments[r].toString();n=n.replace(new RegExp("\\{"+(r-1)+"\\}","g"),e)}return n}}})(t=e.Internal||(e.Internal={}))})(t=e.CIFramework||(e.CIFramework={}))})(Microsoft||(Microsoft={}));var Microsoft;(function(e){var t;(function(t){var n;(function(t){class n{constructor(e,t){this._name=e,this._order=t}get name(){return this._name}get order(){return this._order}}n.ThirdPartyWebSite="ThirdPartyWebsite",n.webresource="webresource";class r{constructor(e,t,n,r,i,o,s,a){this._name=t,this._uciAppType=o,this._template=JSON.parse(s),this._templateId=e,this._title=n,this._isPinned=i,this._icon=r,this._tags=a}static InitPageTypes(){const e=new Promise((e,t)=>0<r._UCIPageTypes.size?e(!0):Xrm.WebApi.retrieveMultipleRecords("msdyn_consoleapplicationtype","?$select=msdyn_name").then(t=>{t.entities.forEach(t=>(t.msdyn_name===n.ThirdPartyWebSite&&(t.msdyn_name=n.webresource),r._UCIPageTypes.set(t.msdyn_consoleapplicationtypeid,new n(t.msdyn_name,t.msdyn_renderingorder)),e(!0)))},e=>t(e)));return e}static InitTemplates(n){return new Promise((i,o)=>{r.InitPageTypes().then(()=>0<r._appTemplates.size?i(!0):void Xrm.WebApi.retrieveMultipleRecords("msdyn_consoleapplicationtemplate","?$select=msdyn_name,msdyn_icon,msdyn_pinned,msdyn_title,_msdyn_pagetype_value,msdyn_templateparameters&$expand=msdyn_msdyn_consoleapplicationtemplate_tags($select=msdyn_name)").then(e=>(e.entities.forEach(e=>{r._appTemplates.set(e.msdyn_name,new r(e.msdyn_consoleapplicationtemplateid,e.msdyn_name,e.msdyn_title,e.msdyn_icon,e.msdyn_pinned,r._UCIPageTypes.get(e._msdyn_pagetype_value),e.msdyn_templateparameters,e.msdyn_msdyn_consoleapplicationtemplate_tags.map(e=>e.msdyn_name)))}),i(!0)),i=>{const s=t.generateErrorObject(i,"InitTemplates - Xrm.WebApi.retrieveMultipleRecords",t.errorTypes.XrmApiError);return t.logAPIFailure(r.appId,!0,s,"InitTemplates",e.CIFramework.Internal.cifVersion,"","","",n),o(i)}),e=>o(e))})}static getAppTemplateById(e){return new Promise((t,n)=>{r.InitTemplates().then(()=>{for(const[n,i]of r._appTemplates)if(e===i.templateId)return t(n);return n(new Error("No matching application template found with Id "+e))},e=>n(e))})}static getTemplate(e){return new Promise((t,n)=>{r.InitTemplates().then(()=>t(r._appTemplates.get(e)),e=>n(e))})}static convertBoolean(e){if(!e)return!1;const t=e.toLowerCase();return"0"!==t&&"no"!==t&&"false"!==t}static convertValue(e,n,i,o){try{if(t.isNullOrUndefined(e))return Promise.resolve(null);return"number"===n?Promise.resolve(+e):"boolean"===n?Promise.resolve(r.convertBoolean(e)):"json"===n?Promise.resolve(JSON.parse(e)):"string"===n?t.TemplatesUtility.resolveTemplateString(e,i,o):Promise.resolve(e)}catch(t){console.log("Parse error resolving value '"+e+"' of type '"+n+" in scope "+o),Promise.resolve(null)}}instantiateTemplate(n,i){return new Promise(function(o,s){try{const s={},a={canBeClosed:!this.isPinned};!t.isNullOrUndefined(this.title)&&0<this.title.length&&(a.title=this.title),!t.isNullOrUndefined(this.icon)&&0<this.icon.length&&(a.iconPath=this.icon),s.pageType=this.pageType;const l=[t.TemplatesUtility.resolveTemplateString(this.title,n,this.name).then(e=>(!t.isNullOrUndefined(e)&&0<e.length&&(a.title=e),Promise.resolve(e)),n=>{const o=t.generateErrorObject(n,"instantiateTemplate - TemplatesUtility.resolveTemplateString",t.errorTypes.GenericError);return t.logAPIFailure(r.appId,!0,o,"instantiateTemplate",e.CIFramework.Internal.cifVersion,"","","",i),Promise.resolve(this.title)})],d=this.name;for(const o in this.template)if(this.template.hasOwnProperty(o)){const a=this.template[o];console.log("Initiating resolution for param "+o+" for templ "+d);let c=null;n.hasOwnProperty(this.name)&&n[this.name].hasOwnProperty(o)?c=n[this.name][o]:n.hasOwnProperty(o)&&(c=n[o]);const p=a.isRuntime&&t.isNullOrUndefined(a.value)?c:a.value;l.push(r.convertValue(p,a.type,n,this.name).then(e=>(t.isNullOrUndefined(e)||(s[o]=e),console.log("Found value "+o+" for templ: "+d+" : "+e),Promise.resolve(e)),n=>{const s=t.generateErrorObject(n,"instantiateTemplate - UCIApplicationTabTemplate.convertValue",t.errorTypes.GenericError);return t.logAPIFailure(r.appId,!0,s,"instantiateTemplate",e.CIFramework.Internal.cifVersion,"","","",i),console.log("Error retrieving "+o+" for templ: "+d+" : "+n),Promise.resolve(p)}))}Promise.all(l).then(()=>(console.log("All params for templ "+d+" are done"),o({pageInput:s,options:a})),n=>{const l=t.generateErrorObject(n,"instantiateTemplate - Promise.all",t.errorTypes.GenericError);return t.logAPIFailure(r.appId,!0,l,"instantiateTemplate",e.CIFramework.Internal.cifVersion,"","","",i),console.log("All params for templ "+d+" are done with error "+n),o({pageInput:s,options:a})})}catch(e){return s(e)}})}get templateId(){return this._templateId}get name(){return this._name}get title(){return this._title}get template(){return this._template}get isPinned(){return this._isPinned}get pageType(){return this._uciAppType.name}get order(){return this._uciAppType.order}get icon(){return this._icon}get tags(){return this._tags}resolveTitle(e){if(t.isNullOrUndefined(this.title))return new Promise(t=>t(e.title));return t.isNullOrUndefined(e.title)?t.TemplatesUtility.resolveTemplateString(this.title,e,this.name):t.TemplatesUtility.resolveTemplateString(e.title,e,this.name)}}r.appId=top.location.search.split("appid=")[1].split("&")[0],r._appTemplates=new Map,r._UCIPageTypes=new Map,t.UCIApplicationTabTemplate=r;class i{constructor(n,o,s,a,l,d,c,p){this._name=o,this._templateId=n,this._title=s,this._panelState=i._panelOptionToState.get(l),this._icon=a,this._pinned=d,this._anchorTabName=c;const g=[];p.forEach(n=>{g.push(r.getTemplate(n).then(e=>Promise.resolve(e),n=>{const r=t.generateErrorObject(n,"getTemplateByTag - UCIApplicationTabTemplate.getTemplate",t.errorTypes.GenericError);return t.logAPIFailure(i.appId,!0,r,"getTemplateByTag",e.CIFramework.Internal.cifVersion),Promise.resolve(n)}))}),this._appTabs=Promise.all(g).then(e=>{const t=e.sort((e,t)=>e.order-t.order);return Promise.resolve(t)},n=>{const r=t.generateErrorObject(n,"getTemplateByTag - allApps.sort",t.errorTypes.GenericError);return t.logAPIFailure(i.appId,!0,r,"getTemplateByTag",e.CIFramework.Internal.cifVersion),Promise.reject(n)})}static InitSessionTemplates(n){return new Promise((o,s)=>{r.InitTemplates().then(()=>0<i._sessionTemplates.size?o(!0):void Xrm.WebApi.retrieveMultipleRecords("msdyn_consoleapplicationsessiontemplate","?$select=msdyn_name,msdyn_title,msdyn_icon,msdyn_panelstate,msdyn_pinned,_msdyn_anchortab_value,msdyn_renderingorder&$expand=msdyn_msdyn_consoleapplicationsessiontemp_tag($select=msdyn_name),msdyn_msdyn_consoleapplicationsessiontemplate_m($select=msdyn_name)&$orderby=msdyn_renderingorder").then(s=>{s.entities.forEach(s=>{const a=[];for(const e in s.msdyn_msdyn_consoleapplicationsessiontemplate_m)s.msdyn_msdyn_consoleapplicationsessiontemplate_m.hasOwnProperty(e)&&a.push(s.msdyn_msdyn_consoleapplicationsessiontemplate_m[e].msdyn_name);for(const o in r.getAppTemplateById(s._msdyn_anchortab_value).then(e=>{i._sessionTemplates.set(s.msdyn_name,new i(s.msdyn_consoleapplicationsessiontemplateid,s.msdyn_name,s.msdyn_title,s.msdyn_icon,s.msdyn_panelstate,s.msdyn_pinned,e,a))},r=>{const o=t.generateErrorObject(r,"InitSessionTemplates - UCIApplicationTabTemplate.getAppTemplateById",t.errorTypes.GenericError);t.logAPIFailure(i.appId,!0,o,"InitSessionTemplates",e.CIFramework.Internal.cifVersion,"","","",n)}),s.msdyn_msdyn_consoleapplicationsessiontemp_tag)if(s.msdyn_msdyn_consoleapplicationsessiontemp_tag.hasOwnProperty(o)){const e=s.msdyn_msdyn_consoleapplicationsessiontemp_tag[o].msdyn_name;i._templateBytag.has(e)||i._templateBytag.set(e,[]),i._templateBytag.get(e).push(s.msdyn_name)}return o(!0)})}),e=>s(e))})}get templateId(){return this._templateId}instantiateTemplate(n,o){return new Promise(function(s,a){r.getTemplate(this.anchorTabName).then(function(r){const a=r,l={};!1===this.canBeClosed&&(l.canBeClosed=this.canBeClosed),!t.isNullOrUndefined(this.title)&&0<this.title.length&&(l.title=this.title),!t.isNullOrUndefined(this.icon)&&0<this.icon.length&&(l.iconPath=this.icon);const d=[];let c=null;d.push(t.TemplatesUtility.resolveTemplateString(this.title,n,this.name).then(e=>(l.title=e,Promise.resolve(!0)),n=>{const r=t.generateErrorObject(n,"instantiateTemplate - TemplatesUtility.resolveTemplateString",t.errorTypes.GenericError);return t.logAPIFailure(i.appId,!0,r,"instantiateTemplate",e.CIFramework.Internal.cifVersion,"","","",o),Promise.resolve(!0)})),d.push(r.instantiateTemplate(n).then(e=>(c=e.tabInput,("entityrecord"===a._uciAppType.name.toString()||"inlinedialog"===a._uciAppType.name.toString())&&(t.isNullOrUndefined(c.data)?(c.data={},c.data.templateId=this.templateId):c.data.templateId=this.templateId),Promise.resolve(!0)),n=>{const r=t.generateErrorObject(n,"instantiateTemplate - result.instantiateTemplate",t.errorTypes.GenericError);return t.logAPIFailure(i.appId,!0,r,"instantiateTemplate",e.CIFramework.Internal.cifVersion,"","","",o),Promise.reject(n)})),Promise.all(d).then(()=>s({pageInput:c,options:l,anchorTabTemplate:a}),n=>{const r=t.generateErrorObject(n,"instantiateTemplate - Promise.all",t.errorTypes.GenericError);t.logAPIFailure(i.appId,!0,r,"instantiateTemplate",e.CIFramework.Internal.cifVersion,"","","",o)})},n=>{const r=t.generateErrorObject(n,"instantiateTemplate - UCIApplicationTabTemplate.getTemplate",t.errorTypes.GenericError);return t.logAPIFailure(i.appId,!0,r,"instantiateTemplate",e.CIFramework.Internal.cifVersion,"","","",o),a(n)})})}static getTemplateByTag(n,r){return new Promise((o,s)=>{i.InitSessionTemplates().then(()=>{try{const e=i._templateBytag.get(n)[0];return o(i._sessionTemplates.get(e))}catch(o){const a=t.generateErrorObject(o,"getTemplateByTag - UCISessionTemplate._sessionTemplates",t.errorTypes.GenericError);return t.logAPIFailure(i.appId,!0,a,"getTemplateByTag",e.CIFramework.Internal.cifVersion,"","","",r),s(new Error("Error retrieving template by tag ("+n+") : "+o))}},n=>{const o=t.generateErrorObject(n,"getTemplateByTag - UCISessionTemplate.InitSessionTemplates",t.errorTypes.GenericError);return t.logAPIFailure(i.appId,!0,o,"getTemplateByTag",e.CIFramework.Internal.cifVersion,"","","",r),s(n)})})}static getTemplateByName(e){return new Promise((n,r)=>{i.InitSessionTemplates().then(()=>{const o=i._sessionTemplates.get(e);return t.isNullOrUndefined(o)?r(new Error("Did not find template by name ("+e+")")):n(o)},t=>r(new Error("Error retrieving template by name ("+e+") : "+t)))})}get name(){return this._name}get title(){return this._title}get panelState(){return this._panelState}get icon(){return this._icon}get canBeClosed(){return!this._pinned}get anchorTabName(){return this._anchorTabName}get appTabs(){return this._appTabs}resolveTitle(e){return t.TemplatesUtility.resolveTemplateString(this.title,e,this.name)}}i._sessionTemplates=new Map,i._templateBytag=new Map,i.appId=top.location.search.split("appid=")[1].split("&")[0],i._panelOptionToState=new Map([[1e8,1],[100000001,0],[100000002,2]]),t.UCISessionTemplate=i})(n=t.Internal||(t.Internal={}))})(t=e.CIFramework||(e.CIFramework={}))})(Microsoft||(Microsoft={}));var Microsoft;(function(e){var t;(function(t){var n;(function(n){let r=!1;class i{constructor(){}static InitTemplates(){return new Promise((t,o)=>(n.isServiceWorkerSupportedInBrowser=n.isServiceWorkerSupported(),0<i._notificationTemplates.size?t(!0):void Xrm.WebApi.retrieveMultipleRecords("msdyn_consoleapplicationnotificationtemplate","?$select=msdyn_name,msdyn_showtimeout,msdyn_theme,msdyn_title,msdyn_autoacceptnotification,msdyn_notificationbuttons,msdyn_icon,msdyn_timeout,msdyn_acceptbuttontext,msdyn_rejectbuttontext,msdyn_desktopnotificationsettings&$expand=msdyn_msdyn_consoleapplicationnotificationtempl($select=msdyn_name,msdyn_lineheader,msdyn_value,msdyn_priority),msdyn_msdyn_consoleapplicationnotificationtag($select=msdyn_name)").then(o=>(o.entities.forEach(t=>{const o=new i;o.templateId=t.msdyn_consoleapplicationnotificationtemplateid,o.name=t.msdyn_name,o.title=t.msdyn_title,o.isAutoAcceptNotification=t.msdyn_autoacceptnotification,o.actionButtons=t.msdyn_notificationbuttons,o.icon=t.msdyn_icon,o.timeout=1e3*t.msdyn_timeout,o.infoFields=t.msdyn_msdyn_consoleapplicationnotificationtempl,o.desktopNotificationSettings=t.msdyn_desktopnotificationsettings,o.showTimeout=t.msdyn_showtimeout,o.theme=t.msdyn_theme,r||t.msdyn_desktopnotificationsettings!==e.CIFramework.DesktopNotificationConstants.OnlyWhenPageNotInFocus||(n.requestPermissionForDesktopNotifications(),r=!0);const s=JSON.parse(t.msdyn_notificationbuttons);o.actionButtons={};const a=[];let l=0;o.isAutoAcceptNotification&&(s.Reject_Button_Enabled=!1),a.push(t.msdyn_acceptbuttontext?t.msdyn_acceptbuttontext:s.Accept_Button_String?s.Accept_Button_String:""),o.actionButtons[i.AcceptAction]=a[l],s.Reject_Button_Enabled&&(a.push(t.msdyn_rejectbuttontext?t.msdyn_rejectbuttontext:s.Reject_Button_String?s.Reject_Button_String:""),o.actionButtons[i.RejectAction]=a[++l]),o.buttonCount=l,i._notificationTemplates.set(t.msdyn_name,o);const d=t.msdyn_msdyn_consoleapplicationnotificationtag;for(const e in d){const n=t.msdyn_msdyn_consoleapplicationnotificationtag[e].msdyn_name;i._templateBytag.has(n)||i._templateBytag.set(n,[]),i._templateBytag.get(n).push(t.msdyn_name)}}),t(!0)),e=>o(e))))}static getAppTemplateById(e){return new Promise((t,n)=>{i.InitTemplates().then(()=>{for(const[n,r]of i._notificationTemplates)if(e===r.templateId)return t(n);return n(new Error("No matching application template found with Id "+e))},e=>n(e))})}static getTemplateByTag(e){return new Promise((t,n)=>{i.InitTemplates().then(()=>{try{const n=i._templateBytag.get(e)[0];return t(i._notificationTemplates.get(n))}catch(t){return n(new Error("Error retrieving template by tag ("+e+") : "+t))}},e=>n(e))})}static getTemplate(e){return new Promise((t,n)=>{i.InitTemplates().then(()=>t(i._notificationTemplates.get(e)),e=>n(e))})}instantiateTemplate(e,r,s,a){return new Promise(function(l,d){try{const d={title:this.title,acceptAction:{eventHandler:r,actionLabel:this.actionButtons[i.AcceptAction]||t.Utility.getResourceString("ACCEPT_BUTTON_TEXT")},declineAction:{eventHandler:s,actionLabel:this.actionButtons[i.RejectAction]||t.Utility.getResourceString("REJECT_BUTTON_TEXT")},imageUrl:this.icon,details:{},type:n.isNullOrUndefined(this.actionButtons[i.RejectAction])?1:0,entityLookUpValue:null,desktopNotificationSettings:this.desktopNotificationSettings,buttonCount:this.buttonCount,themeType:this.theme};if(!n.isNullOrUndefined(this.timeout)&&0<this.timeout&&this.showTimeout===t.ShowTimeoutOption.Yes){const e={eventHandler:a,actionLabel:t.Utility.getResourceString("NOTIFICATION_DETAIL_WAIT_TIME_TEXT"),timeout:this.timeout};d.timeoutAction=e}else console.log("Timeout action not added for addpopupnotification ");const c=[n.TemplatesUtility.resolveTemplateString(this.title,e,this.name).then(e=>(d.title=e,Promise.resolve(e)),function(e){return d.title=this.title,console.log(e),Promise.reject(e)}),n.TemplatesUtility.resolveTemplateString(this.icon,e,this.name).then(e=>(d.imageUrl=e,Promise.resolve(e)),function(e){return d.imageUrl=this.icon,console.log(e),Promise.reject(e)})];if(0<this.infoFields.length){const t=[];for(const e in this.infoFields)t.push(new o(this.infoFields[e].msdyn_lineheader,this.infoFields[e].msdyn_value,this.infoFields[e].msdyn_priority));t.sort(this.compareInfoFields);const r=t.length>n.NotificationConstants.NoOfFieldsAllowedInNotification?n.NotificationConstants.NoOfFieldsAllowedInNotification:t.length,i=[],s=new Promise(function(n){this.resolveFields(t,0,r,e,this.name,i,0,r).then(function(){return this.updatePopupItemDetailswithOrderedFields(d,i),n(i)}.bind(this),function(e){return console.log(e),this.updatePopupItemDetailswithOrderedFields(d,i),n(i)}.bind(this))}.bind(this));c.push(s)}Promise.all(c).then(function(){return l(d)}.bind(this),function(){return l(d)}.bind(this))}catch(e){return d(e)}}.bind(this))}resolveFields(e,t,r,s,a,i,l,d){return new Promise(function(c){try{const p=[];for(let d=t;d<r&&d<e.length;d++){const t={index:d};p.push(n.TemplatesUtility.resolveTemplateString(e[d].value,s,a).then(function(t,r){return n.isNullOrUndefined(r)||""===r||(i.push(new o(e[t.index].lineheader,r,e[t.index].priority)),l++),Promise.resolve("Success")}.bind(this,t),function(){return Promise.resolve("Error")}.bind(this)))}Promise.all(p).then(function(){return r>=e.length||l>=d?c(l):void(l<d&&this.resolveFields(e,r,r+1,s,a,i,l,d).then(function(e){return c(e)}.bind(this)))}.bind(this),function(){return c(l)}.bind(this))}catch(e){return c(l)}}.bind(this))}updatePopupItemDetailswithOrderedFields(e,t){t.sort(this.compareInfoFields);let r=0;for(const i of t)if(e.details[i.lineheader]=i.value,r++,r===n.NotificationConstants.NoOfFieldsAllowedInNotification)return e;return e}compareInfoFields(e,t){return e.priority===t.priority?n.ComparisonResult.EQUAL:n.isNullOrUndefined(e.priority)?n.ComparisonResult.GREATER:n.isNullOrUndefined(t.priority)?n.ComparisonResult.LESSER:e.priority>t.priority?n.ComparisonResult.GREATER:n.ComparisonResult.LESSER}get templateId(){return this._templateId}set templateId(e){this._templateId=e}get name(){return this._name}set name(e){this._name=e}get isAutoAcceptNotification(){return this._isAutoAcceptNotification}set isAutoAcceptNotification(e){this._isAutoAcceptNotification=e}get title(){return this._title}set title(e){this._title=e}get actionButtons(){return this._actionButtons}set actionButtons(e){this._actionButtons=e}get icon(){return this._icon}set icon(e){this._icon=e}get timeout(){return this._timeout}set timeout(e){this._timeout=e}get showTimeout(){return this._showTimeout}set showTimeout(e){this._showTimeout=n.isNullOrUndefined(e)?t.ShowTimeoutOption.Yes:e}get theme(){return this._theme}set theme(e){this._theme=n.isNullOrUndefined(e)?t.Constants.darkTheme:100000001===e?t.Constants.lightTheme:t.Constants.darkTheme}get infoFields(){return this._infoField}set infoFields(e){this._infoField=e}get desktopNotificationSettings(){return this._desktopNotificationSettings}set desktopNotificationSettings(e){this._desktopNotificationSettings=e}get buttonCount(){return this._buttonCount}set buttonCount(e){this._buttonCount=e}}i._notificationTemplates=new Map,i._templateBytag=new Map,i.AcceptAction="100000000",i.RejectAction="100000001",n.UCINotificationTemplate=i;class o{constructor(e,t,n){this.lineheader=e,this.value=t,this.priority=n}}})(n=t.Internal||(t.Internal={}))})(t=e.CIFramework||(e.CIFramework={}))})(Microsoft||(Microsoft={}));var Microsoft;(function(e){var t;(function(t){var n;(function(n){class r extends n.SessionManager{constructor(){super(),this.sessionSwitchHandlerID=Xrm.App.sessions.addOnAfterSessionSwitch(this.onSessionSwitched.bind(this)),this.sessionCloseHandlerID=Xrm.App.sessions.addOnAfterSessionClose(this.onSessionClosed),this.sessionCreateHandlerID=Xrm.App.sessions.addOnAfterSessionCreate(this.onSessionCreated),this.sessionImageHelper=new n.SessionImageHelper,this.initPromises=[],this.initPromises.push(n.UCISessionTemplate.InitSessionTemplates()),this.initPromises.push(n.UCINotificationTemplate.InitTemplates()),this.sessionToActivityCountMap=new Map,n.registerOCApplicationTabVisibilityEvents()}onSessionSwitched(r){const i=e.CIFramework.Utility.buildMap(r.getEventArgs().getInputArguments());let o=null;const s=i.get(t.Constants.previousSessionId),a=i.get(t.Constants.newSessionId),l=n.state.sessionManager.getProvider(s),d=n.state.sessionManager.getProvider(a);null!=l&&(o=l.landingUrl),null!=d&&(o=d.landingUrl),n.state.isAnalyticsEnabledForAnyProvider&&(n.raiseSystemAnalyticsEvent(t.InternalEventName.SessionFocusOut,i,new Map().set(t.Constants.originURL,o)),n.raiseSystemAnalyticsEvent(t.InternalEventName.SessionFocusIn,i,new Map().set(t.Constants.originURL,o)));let c=!1;const p=n.state.sessionManager.sessions.get(a);n.isNullOrUndefined(p)||this.resetActivityIndicator(a),null!=l&&(n.state.client.collapseFlap(s),l!==d&&(c=!0),l.setUnfocusedSession(s,c)),null==d?n.state.client.setPanelMode("setPanelMode",t.Constants.sidePanelHiddenState):(d.setFocusedSession(a,c),n.state.client.setPanelMode("setPanelMode",n.state.sessionManager.getPanelState(a)),n.state.client.setProviderVisibility(n.state.providerManager.ciProviders,d.providerId))}onSessionClosed(r){const i=e.CIFramework.Utility.buildMap(r.getEventArgs().getInputArguments());let o=null;const s=i.get(t.Constants.sessionId),a=n.state.sessionManager.getProvider(s);null!=a&&(o=a.landingUrl),n.raiseSystemAnalyticsEvent(t.InternalEventName.SessionClosed,i,new Map().set(t.Constants.originURL,o)),n.state.client.collapseFlap(s);const l=n.state.sessionManager.sessions.get(s);if(null!=a){if(a&&a.name!==n.ChannelProvider.Omnichannel&&!0===a.enableAnalytics&&!1===a.isThirdPartyLWICreationOverridden&&n.state.isOmnichannelInstalled&&!n.isNullOrUndefined(l)){const e=new Map().set(t.Constants.entityStateCode,t.Constants.stateCodeClose).set(t.Constants.entityStatusCode,t.Constants.statusCodeClose),r=new Map().set(t.Constants.entityName,t.Constants.liveWorkItemEntity).set(t.Constants.entityId,l.conversationId).set(t.Constants.value,e).set(t.Constants.originURL,o);n.updateConversation(r)}a.closeSession(s)}}onSessionCreated(r){const i=e.CIFramework.Utility.buildMap(r.getEventArgs().getInputArguments()),o=i.get(t.Constants.newSessionId),s=n.state.sessionManager.getProvider(o);null==s?n.state.client.setPanelMode("setPanelMode",t.Constants.sidePanelHiddenState):n.state.client.setPanelMode("setPanelMode",n.state.sessionManager.getPanelState(o))}getFocusedSession(e){const t=new Date,r=Xrm.App.sessions.getFocusedSession().sessionId;return n.logApiData(e,t,Date.now()-t.getTime(),"Xrm.App.sessions.getFocusedSession"),r}isDefaultSession(e,t){const r=new Date,i=Xrm.App.sessions.getSession(e).isDefault;return n.logApiData(t,r,Date.now()-r.getTime(),"Xrm.App.sessions.getSession"),i}canCreateSession(e){const t=new Date,r=Xrm.App.sessions.canCreateSession();return n.logApiData(e,t,Date.now()-t.getTime(),"Xrm.App.sessions.canCreateSession"),r}setSessionTitle(e,t){if(!this.sessions.has(e)){const t={reportTime:new Date().toUTCString(),errorMsg:"Session Id "+e+" not found",errorType:n.errorTypes.GenericError,sourceFunc:this.setSessionTitle.name};return Promise.reject(t)}const r=this.sessions.get(e);return r.resolveTitle(t).then(function(t){const n=Xrm.App.sessions.getSession(e),r=this.sessionImageHelper.updateImageOnTitleUpdate(n,t);return n.iconPath=r.iconPath,n.iconTitle=r.iconTitle,n.title=t,Promise.resolve(t)}.bind(this),e=>Promise.reject(e))}createSession(t,r,i,o,s,a,l,d,c){const p=n.state.sessionManager.getFocusedSession();return n.state.client.collapseFlap(p),new Promise(function(i,o){const p=n.TemplatesUtility.resolveTemplateName(r.templateNameResolver,r.templateName);p.then(function(p){let g=r.templateName;p.isFoundByResolver&&!n.isNullOrUndefined(p.templateName)&&(g=p.templateName);let m=null;m=n.isNullOrUndefined(g)?n.UCISessionTemplate.getTemplateByTag(r.templateTag):n.UCISessionTemplate.getTemplateByName(g);const u=r.templateParameters;m.then(function(r){r.instantiateTemplate(u,d).then(function(p){const g=new Date,m=new Map;let y=null;p.options.isFocused=!0;const T=this.sessionImageHelper.createImageForSession(p.options.title);p.options.iconPath=T.iconPath,p.options.iconTitle=T.iconTitle,Xrm.App.sessions.createSession(p).then(function(o){n.logApiData(s,g,Date.now()-g.getTime(),"Xrm.App.sessions.createSession"),t&&t.name!==n.ChannelProvider.Omnichannel&&!0===t.enableAnalytics&&!1===t.isThirdPartyLWICreationOverridden&&n.state.isOmnichannelInstalled?(y=e.CIFramework.Utility.newGuid(),this.createLiveworkitem(t,y,l,d)):y=d,this.sessions.set(o,new n.SessionInfo(t,r,u,d,e.CIFramework.Utility.newGuid(),c,y)),n.state.client.setPanelMode("setPanelMode",r.panelState),n.state.client.setProviderVisibility(n.state.providerManager.ciProviders,t.providerId);const T={},I=Xrm.App.sessions.getSession(o).tabs.getAll().get(0).tabId;T[I]={pageType:p.pageInput.pageType,entityName:p.pageInput.entityName,entityId:p.pageInput.entityId},this.updateTabContextInCurrentSession(T,o),window.setTimeout(t.setFocusedSession.bind(t),0,o,!0),p.anchorTabTemplate.resolveTitle(u).then(function(e){n.isNullOrUndefined(e)||this.setTabTitleInternal(o,Xrm.App.sessions.getSession(o).tabs.getAll().get(0).tabId,e)}.bind(this),function(){n.isNullOrUndefined(p.anchorTabTemplate.title)||this.setTabTitleInternal(o,Xrm.App.sessions.getSession(o).tabs.getAll().get(0).tabId,p.anchorTabTemplate.title)}.bind(this)),this.associateTabWithSession(o,Xrm.App.sessions.getSession(o).tabs.getAll().get(0).tabId,p.anchorTabTemplate,r.anchorTabName,p.anchorTabTemplate.tags),m.set("sessionId",o),m.set("conversationId",y),i(m),r.appTabs.then(function(e){const t=[];e.forEach(function(e){t.push(new Promise(function(t,r){e.instantiateTemplate(u,d).then(function(n){n.options.isFocused=!1,this.createTabInternal(o,n,s).then(function(n){return this.associateTabWithSession(o,n,e,e.name,e.tags),t(n)}.bind(this),function(e){return r(e)}.bind(this))}.bind(this),function(e){const t=n.generateErrorObject(e,"ConsoleAppSessionManager - tab.instantiateTemplate",n.errorTypes.XrmApiError);return n.logAPIFailure(a,!0,t,"ConsoleAppSessionManager",l,"","","",d),r(e)}.bind(this))}.bind(this)))}.bind(this)),Promise.all(t).then(function(){return Xrm.App.sessions.getSession(o).tabs.getAll().get(0).focus()}.bind(this),function(){Xrm.App.sessions.getSession(o).tabs.getAll().get(0).focus()}.bind(this))}.bind(this),function(e){const t=n.generateErrorObject(e,"ConsoleAppSessionManager - session.appTabs",n.errorTypes.XrmApiError);n.logAPIFailure(a,!0,t,"ConsoleAppSessionManager",l,"","","",d)}.bind(this))}.bind(this),function(e){const t=n.generateErrorObject({message:e,name:"createSession"},"ConsoleAppSessionManager - Xrm.App.sessions.createSession",n.errorTypes.XrmApiError);n.logAPIFailure(a,!0,t,"ConsoleAppSessionManager",l,"","","",d),o(e)}.bind(this))}.bind(this),function(e){const t=n.generateErrorObject(e,"ConsoleAppSessionManager - session.instantiateTemplate",n.errorTypes.XrmApiError);return n.logAPIFailure(a,!0,t,"ConsoleAppSessionManager",l,"","","",d),o(e)}.bind(this))}.bind(this),function(e){const t=n.generateErrorObject(e,"ConsoleAppSessionManager - UCISessionTemplate.getTemplateByName/Tag",n.errorTypes.XrmApiError);return n.logAPIFailure(a,!0,t,"ConsoleAppSessionManager",l,"","","",d),o(e)}.bind(this))}.bind(this),e=>{const t=n.generateErrorObject(e,"ConsoleAppSessionManager - UCISessionTemplate.getTemplateByName/Tag",n.errorTypes.XrmApiError);return n.logAPIFailure(a,!0,t,"ConsoleAppSessionManager",l,"","","",d),o(e)})}.bind(this))}resetActivityIndicator(e){const t=Xrm.App.sessions.getSession(e),n=this.sessionImageHelper.getImageOptionsForActivityIndicator(t,null,!0);t.iconPath=n.iconPath,t.iconTitle=n.iconTitle}createLiveworkitem(t,r,i,o){const s={};s[n.LiveWorkItemEntity.ocLiveWorkItemId]=r,s[n.LiveWorkItemEntity.subject]=e.CIFramework.Utility.getResourceString("VISITOR_TEXT")+" : "+t.name,s[n.LiveWorkItemEntity.title]=e.CIFramework.Utility.getResourceString("VISITOR_TEXT")+" : "+t.name,s[n.LiveWorkItemEntity.activityId]=r,s[n.LiveWorkItemEntity.providerName]=r,s[n.LiveWorkItemEntity.isThirdPartyConversation]=!0,Xrm.WebApi.createRecord(n.LiveWorkItemEntity.entityName,s).then(function(e){console.log("Conversation Data record created with ID: "+e.id)},e=>{const t=n.generateErrorObject(e,"ConsoleAppSessionManager - CreateSession.createLiveworkitem/Tag",n.errorTypes.XrmApiError);n.logAPIFailure(n.appId,!0,t,"ConsoleAppSessionManager",i,"","","",o)})}requestFocusSession(e,t,r){const i=new Date;return Xrm.App.sessions.getSession(e).requestFocus(),n.logApiData(r,i,Date.now()-i.getTime(),"Xrm.App.sessions.getSession(sessionId).requestFocus"),Promise.resolve()}notifyKpiBreach(e,t,r,i){const o=Xrm.App.sessions.getSession(e),s=this.sessionImageHelper.getImageOptionsForKPIBreach(o,t,this.sessionToActivityCountMap.get(e));let a=new Date,l="Xrm.App.session.iconPath";return o.iconPath=s.iconPath,n.logApiData(i,a,Date.now()-a.getTime(),l),a=new Date,l="Xrm.App.session.iconTitle",o.iconTitle=s.iconTitle,n.logApiData(i,a,Date.now()-a.getTime(),l),Promise.resolve()}notifyNewActivity(e,t,r,i){if(isNaN(t)||0>t)return Promise.resolve();const o=Xrm.App.sessions.getFocusedSession();if(null!=o&&o.sessionId===e)return Promise.resolve();this.sessionToActivityCountMap.set(e,t);const s=Xrm.App.sessions.getSession(e);(r||null==t)&&this.sessionToActivityCountMap.has(e)&&this.sessionToActivityCountMap.delete(e);const a=this.sessionImageHelper.getImageOptionsForActivityIndicator(s,t);let l=new Date,d="Xrm.App.session.iconPath";return s.iconPath=a.iconPath,n.logApiData(i,l,Date.now()-l.getTime(),d),l=new Date,d="Xrm.App.session.iconTitle",s.iconTitle=a.iconTitle,n.logApiData(i,l,Date.now()-l.getTime(),d),Promise.resolve()}focusSession(e){return Xrm.App.sessions.getSession(e).focus(),Promise.resolve()}closeSession(e){return new Promise(function(t,n){Xrm.App.sessions.getSession(e).close().then(function(n){this.sessions.delete(e),this.sessionToActivityCountMap.has(e)&&this.sessionToActivityCountMap.delete(e),t(n)}.bind(this),e=>{n(e)})}.bind(this))}getFocusedTab(e,t){const r=new Date,i=Xrm.App.sessions.getSession(e).tabs.getFocusedTab().tabId;return n.logApiData(t,r,Date.now()-r.getTime(),"Xrm.App.sessions.getSession(sessionId).tabs.getFocusedTab"),i}createTab(t,r,i,o,s,a){return new Promise(function(l,d){let c=null;n.isNullOrUndefined(r.templateName)||(c=n.UCIApplicationTabTemplate.getTemplate(r.templateName));let p=r.templateParameters;n.isNullOrUndefined(r.templateParameters)&&(p={}),c.then(function(c){c.instantiateTemplate(p,a).then(function(n){n.options.isFocused=r.isFocused||!1,this.createTabInternal(t,n,i).then(function(n){return this.associateTabWithSession(t,n,c,c.name,c.tags),r.injectOnSave&&window.top.Xrm.Page.data.entity.addOnSave(e.CIFramework.Utility.onFormSaveHandler),l(n)}.bind(this),function(e){return d(e)}.bind(this))}.bind(this),function(e){const t=n.generateErrorObject(e,"ConsoleAppSessionManager - tab.instantiateTemplate",n.errorTypes.XrmApiError);return n.logAPIFailure(o,!0,t,"ConsoleAppSessionManager",s,"","","",a),d(e)}.bind(this))}.bind(this),function(e){const t=n.generateErrorObject(e,"ConsoleAppSessionManager - UCIApplicationTabTemplate.getTemplate",n.errorTypes.XrmApiError);n.logAPIFailure(o,!0,t,"ConsoleAppSessionManager",s,"","","",a)}.bind(this))}.bind(this))}createTabInternal(e,t,r){const i=new Date;return new Promise(function(o,s){Xrm.App.sessions.getSession(e).tabs.createTab(t).then(function(s){const a={};a.applicationType=t.pageInput.pageType,n.logApiData(r,i,Date.now()-i.getTime(),"Xrm.App.sessions.getSession(sessionId).tabs.createTab",a);const l={};l[s]={pageType:t.pageInput.pageType,entityName:t.pageInput.entityName,entityId:t.pageInput.entityId},this.updateTabContextInCurrentSession(l,e),o(s)}.bind(this),function(e){s(e)}.bind(this))}.bind(this))}focusTab(e,t,r){const i=new Date;return Xrm.App.sessions.getSession(e).tabs.getTab(t).focus(),n.logApiData(r,i,Date.now()-i.getTime(),"Xrm.App.sessions.getSession(sessionId).tabs.getTab(tabId).focus"),Promise.resolve()}closeTab(e,t){return new Promise((n,r)=>{Xrm.App.sessions.getSession(e).tabs.getTab(t).close().then(e=>{n(e)},e=>{r(e)})})}refreshTab(e,t){return new Promise((n,r)=>{Xrm.App.sessions.getSession(e).tabs.getTab(t).refresh().then(()=>{n(!0)},e=>{r(e)})})}}n.ConsoleAppSessionManager=r})(n=t.Internal||(t.Internal={}))})(t=e.CIFramework||(e.CIFramework={}))})(Microsoft||(Microsoft={}));var Internal=Microsoft.CIFramework.Internal,Microsoft;(function(e){var t;(function(e){var t;(function(t){function n(t,n){console.log(t);const r={};r.reportTime=new Date().toUTCString(),r.errorMsg=t,r.errorType=e.Internal.errorTypes.InvalidParams,r.sourceFunc=n,e.Internal.logAPIInternalInfo(e.Internal.appId,!0,r,e.MessageType.logErrorsAndReject,e.Internal.cifVersion)}t.CIFExternalUtilityImpl=class{getTemplateForSession(t){try{let r=t?t:e.Internal.state.sessionManager.getFocusedSession();let i;if(e.Internal.state.sessionManager.sessions.has(r))i=e.Internal.state.sessionManager.sessions.get(r).sessionConfig;else throw n("Please provide valid session id","CIFExternalUtility.getSessionTemplateId"),new Error("Invalid session Id");return i.templateId}catch(e){throw n("Error retrieving sessionTemplateId : "+e,"CIFExternalUtility.getTemplateForSession"),e}}getSessionTemplateParams(t){try{let r;if(r=t?t:e.Internal.state.sessionManager.getFocusedSession(),e.Internal.state.sessionManager.sessions.has(r))return e.Internal.state.sessionManager.sessions.get(r).templateParams;throw n("Please provide valid session id","CIFExternalUtility.getSessionTemplateParams"),new Error("Invalid session Id")}catch(e){throw n("Error retrieving sessionTemplateParams : "+e,"CIFExternalUtility.getSessionTemplateParams"),e}}setSessionTemplateParams(t,r){try{if(!e.Internal.isNullOrUndefined(t)){let i;if(i=r?r:e.Internal.state.sessionManager.getFocusedSession(),e.Internal.state.sessionManager.sessions.has(i))return e.Internal.state.sessionManager.sessions.get(i).setTemplateParams(t),e.Internal.state.sessionManager.sessions.get(i).templateParams;throw n("Please provide valid session id","CIFExternalUtility.setSessionTemplateParams"),new Error("Invalid session Id")}else throw n("Parameter input is required","CIFExternalUtility.setSessionTemplateParams"),new Error("Parameter required")}catch(e){throw n("Error setting sessionTemplateParams : "+e,"CIFExternalUtility.setSessionTemplateParams"),e}}resolveTemplateString(t,n,r){return e.Internal.TemplatesUtility.resolveTemplateString(t,n,r)}createTab(t){return e.Internal.state.sessionManager.createTabInternal(e.Internal.state.sessionManager.getFocusedSession(),t)}focusTab(t,r){try{return new Promise((n,i)=>{let o;o=r?r:e.Internal.state.sessionManager.getFocusedSession(),e.Internal.state.sessionManager.focusTab(o,t).then(e=>{n(e)},e=>{i(e)})})}catch(e){n("Error in focusTab : "+e,"CIFExternalUtility.focusTab"),Promise.reject(e)}}getCurrentTab(t){try{let n;return n=t?t:e.Internal.state.sessionManager.getFocusedSession(),e.Internal.state.sessionManager.getFocusedTab(n)}catch(e){throw n("Error getCurrentTab : "+e,"CIFExternalUtility.getCurrentTab"),e}}refreshTab(t,r){try{return new Promise((n,i)=>{let o;o=r?r:e.Internal.state.sessionManager.getFocusedSession(),e.Internal.state.sessionManager.refreshTab(o,t).then(e=>{n(e)},e=>{i(e)})})}catch(e){n("Error in refreshTab : "+e,"CIFExternalUtility.refreshTab"),Promise.reject(e)}}}})(t=e.External||(e.External={}))})(t=e.CIFramework||(e.CIFramework={}))})(Microsoft||(Microsoft={}));var Microsoft;(function(e){var t;(function(e){var t;(function(e){class t{}t.UnifiedClient="4",e.ClientType=t;class n{}n.SingleSession="0",n.MultiSession="1",e.SessionType=n;class r{}r.NoOfFieldsAllowedInNotification=4,e.NotificationConstants=r;var i;(function(e){e[e.EQUAL=0]="EQUAL",e[e.GREATER=1]="GREATER",e[e.LESSER=-1]="LESSER"})(i=e.ComparisonResult||(e.ComparisonResult={}));class o{}o.CHANNEL_PROVIDER="ChannelProvider",o.SESSION="Session",o.CURRENT_TAB="CurrentTab",o.ANCHOR_TAB="AnchorTab",o.SPLIT_BY_DOT=".",e.SlugPrefix=o;e.NotificationParams=class{};e.NotificationTelemetryParams=class{};class s{}s.entityName="msdyn_ocliveworkitem",s.title="msdyn_title",s.subject="subject",s.activityId="activityid",s.ocLiveWorkItemId="msdyn_ocliveworkitemid",s.providerName="msdyn_channelproviderName",s.isThirdPartyConversation="msdyn_thirdpartyconversation",e.LiveWorkItemEntity=s;class a{}a.Omnichannel="omnichannel",e.ChannelProvider=a;var l;(function(e){e[e.TOAST=1]="TOAST",e[e.MESSAGE_BAR=2]="MESSAGE_BAR"})(l=e.GlobalNotificationType||(e.GlobalNotificationType={}))})(t=e.Internal||(e.Internal={}))})(t=e.CIFramework||(e.CIFramework={}))})(Microsoft||(Microsoft={}));var Microsoft;(function(e){var t;(function(e){var t;(function(t){class n{constructor(e){this.hostIFrame=e,this.provider=null,this.visibility=!0,this.preservedHeight=0}setVisibility(e){return this.visibility=e,!0}setHeight(e){return!!this.hostIFrame&&(this.hostIFrame.height=this.visibility?0<e?e.toString():"calc(100% - 10px)":"0",!0)}static getDefaultWidth(){return e.Constants.DEFAULT_WIDGET_WIDTH.toString()}setWidth(e){return!!this.hostIFrame&&(this.preservedWidth=e,this.hostIFrame.width=this.visibility?0<e?e.toString():n.getDefaultWidth():"0",!0)}getContentWindow(){return this.hostIFrame?this.hostIFrame.contentWindow:null}setProvider(e){this.provider=e}}t.WidgetIFrameWrapper=n})(t=e.Internal||(e.Internal={}))})(t=e.CIFramework||(e.CIFramework={}))})(Microsoft||(Microsoft={}));var Microsoft;(function(e){var t;(function(e){var t;(function(e){var t;(function(e){e.apiVersion="API_Version",e.appId="App_ID",e.channelOrder="Channel_Order",e.clientType="Client_Type",e.crmVersion="CRM_Version",e.orgId="Organization_ID",e.orgName="Organization_Name",e.providerId="Provider_ID",e.providerName="Provider_Name",e.startTime="Start_Time",e.timeTaken="Time_Taken",e.apiName="API_Name",e.eventName="Event_Name",e.telemetryData="API_Perf_Markers",e.isError="Is_Error",e.errorMessage="Error_Message",e.errorType="Error_Type",e.errorReportTime="Error_Report_Time",e.errorFunction="Error_Function",e.perfTable="D365_CIF_Perf",e.usageTable="D365_CIF_Usage",e.apiUsageTable="D365_CIF_APIUsage",e.analyticsUsageTable="D365_CIFAnalytics_Usage",e.scenarioMarkerTable="D365_CIF_ScenarioMarker",e.userId="User_ID",e.CIFVersion="CIF_Version",e.customParameters="customParameters",e.navigationType="Nav_Type",e.multiSession="Multi Session",e.singleSession="Single Session",e.correlationId="correlationId",e.cifPatchVersion="cifPatchVersion",e.scenarioState="scenarioState",e.scenarioStatus="scenarioStatus",e.clientSessionId="clientSessionId"})(t=e.TelemetryConstants||(e.TelemetryConstants={}))})(t=e.Internal||(e.Internal={}))})(t=e.CIFramework||(e.CIFramework={}))})(Microsoft||(Microsoft={}));var Microsoft;(function(e){var t;(function(e){var t;(function(e){var t;(function(e){e[e.InvalidParams=0]="InvalidParams",e[e.TimeOut=1]="TimeOut",e[e.XrmApiError=2]="XrmApiError",e[e.GenericError=3]="GenericError"})(t=e.errorTypes||(e.errorTypes={}))})(t=e.Internal||(e.Internal={}))})(t=e.CIFramework||(e.CIFramework={}))})(Microsoft||(Microsoft={}));var Microsoft;(function(e){var t;(function(t){var n;(function(n){function r(){const e=o(),n=s(e);defaultLogger="Dev"===e?AWTLogManager.initialize(u,n):AWTLogManager.initialize(m,n),AWTLogManager.addNotificationListener({eventsSent:e=>{console.log("CIF Telemetry - Number of Events Sent: "+e.length)},eventsDropped:e=>{console.log("CIF Telemetry - Number of Events Dropped: "+e.length)}}),t.DesktopNotificationConstants.BroadcastChannel in self&&(C=new BroadcastChannel("desktop_notification_telemetry"),g())}function i(){let e=window.location.host;return e||(e=window.parent.location.host),e}function o(){const e=i();return e.endsWith("dod-crm.microsoftdynamics.us")?"DoD":e.endsWith("crm9.dynamics.com")||e.endsWith("crm.microsoftdynamics.us")?"GCCHigh":e.endsWith("crm.microsoftdynamics.de")?"BlackForest":e.endsWith("crm.dynamics.cn")?"MoonCake":e.endsWith("crm4.dynamics.com")?"Europe":e.endsWith("extest.microsoft.com")||e.endsWith("crm10.dynamics.com")||e.endsWith("crm.crmlivetie.com")||e.endsWith("crm2.crmlivetie.com")||e.endsWith("contoso.com:444")||e.endsWith("microsoft.com")||e.endsWith("msmecrm.com")||e.endsWith("crm.crmlivetoday.com")||e.endsWith("crm.1boxtest.com")||e.endsWith("crm.crmifd.com")||e.endsWith("msmecrm.com:444")||0===e.search("localhost")?"Dev":"Public"}function s(e){const t={disableCookiesUsage:!0};return"GCCHigh"===e?t.collectorUri=T:"DoD"===e?t.collectorUri=I:"BlackForest"===e?t.collectorUri=y:"Europe"===e?t.collectorUri=f:void 0,t}function a(){return e.CIFramework.Internal.isConsoleAppInternal()?n.TelemetryConstants.multiSession:n.TelemetryConstants.singleSession}function l(e,t,n,r,i,o,s,a,l){const d=new S(o?o:"",s?s:"",null,r,null,e?e:"",i,!!t&&t,n?n:null,a?a:"",l);p(d)}function d(e){const t=new AWTEventProperties;t.setName(n.TelemetryConstants.usageTable),t.setProperty(n.TelemetryConstants.apiVersion,e.apiVersion?e.apiVersion:""),t.setProperty(n.TelemetryConstants.appId,e.appId?e.appId:""),t.setProperty(n.TelemetryConstants.channelOrder,e.sortOrder?e.sortOrder:""),t.setProperty(n.TelemetryConstants.clientType,Xrm.Utility.getGlobalContext().client.getClient()),t.setProperty(n.TelemetryConstants.crmVersion,Xrm.Utility.getGlobalContext().getVersion()),t.setProperty(n.TelemetryConstants.orgId,Xrm.Utility.getGlobalContext().organizationSettings.organizationId),t.setProperty(n.TelemetryConstants.orgName,Xrm.Utility.getGlobalContext().organizationSettings.uniqueName),t.setProperty(n.TelemetryConstants.providerId,e.providerId?e.providerId:""),t.setProperty(n.TelemetryConstants.providerName,e.providerName?e.providerName:""),t.setProperty(n.TelemetryConstants.isError,!!e.isError&&e.isError),t.setProperty(n.TelemetryConstants.errorMessage,e.errorObject?e.errorObject.errorMsg:""),t.setProperty(n.TelemetryConstants.errorType,e.errorObject?n.errorTypes[e.errorObject.errorType]:""),t.setProperty(n.TelemetryConstants.errorReportTime,e.errorObject?e.errorObject.reportTime:""),t.setProperty(n.TelemetryConstants.errorFunction,e.errorObject?e.errorObject.sourceFunc:""),t.setProperty(n.TelemetryConstants.userId,Xrm.Utility.getGlobalContext().userSettings.userId),t.setProperty(n.TelemetryConstants.apiName,e.apiName?e.apiName:""),t.setProperty(n.TelemetryConstants.CIFVersion,e.cifVersion),t.setProperty(n.TelemetryConstants.customParameters,e.customParameters?JSON.stringify(e.customParameters):""),t.setProperty(n.TelemetryConstants.navigationType,a()),t.setProperty(n.TelemetryConstants.correlationId,e.correlationId?e.correlationId:""),t.setProperty(n.TelemetryConstants.cifPatchVersion,n.cifPatchVersion),defaultLogger.logEvent(t.getEvent())}function c(e){const t=new AWTEventProperties;t.setName(n.TelemetryConstants.scenarioMarkerTable),t.setProperty(n.TelemetryConstants.correlationId,e.correlationId),t.setProperty(n.TelemetryConstants.scenarioState,e.scenarioState),t.setProperty(n.TelemetryConstants.scenarioStatus,e.scenarioStatus),t.setProperty(n.TelemetryConstants.eventName,e.eventName),t.setProperty(n.TelemetryConstants.clientSessionId,e.clientSessionId),t.setProperty(n.TelemetryConstants.customParameters,JSON.stringify(e.customParameters)),t.setProperty(n.TelemetryConstants.clientType,Xrm.Utility.getGlobalContext().client.getClient()),t.setProperty(n.TelemetryConstants.crmVersion,Xrm.Utility.getGlobalContext().getVersion()),t.setProperty(n.TelemetryConstants.orgId,Xrm.Utility.getGlobalContext().organizationSettings.organizationId),t.setProperty(n.TelemetryConstants.orgName,Xrm.Utility.getGlobalContext().organizationSettings.uniqueName),t.setProperty(n.TelemetryConstants.userId,Xrm.Utility.getGlobalContext().userSettings.userId),t.setProperty(n.TelemetryConstants.navigationType,a()),t.setProperty(n.TelemetryConstants.cifPatchVersion,n.cifPatchVersion),defaultLogger.logEvent(t.getEvent())}function p(e){const t=new AWTEventProperties;t.setName(n.TelemetryConstants.apiUsageTable),t.setProperty(n.TelemetryConstants.apiVersion,e.apiVersion?e.apiVersion:""),t.setProperty(n.TelemetryConstants.appId,e.appId?e.appId:""),t.setProperty(n.TelemetryConstants.channelOrder,e.sortOrder?e.sortOrder:""),t.setProperty(n.TelemetryConstants.clientType,Xrm.Utility.getGlobalContext().client.getClient()),t.setProperty(n.TelemetryConstants.crmVersion,Xrm.Utility.getGlobalContext().getVersion()),t.setProperty(n.TelemetryConstants.orgId,Xrm.Utility.getGlobalContext().organizationSettings.organizationId),t.setProperty(n.TelemetryConstants.orgName,Xrm.Utility.getGlobalContext().organizationSettings.uniqueName),t.setProperty(n.TelemetryConstants.providerId,e.providerId?e.providerId:""),t.setProperty(n.TelemetryConstants.providerName,e.providerName?e.providerName:""),t.setProperty(n.TelemetryConstants.isError,!!e.isError&&e.isError),t.setProperty(n.TelemetryConstants.errorMessage,e.errorObject?e.errorObject.errorMsg:""),t.setProperty(n.TelemetryConstants.errorType,e.errorObject?n.errorTypes[e.errorObject.errorType]:""),t.setProperty(n.TelemetryConstants.errorReportTime,e.errorObject?e.errorObject.reportTime:""),t.setProperty(n.TelemetryConstants.errorFunction,e.errorObject?e.errorObject.sourceFunc:""),t.setProperty(n.TelemetryConstants.userId,Xrm.Utility.getGlobalContext().userSettings.userId),t.setProperty(n.TelemetryConstants.apiName,e.apiName?e.apiName:""),t.setProperty(n.TelemetryConstants.CIFVersion,e.cifVersion),t.setProperty(n.TelemetryConstants.customParameters,e.customParameters?JSON.stringify(e.customParameters):""),t.setProperty(n.TelemetryConstants.navigationType,a()),t.setProperty(n.TelemetryConstants.correlationId,e.correlationId?e.correlationId:""),t.setProperty(n.TelemetryConstants.cifPatchVersion,n.cifPatchVersion),defaultLogger.logEvent(t.getEvent())}function g(){C.addEventListener("message",e=>{l(n.appId,!1,null,t.MessageType.notifyEvent+"-"+e.data.notificationTelemetry.message,n.cifVersion,"","","",e.data.notificationTelemetry.correlationId)})}const m="0cd345da5c484bff8b75c696a3ac2159-3a768593-5759-4630-a59e-a75af2a7bf20-6631",u="39f156fe0f00465288756928db675fe0-fef5dc1c-14bd-4361-9259-5f10f8ef5040-7209",y="https://de.pipe.aria.microsoft.com/Collector/3.0/",T="https://tb.pipe.aria.microsoft.com/Collector/3.0/",I="https://pf.pipe.aria.microsoft.com/Collector/3.0",f="https://eu.pipe.aria.microsoft.com/Collector/3.0/";let C;n.initializeTelemetry=r,n.getNavigationType=a,n.generateErrorObject=function(t,e,n){const r={};try{r.errorMsg=t.get("message")}catch(n){r.errorMsg=t.message}return r.sourceFunc=e,r.errorType=n,r.reportTime=new Date().toUTCString(),r},n.logFailure=function(t,n,r,i,o,s,a,l,c){const p=new v(s?s:"",a?a:"",null,i,null,t?t:"",o,!!n&&n,r?r:null,l?l:"",c);return d(p),Promise.reject(e.CIFramework.Utility.createErrorMap(r.errorMsg,i))},n.logAPIFailure=function(t,n,r,i,o,s,a,l,d){const c=new S(s?s:"",a?a:"",null,i,null,t?t:"",o,!!n&&n,r?r:null,l?l:"",d);return p(c),Promise.reject(e.CIFramework.Utility.createErrorMap(r.errorMsg,i))},n.logAPIInternalInfo=l,n.logTelemetryMarker=function(e,t,n,r,i,o){const s=new _(e,t,n,r,i,o);c(s)},n.setUsageData=d,n.setScenarioMarkerData=c,n.logApiData=function(e,t,n,r,i){const o={};o.StartTime=t.toUTCString(),o.TimeTaken=n,i&&(o.AdditionalDetails=i),e&&(e[r]=o)},n.logParameterData=function(e,t,n){const r={};r.apiName=t,r.parameters=n,e&&(e[t]=r)},n.setPerfData=function(e){const t=new AWTEventProperties;t.setName(n.TelemetryConstants.perfTable),t.setProperty(n.TelemetryConstants.providerId,e.providerData.providerId?e.providerData.providerId:""),t.setProperty(n.TelemetryConstants.providerName,e.providerData.name?e.providerData.name:""),t.setProperty(n.TelemetryConstants.crmVersion,e.providerData.crmVersion?e.providerData.crmVersion:""),t.setProperty(n.TelemetryConstants.appId,e.providerData.appId?e.providerData.appId:""),t.setProperty(n.TelemetryConstants.apiVersion,e.providerData.apiVersion?e.providerData.apiVersion:""),t.setProperty(n.TelemetryConstants.orgId,Xrm.Utility.getGlobalContext().organizationSettings.organizationId),t.setProperty(n.TelemetryConstants.orgName,e.providerData.orgName?e.providerData.orgName:""),t.setProperty(n.TelemetryConstants.startTime,e.startTime?e.startTime.toUTCString():""),t.setProperty(n.TelemetryConstants.timeTaken,e.timeTaken?e.timeTaken:0),t.setProperty(n.TelemetryConstants.apiName,e.apiName?e.apiName:""),t.setProperty(n.TelemetryConstants.telemetryData,e.telemetryData?JSON.stringify(e.telemetryData):""),t.setProperty(n.TelemetryConstants.CIFVersion,e.cifVersion),t.setProperty(n.TelemetryConstants.navigationType,a()),t.setProperty(n.TelemetryConstants.correlationId,e.correlationId?e.correlationId:""),t.setProperty(n.TelemetryConstants.cifPatchVersion,n.cifPatchVersion),defaultLogger.logEvent(t.getEvent())},n.setAnalyticsAPIUsageTelemetry=function(e){const t=new AWTEventProperties;t.setName(n.TelemetryConstants.analyticsUsageTable),t.setProperty(n.TelemetryConstants.apiVersion,e.apiVersion?e.apiVersion:""),t.setProperty(n.TelemetryConstants.appId,e.appId?e.appId:""),t.setProperty(n.TelemetryConstants.channelOrder,e.sortOrder?e.sortOrder:""),t.setProperty(n.TelemetryConstants.clientType,Xrm.Utility.getGlobalContext().client.getClient()),t.setProperty(n.TelemetryConstants.crmVersion,Xrm.Utility.getGlobalContext().getVersion()),t.setProperty(n.TelemetryConstants.orgId,Xrm.Utility.getGlobalContext().organizationSettings.organizationId),t.setProperty(n.TelemetryConstants.orgName,Xrm.Utility.getGlobalContext().organizationSettings.uniqueName),t.setProperty(n.TelemetryConstants.providerId,e.providerId?e.providerId:""),t.setProperty(n.TelemetryConstants.providerName,e.providerName?e.providerName:""),t.setProperty(n.TelemetryConstants.isError,!!e.isError&&e.isError),t.setProperty(n.TelemetryConstants.errorMessage,e.errorObject?e.errorObject.errorMsg:""),t.setProperty(n.TelemetryConstants.errorType,e.errorObject?n.errorTypes[e.errorObject.errorType]:""),t.setProperty(n.TelemetryConstants.errorReportTime,e.errorObject?e.errorObject.reportTime:""),t.setProperty(n.TelemetryConstants.errorFunction,e.errorObject?e.errorObject.sourceFunc:""),t.setProperty(n.TelemetryConstants.userId,Xrm.Utility.getGlobalContext().userSettings.userId),t.setProperty(n.TelemetryConstants.apiName,e.apiName?e.apiName:""),t.setProperty(n.TelemetryConstants.eventName,e.eventName?e.eventName:""),t.setProperty(n.TelemetryConstants.CIFVersion,e.cifVersion),t.setProperty(n.TelemetryConstants.customParameters,e.customParameters?JSON.stringify(e.customParameters):""),t.setProperty(n.TelemetryConstants.navigationType,a()),t.setProperty(n.TelemetryConstants.correlationId,e.correlationId?e.correlationId:""),t.setProperty(n.TelemetryConstants.cifPatchVersion,n.cifPatchVersion),defaultLogger.logEvent(t.getEvent())},n.setAPIUsageTelemetry=p;class v{constructor(e,t,n,r,i,o,s,a,l,d,c){this.providerId=e?e:"",this.providerName=t?t:"",this.apiVersion=n?n:"",this.apiName=r?r:"",this.sortOrder=i?i:"",this.appId=o?o:"",this.isError=!!a&&a,this.errorObject=l?l:null,this.cifVersion=s?s:"",this.customParameters=d?d:"",this.correlationId=c?c:""}}n.UsageTelemetryData=v;class _{constructor(e,t,n,r,i,o){this.correlationId=e,this.scenarioState=n,this.eventName=t,this.clientSessionId=i?i:"",this.customParameters=r?r:"",this.scenarioStatus=o?o:""}}n.ScenarioMarkerTelemetryData=_;n.PerfTelemetryData=class{constructor(e,t,n,r,i,o,s){this.providerData=e?e:null,this.startTime=t?t:"",this.timeTaken=n?n:0,this.apiName=r?r:"",this.telemetryData=o?o:null,this.cifVersion=i?i:"",this.correlationId=s?s:""}};class S{constructor(e,t,n,r,i,o,s,a,l,d,c){this.providerId=e?e:"",this.providerName=t?t:"",this.apiVersion=n?n:"",this.apiName=r?r:"",this.sortOrder=i?i:"",this.appId=o?o:"",this.isError=!!a&&a,this.errorObject=l?l:null,this.cifVersion=s?s:"",this.customParameters=d?d:"",this.correlationId=c?c:""}}n.APIUsageTelemetry=S;n.AnalyticsAPIUsageTelemetry=class{constructor(e,t,n,r,i,o,s,a,l,d,c,p){this.providerId=e?e:"",this.providerName=t?t:"",this.apiVersion=n?n:"",this.apiName=r?r:"",this.eventName=i?i:"",this.sortOrder=o?o:"",this.appId=s?s:"",this.isError=!!l&&l,this.errorObject=d?d:null,this.cifVersion=a?a:"",this.customParameters=c?c:"",this.correlationId=p?p:""}}})(n=t.Internal||(t.Internal={}))})(t=e.CIFramework||(e.CIFramework={}))})(Microsoft||(Microsoft={}));var Microsoft;(function(t){var e;(function(e){var n;(function(n){n.unifiedClient=function(){const r={};return r.registerHandler=(e,t)=>(this.eventHandlers||(this.eventHandlers=new Map),t&&this.eventHandlers.set(e,t),!0),r.removeHandler=e=>{if(!this.eventHandlers)return null;const t=this.eventHandlers.get(e);return this.eventHandlers.delete(e),t},r.createRecord=(e,r,i,o)=>{if(!o){const e={errorMsg:"Need values to create for createRecord",errorType:n.errorTypes.InvalidParams,reportTime:new Date().toUTCString(),sourceFunc:"client.createRecord"};return Promise.reject(e)}let s=null;return s="string"==typeof o?JSON.parse(o):o,new Promise((r,o)=>{const a=new Date;return Xrm.WebApi.createRecord(e,t.CIFramework.Utility.buildEntity(s)).then(e=>{const o=Date.now()-a.getTime();return n.logApiData(i,a,o,"Xrm.WebApi.createRecord"),r(t.CIFramework.Utility.buildMap(e))},e=>{const t=n.generateErrorObject(e,"client.createRecord - Xrm.WebApi.createRecord",n.errorTypes.XrmApiError);return o(t)})})},r.updateRecord=(e,r,i,o)=>{if(!o){const e={errorMsg:"Need values to Update for updateRecord",errorType:n.errorTypes.InvalidParams,reportTime:new Date().toUTCString(),sourceFunc:"client.updateRecord"};return Promise.reject(e)}let s=null;return s="string"==typeof o?JSON.parse(o):o,new Promise((o,a)=>{const l=new Date;return Xrm.WebApi.updateRecord(e,r,t.CIFramework.Utility.buildEntity(s)).then(e=>{const r=Date.now()-l.getTime();return n.logApiData(i,l,r,"Xrm.WebApi.updateRecord"),o(t.CIFramework.Utility.buildMap(e))},e=>{const t=n.generateErrorObject(e,"client.updateRecord - Xrm.WebApi.updateRecord",n.errorTypes.XrmApiError);return a(t)})})},r.retrieveRecord=(e,r,i,o)=>new Promise((s,a)=>{const l=new Date;return Xrm.WebApi.retrieveRecord(e,r,o).then(e=>{const r=Date.now()-l.getTime();return n.logApiData(i,l,r,"Xrm.WebApi.retrieveRecord"),s(t.CIFramework.Utility.buildMap(e))},e=>{const t=n.generateErrorObject(e,"client.retrieveRecord - Xrm.WebApi.retrieveRecord",n.errorTypes.XrmApiError);return a(t)})}),r.getEntityMetadata=(e,r)=>{const i=r?r:null;return new Promise((r,o)=>Xrm.Utility.getEntityMetadata(e,i).then(e=>r(JSON.stringify(t.CIFramework.Utility.flattenMetadata(e))),e=>{const t=n.generateErrorObject(e,"client.getEntityMetadata - Xrm.Utility.getEntityMetadata",n.errorTypes.XrmApiError);return o(t)}))},r.deleteRecord=(e,r,i)=>new Promise((o,s)=>{const a=new Date;return Xrm.WebApi.deleteRecord(e,r).then(e=>{const r=Date.now()-a.getTime();return n.logApiData(i,a,r,"Xrm.WebApi.deleteRecord"),o(t.CIFramework.Utility.buildMap(e))},e=>{const t=n.generateErrorObject(e,"client.deleteRecord - Xrm.WebApi.deleteRecord",n.errorTypes.XrmApiError);return s(t)})}),r.sizeChanged=()=>{this.eventHandlers||(this.eventHandlers=new Map);const t=this.eventHandlers.get(e.Constants.SizeChangeHandler);if(t){const n=new Map().set(e.Constants.value,r.getWidgetWidth()),i=new CustomEvent(e.Constants.SizeChangeHandler,{detail:n});t(i)}},r.modeChanged=()=>{this.eventHandlers||(this.eventHandlers=new Map);const t=this.eventHandlers.get(e.Constants.ModeChangeHandler);if(t){const n=new Map().set(e.Constants.value,Xrm.Panel.state),r=new CustomEvent(e.Constants.ModeChangeHandler,{detail:n});t(r)}},r.navigationHandler=t=>{this.eventHandlers||(this.eventHandlers=new Map);const n=this.eventHandlers.get(e.Constants.NavigationHandler);if(n){let r="";try{const e=t.getEventArgs();r=e.pageUrl}catch(e){}const i=new Map().set(e.Constants.value,r),o=new CustomEvent(e.Constants.ModeChangeHandler,{detail:i});n(o)}},r.getUserID=()=>Xrm.Utility.getGlobalContext().userSettings.userId,r.getClientSessionId=()=>(this.clientSessionId||(this.clientSessionId=e.Utility.newGuid()),this.clientSessionId),r.loadPanel=()=>{const t=Xrm.App;return t.panels.loadPanel({pageInput:{pageType:"control",controlName:e.ProductivityPaneConfigConstants.productivityPaneControlName},replaceIfExisted:!0,width:340,position:2,state:2,showTitle:!1,canBeClosed:!1,canBeCollapsed:!0,defaultCollapsedBehavior:!1,isTitleStatic:!0})},r.loadWidgets=t=>{const i=this;let o="";if(0<t.size){const n=t.entries().next();o=n.value[1].label.toLowerCase()!==e.Constants.defaultOmnichannelLabel||n.value[1].providerId===e.Constants.defaultOmnichannelProviderId?n.value[1].label:""}const s={position:n.isConsoleAppInternal()?e.Constants.left:e.Constants.right,defaultCollapsedBehavior:!1,url:"/webresources/widgets_container.html",title:o};return n.isConsoleAppInternal()&&(s.state=e.Constants.sidePanelHiddenState),new Promise((o,a)=>Xrm.Panel.loadPanel(s).then(()=>{Xrm.Panel.addOnSizeChange(r.sizeChanged),Xrm.Panel.addOnStateChange(r.modeChanged),Xrm.Navigation.addOnPreNavigation(r.navigationHandler);const s=window.parent.document.getElementById(e.Constants.widgetIframeId),a=window.parent,l=new Map,d=s.clientHeight*(1-.9)/t.size;return s.onload=()=>{s.contentWindow.document.body.dir=window.parent.document.body.dir;const e=s.contentDocument?s.contentDocument:s.contentWindow.document,r=1===t.size;for(const[o,a]of t){const t=r?"display:block":"display:none",c=document.createElement("div");c.setAttribute("id",a.providerId),c.setAttribute("tabindex","-1"),c.setAttribute("role","tabpanel"),c.setAttribute("style","height: 100%;"+t);const p=document.createElement("iframe");p.setAttribute("allow","microphone; camera; geolocation"),p.setAttribute("sandbox","allow-forms allow-popups allow-scripts allow-same-origin allow-modals allow-downloads"),s.setAttribute("style","border-top: 1px solid;border-color: #F5F5F5;"),p.height="100%",p.width="100%",p.src=o+(a.name===n.ChannelProvider.Omnichannel?"&clientSessionId="+i.clientSessionId:""),p.allowFullscreen=!0,p.setAttribute("allowfullscreen","true"),p.setAttribute("webkitallowfullscreen","true"),p.setAttribute("mozallowfullscreen","true"),p.title=a.label,a.setContainer(new n.WidgetIFrameWrapper(p),d),c.appendChild(p),e.getElementById("widgetControlDiv").appendChild(c),l.set(a.name,!0)}},o(l)},e=>{a(e)}))},r.openKBSearchControl=()=>{try{const e=window.top.getCurrentXrm()||Xrm;return e.Page.getControl("KBSearchcontrol").setFocus(),!0}catch(e){return!1}},r.openForm=(r,i)=>{const o=JSON.parse(r),s=i?JSON.parse(i):null;if(n.isConsoleAppInternal()){const r={pageInput:{pageType:"entityrecord"},options:{isFocused:!0}};return new Promise((i,a)=>{t.CIFramework.Internal.state.sessionManager.createTabInternal(t.CIFramework.Internal.state.sessionManager.getFocusedSession(),r).then(()=>Xrm.Navigation.openForm(o,s).then(t=>i(new Map().set(e.Constants.value,t)),e=>{const t=n.generateErrorObject(e,"client.openForm - Xrm.Navigation.openForm",n.errorTypes.XrmApiError);return a(t)}),e=>{const t=n.generateErrorObject(e,"client.openForm - Xrm.Navigation.openForm",n.errorTypes.XrmApiError);Promise.reject(t)})})}return new Promise((t,r)=>{const i=window.top.getCurrentXrm()||Xrm;return i.Navigation.openForm(o,s).then(n=>t(new Map().set(e.Constants.value,n)),e=>{const t=n.generateErrorObject(e,"client.openForm - Xrm.Navigation.openForm",n.errorTypes.XrmApiError);return r(t)})})},r.openDialog=(t,r)=>{const i=JSON.parse(t),o=r?JSON.parse(r):null;return new Promise((t,r)=>{const s=window.top.getCurrentXrm()||Xrm;return s.Navigation.openConfirmDialog(i,o).then(n=>t(new Map().set(e.Constants.value,n)),e=>{const t=n.generateErrorObject(e,"client.openDialog - Xrm.Navigation.openConfirmDialog",n.errorTypes.XrmApiError);return r(t)})})},r.showGlobalNotification=(t,r)=>{const i=new Date;return new Promise((o,s)=>{const a={type:n.GlobalNotificationType.MESSAGE_BAR,level:t.level,message:t.message,showCloseButton:!!n.isNullOrUndefined(t.showCloseButton)||t.showCloseButton};if(t.actionLink&&t.actionLabel){const e={actionLabel:t.actionLabel,eventHandler(){Xrm.Navigation.openUrl(t.actionLink)}};a.action=e}const l=Xrm.App;return l.addGlobalNotification(a).then(t=>{const s=Date.now()-i.getTime();return n.logApiData(r,i,s,"Xrm.App.addGlobalNotification"),o(new Map().set(e.Constants.value,t))},e=>{console.log(e.message);const t=n.generateErrorObject(e,"client.addGlobalNotification - Xrm.App.addGlobalNotification",n.errorTypes.XrmApiError);return s(t)})})},r.clearGlobalNotification=(e,t)=>{const r=new Date;return new Promise((i,o)=>{if(""!==e)return Xrm.App.clearGlobalNotification(e).then(()=>{const e=Date.now()-r.getTime();return n.logApiData(t,r,e,"Xrm.App.clearGlobalNotification"),i()},e=>{const t=n.generateErrorObject(e,"client.clearGlobalNotification - Xrm.App.clearGlobalNotification",n.errorTypes.XrmApiError);return o(t)})})},r.refreshForm=e=>new Promise((t,r)=>{try{const i=window.top.getCurrentXrm()||Xrm,o=i.Page.data.refresh(e);return o.then(e=>t(e),e=>{const t=n.generateErrorObject(e,"client.openForm - Xrm.Navigation.openForm",n.errorTypes.XrmApiError);return r(t)})}catch(e){return r(e)}}),r.retrieveMultipleAndOpenRecords=(r,i,o,s)=>new Promise((a,l)=>{const d=new Date,c=t.CIFramework.Utility.splitQueryForSearch(i);if(1>=c[0].length){if(o){const r={errorMsg:"Error. Either the seach query is empty or searchOnly is true for search query",errorType:n.errorTypes.InvalidParams,reportTime:new Date().toUTCString(),sourceFunc:"client.retrieveMultipleAndOpenRecords"};return l(t.CIFramework.Utility.createErrorMap(r.errorMsg,e.MessageType.searchAndOpenRecords))}if(n.isConsoleAppInternal()){const e={pageInput:{pageType:"search",searchText:t.CIFramework.Utility.extractSearchText(c[1]),searchType:1,EntityNames:[r]},options:{isFocused:!0}};t.CIFramework.Internal.state.sessionManager.createTabInternal(t.CIFramework.Internal.state.sessionManager.getFocusedSession(),e)}else t.CIFramework.Utility.launchSearchPage(c[1],r);return a(new Map().set(e.Constants.value,[]))}Xrm.WebApi.retrieveMultipleRecords(r,c[0]).then(i=>{if(1===i.entities.length){const s=i.entities[0];!1===o&&Xrm.Utility.getEntityMetadata(r,null).then(e=>{const i={entityName:r,entityId:s[e.PrimaryIdAttribute]};if(n.isConsoleAppInternal()){const n={pageInput:{pageType:"entityrecord",entityName:r,entityId:s[e.PrimaryIdAttribute]},options:{isFocused:!0}};t.CIFramework.Internal.state.sessionManager.createTabInternal(t.CIFramework.Internal.state.sessionManager.getFocusedSession(),n)}else{const e=window.top.getCurrentXrm()||Xrm;e.Navigation.openForm(i)}},r=>{const i=n.generateErrorObject(r,"client.retrieveMultipleAndOpenRecords - Xrm.WebApi.retrieveMultipleRecords",n.errorTypes.XrmApiError);return l(t.CIFramework.Utility.createErrorMap(i.errorMsg,e.MessageType.searchAndOpenRecords))})}else if(!1===o)if(n.isConsoleAppInternal()){const e={pageInput:{pageType:"search",searchText:t.CIFramework.Utility.extractSearchText(c[1]),searchType:1,EntityNames:[r]},options:{isFocused:!0}};t.CIFramework.Internal.state.sessionManager.createTabInternal(t.CIFramework.Internal.state.sessionManager.getFocusedSession(),e)}else t.CIFramework.Utility.launchSearchPage(c[1],r);const p=Date.now()-d.getTime();return n.logApiData(s,d,p,"Xrm.WebApi.retrieveMultipleRecords"),a(new Map().set(e.Constants.value,i.entities))},i=>{const s=n.generateErrorObject(i,"client.retrieveMultipleAndOpenRecords - Xrm.WebApi.retrieveMultipleRecords",n.errorTypes.XrmApiError);if(!1===o)if(n.isConsoleAppInternal()){const e={pageInput:{pageType:"search",searchText:t.CIFramework.Utility.extractSearchText(c[1]),searchType:1,EntityNames:[r]},options:{isFocused:!0}};t.CIFramework.Internal.state.sessionManager.createTabInternal(t.CIFramework.Internal.state.sessionManager.getFocusedSession(),e)}else t.CIFramework.Utility.launchSearchPage(c[1],r);return l(t.CIFramework.Utility.createErrorMap(s.errorMsg,e.MessageType.searchAndOpenRecords))})}),r.setProviderVisibility=(t,n)=>{const r=window.parent.document.getElementById(e.Constants.widgetIframeId),i=r.contentDocument?r.contentDocument:r.contentWindow.document;for(const[e,r]of t){const e=i.getElementById(r.providerId);e.style.display=r.providerId===n?"block":"none"}},r.setPanelMode=(t,r,i)=>{const o=new Date;r!==e.Constants.sidePanelHiddenState||n.isConsoleAppInternal()||(r=e.Constants.sidePanelCollapsedState),Xrm.Panel.state=r;const s=Date.now()-o.getTime();return n.logApiData(i,o,s,"Xrm.Panel.setState"),r},r.setPanelPosition=(e,t,r)=>{const i=new Date;Xrm.Panel.position=t;const o=Date.now()-i.getTime();return n.logApiData(r,i,o,"Xrm.Panel.setPosition"),t},r.getPanelPosition=e=>{const t=new Date,r=Xrm.Panel.position,i=Date.now()-t.getTime();return n.logApiData(e,t,i,"Xrm.Panel.getPosition"),r},r.setWidgetWidth=(t,n)=>{const i=window.parent.document.getElementById(e.Constants.widgetIframeId),o=i.contentDocument.getElementById("sessionPanel");return r.setPanelWidth("setPanelWidth",n+o.clientWidth),n},r.setPanelWidth=(e,t,r)=>{const i=new Date;Xrm.Panel.width=t;const o=Date.now()-i.getTime();n.logApiData(r,i,o,"Xrm.Panel.setWidth")},r.getWidgetMode=e=>{const t=new Date,r=Xrm.Panel.state,i=Date.now()-t.getTime();return n.logApiData(e,t,i,"Xrm.Panel.getState"),r},r.getEnvironment=(r,i)=>{const o=new Map,s=window.top.getCurrentXrm()||Xrm;if(n.isConsoleAppInternal()&&!n.isNullOrUndefined(r)&&-1===Array.from(r.getAllSessions()).indexOf(t.CIFramework.Internal.state.sessionManager.getFocusedSession()));else try{const e=new Date,t=new URL(s.Page.getUrl()),r=Date.now()-e.getTime();n.logApiData(i,e,r,"Xrm.Page.getUrl");for(const e of t.searchParams.entries())o.set(e[0],e[1])}catch(e){}const a=new Date,l=Xrm.Utility.getGlobalContext(),d=Date.now()-a.getTime();let c=null;const p=s.Page.data;if(null!=p){const e=s.Page.data.entity;null!=e&&(c=s.Page.data.entity.getIsDirty())}return n.logApiData(i,a,d,"Xrm.Utility.getGlobalContext"),o.set(e.Constants.ClientUrl,l.getClientUrl()),o.set(e.Constants.AppUrl,l.getCurrentAppUrl()),o.set(e.Constants.OrgLcid,l.organizationSettings.languageId),o.set(e.Constants.OrgUniqueName,l.organizationSettings.uniqueName),o.set(e.Constants.OrgId,l.organizationSettings.organizationId),o.set(e.Constants.TenantId,l.organizationSettings.organizationTenant),o.set(e.Constants.UserId,l.userSettings.userId),o.set(e.Constants.UserLcid,l.userSettings.languageId),o.set(e.Constants.UserName,l.userSettings.userName),o.set(e.Constants.UserRoles,l.userSettings.securityRoles),o.set(e.Constants.crmVersion,l.getVersion()),o.set(e.Constants.cifVersion,n.cifPatchVersion),o.set(e.Constants.isDirty,c),o},r.getWidgetWidth=()=>{const t=new Date,n=window.parent.document.getElementById(e.Constants.widgetIframeId),r=n.contentDocument.getElementById("widgetArea");return void 0===r||null===r?0:r.clientWidth},r.checkCIFCapability=()=>{try{if("UnifiedServiceDesk"===window.top.Xrm.Utility.getGlobalContext().client.getClient())return!1;if(window.top.document.getElementById(e.Constants.widgetIframeId))return!1}catch(e){return!1}return!0},r.renderSearchPage=(e,r,i)=>{let o;return new Promise((s,a)=>{try{const a={pageType:"search",searchText:r,searchType:1,EntityNames:[e],EntityGroupName:""};if(n.isConsoleAppInternal()){t.CIFramework.Internal.state.sessionManager.createTabInternal(t.CIFramework.Internal.state.sessionManager.getFocusedSession(),{pageInput:a,options:{isFocused:!0}})}else{o=new Date;const e=window.top.getCurrentXrm()||Xrm;e.Navigation.navigateTo(a);const t=Date.now()-o.getTime();n.logApiData(i,o,t,"Xrm.Navigation.navigateTo")}return s()}catch(e){const t=n.generateErrorObject(e,"client.renderSearchPage - Xrm.Navigation.navigateTo",n.errorTypes.XrmApiError);return a(t)}})},r.createSession=(n,r,i,o,s)=>{const a=window.parent.document.getElementById(e.Constants.widgetIframeId),l=e.Utility.getElementFromIframe(a,e.Constants.sessionPanel);if(null==l)return;const d=new DOMParser,c=d.parseFromString("<div class=\"session flexJustify\" role=\"tab\" tabindex=\"-1\" aria-controls=\""+o+"\" aria-label=\""+r+"\" id=\""+n+"\"><div class=\"flexJustify\" id=\""+n+"UiSessionIcon\"><div class=\"iconCircle\" id=\""+n+"IconCircle\" title=\""+s+"\" style=\"background-color: "+i+";\"><span class=\"initials\">"+r+"</span></div><span class=\"uiSessionNotification\" id=\""+n+"_UiSessionNotification\" style=\"display:none\"></span></div><div id=\""+n+"CrossIcon\" class=\"flexJustify\" title=\""+s+"\" style=\"display:none\"><span class=\"symbolFont Cancel-symbol crossIconFont\"></span></div></div>","text/html"),p=c.getElementById(n);p.onclick=e=>{n===t.CIFramework.Internal.state.sessionManager.getFocusedSession()?t.CIFramework.Internal.state.sessionManager.closeSession(e.currentTarget.id.replace("CrossIcon","")):t.CIFramework.Internal.state.sessionManager.focusSession(e.currentTarget.id)},p.onkeydown=r=>{if(13===r.keyCode)n===t.CIFramework.Internal.state.sessionManager.getFocusedSession()?t.CIFramework.Internal.state.sessionManager.closeSession(r.currentTarget.id.replace("CrossIcon","")):t.CIFramework.Internal.state.sessionManager.focusSession(r.currentTarget.id);else if(37===r.keyCode){if(null!=p.previousElementSibling)p.previousElementSibling.focus();else{const t=e.Utility.getElementsByClassName(a,"session");t[t.length-1].focus()}}else if(39===r.keyCode)if(null!=p.nextElementSibling&&-1!==p.nextElementSibling.className.indexOf("session"))p.nextElementSibling.focus();else{const t=e.Utility.getElementsByClassName(a,"session");t[0].focus()}},p.onkeyup=r=>{r.altKey&&88===r.keyCode&&n===t.CIFramework.Internal.state.sessionManager.getFocusedSession()&&t.CIFramework.Internal.state.sessionManager.closeSession(event.currentTarget.id.replace("CrossIcon",""))};const g=e.Utility.getElementFromIframe(a,"sessions");g.appendChild(p),e.Utility.blinkBrowserTab(a)},r.closeSession=t=>{const n=window.parent.document.getElementById(e.Constants.widgetIframeId),r=e.Utility.getElementFromIframe(n,t);null==r||r.parentNode.removeChild(r)},r.getSessionColor=t=>{const n=window.parent.document.getElementById(e.Constants.widgetIframeId),r=e.Utility.getElementFromIframe(n,t+"IconCircle");return null==r?"":e.Utility.rgb2hex(r.style.backgroundColor)},r.updateSession=(t,n)=>{const r=window.parent.document.getElementById(e.Constants.widgetIframeId),i=e.Utility.getElementFromIframe(r,t);if(null==i)return;const o=i.getAttribute("aria-controls"),s=e.Utility.getElementFromIframe(r,o),a=e.Utility.getElementFromIframe(r,t+"UiSessionIcon"),l=e.Utility.getElementFromIframe(r,t+"_UiSessionNotification"),d=e.Utility.getElementFromIframe(r,t+"CrossIcon");n?(i.style.backgroundColor="#FFFFFF",i.style.boxShadow="8px 4px 10px rgba(102, 102, 102, 0.2)",i.setAttribute("tabindex",0),s.setAttribute("aria-labelledby",t),l.style.display="none",l.innerText="",i.focus()):(i.style.backgroundColor="transparent",i.style.boxShadow="none",i.setAttribute("tabindex",-1),s.setAttribute("aria-labelledby",""));n?(i.onmouseover=()=>{n&&(i.style.boxShadow="0px 4px 8px rgba(102, 102, 102, 0.2)",a.style.display="none",d.style.display="flex")},i.onmouseout=()=>{n&&(i.style.boxShadow="none",a.style.display="flex",d.style.display="none")}):(i.onmouseover=null,i.onmouseout=null),i.setAttribute("aria-selected",n)},r.notifySession=(t,n)=>{const r=window.parent.document.getElementById(e.Constants.widgetIframeId),i=e.Utility.getElementFromIframe(r,t+"_UiSessionNotification");null!=n&&(99<n&&(n=99),i.innerText=n),i.style.display="block",e.Utility.blinkBrowserTab(r)},r.expandFlap=t=>{if(this.flapExpanded)return 0;const n=window.parent.document.getElementById(e.Constants.widgetIframeId),i=n.contentDocument.getElementById("sessionPanel"),o=r.getWidgetWidth();return this.origWidth=o+i.clientWidth,this.flapExpanded=!0,r.registerHandler(e.Constants.CollapseFlapHandler,t),r.setPanelWidth("setPanelWidth",2*this.origWidth-i.clientWidth),n.contentDocument.documentElement.style.setProperty("--flapAreaWidth",o.toString()+"px"),this.origWidth},r.collapseFlap=t=>{if(!this.flapExpanded)return 0;const i=this.eventHandlers.get(e.Constants.CollapseFlapHandler);null!=i&&"undefined"!==i&&(n.isNullOrUndefined(t)?i():i(new CustomEvent(e.Constants.CollapseFlapHandler,{detail:{sessionId:t}}))),r.setPanelWidth("setPanelWidth",this.origWidth);const o=window.parent.document.getElementById(e.Constants.widgetIframeId);return o.contentDocument.documentElement.style.setProperty("--flapAreaWidth","0px"),this.flapExpanded=!1,this.origWidth},r.flapInUse=()=>!0===this.flapExpanded,r},n.UCIPresenceManager=function(){return{setAgentPresence:(r,i)=>{const o=new Date,s=t.CIFramework.Internal.PresenceControl.Instance.setAgentPresence(r),a=Date.now()-o.getTime();n.logApiData(i,o,a,"PresenceControl.setAgentPresence");const l=window.parent.document.getElementById(e.Constants.widgetIframeId),d=l.contentWindow.document.getElementById("CurrentStatus");if(null!=d){const e=d.firstElementChild.id;return e!==r.presenceId&&(d.innerHTML="",d.appendChild(s)),!0}return!1},initializeAgentPresenceList:(r,i)=>{const o=new Date,s=t.CIFramework.Internal.PresenceControl.Instance.setAllPresences(r),a=Date.now()-o.getTime();n.logApiData(i,o,a,"PresenceControl.initializeAgentPresenceList");const l=window.parent.document.getElementById(e.Constants.widgetIframeId),d=l.contentWindow.document.getElementById("PresenceList");return null!=d&&(d.innerHTML="",d.appendChild(s),!0)}}},n.UCIConsoleAppManager=function(){return{setAgentPresence:(r,i)=>{const o=new Date,s=Date.now()-o.getTime();n.logApiData(i,o,s,"PresenceControl.setAgentPresence");const a=window.top.document.querySelector(e.Constants.PRESENCE_BUTTON_DATA_ID),l=window.top.document.querySelector(e.Constants.PRESENCE_LIST_ID),d=r.basePresenceStatus;if(window.localStorage[e.Constants.CURRENT_PRESENCE_INFO]=JSON.stringify(r),r&&r.presenceId&&r.presenceId!==e.Constants.inactivePresenceId&&t.CIFramework.Internal.closeMissedNotificationMessageBar(),a){switch(d){case"AWAY":const t=a.getElementsByTagName("img");t[0].src="/WebResources/msdyn_Away.svg",t[0].title=e.Utility.getResourceString("PRESENCE_AWAY_TEXT"),l.title=e.Utility.getResourceString("PRESENCE_AWAY_TEXT")+"\n\n"+e.Utility.getResourceString("LAUNCH_PRESENCE_DIALOG_TOOLTIP");break;case"AVAILABLE":const n=a.getElementsByTagName("img");n[0].src="/WebResources/msdyn_Available.svg",n[0].title=e.Utility.getResourceString("PRESENCE_AVAILABLE_TEXT"),l.title=e.Utility.getResourceString("PRESENCE_AVAILABLE_TEXT")+"\n\n"+e.Utility.getResourceString("LAUNCH_PRESENCE_DIALOG_TOOLTIP");break;case"OFFLINE":const r=a.getElementsByTagName("img");r[0].src="/WebResources/msdyn_Offline.svg",r[0].title=e.Utility.getResourceString("PRESENCE_OFFLINE_TEXT"),l.title=e.Utility.getResourceString("PRESENCE_OFFLINE_TEXT")+"\n\n"+e.Utility.getResourceString("LAUNCH_PRESENCE_DIALOG_TOOLTIP");break;case"BUSY":const i=a.getElementsByTagName("img");i[0].src="/WebResources/msdyn_BusyIcon.svg",i[0].title=e.Utility.getResourceString("PRESENCE_BUSY_TEXT"),l.title=e.Utility.getResourceString("PRESENCE_BUSY_TEXT")+"\n\n"+e.Utility.getResourceString("LAUNCH_PRESENCE_DIALOG_TOOLTIP");break;case"BUSY_DO_NOT_DISTURB":const o=a.getElementsByTagName("img");o[0].src="/WebResources/msdyn_BusyDND.svg",o[0].title=e.Utility.getResourceString("PRESENCE_DO_NOT_DISTURB_TEXT"),l.title=e.Utility.getResourceString("PRESENCE_DO_NOT_DISTURB_TEXT")+"\n\n"+e.Utility.getResourceString("LAUNCH_PRESENCE_DIALOG_TOOLTIP");break;case"FAILED":const s=a.getElementsByTagName("img");s[0].src="/WebResources/msdyn_Failed.svg",s[0].title=e.Utility.getResourceString("PRESENCE_FAILED_TEXT"),l.title=e.Utility.getResourceString("PRESENCE_FAILED_TEXT")+"\n\n"+e.Utility.getResourceString("LAUNCH_PRESENCE_DIALOG_TOOLTIP");break;default:const c=a.getElementsByTagName("img");c[0].title=e.Utility.getResourceString("PRESENCE_BUTTON_TEXT"),l.title=e.Utility.getResourceString("PRESENCE_UNKOWN_TEXT");}return!0}return!1},initializeAgentPresenceList:(t,r)=>{const i=new Date,o=Date.now()-i.getTime();return n.logApiData(r,i,o,"PresenceControl.initializeAgentPresenceList"),window.localStorage[e.Constants.GLOBAL_PRESENCE_LIST]=JSON.stringify(t),!0}}}})(n=e.Internal||(e.Internal={}))})(e=t.CIFramework||(t.CIFramework={}))})(Microsoft||(Microsoft={}));var Microsoft;(function(e){var t;(function(t){var n;(function(t){t.postMsgWrapper=class{constructor(e,n,r,i){this.pendingPromises=new Map,this.messageHandlers=new Map,this.responseTargetWindow=null,e&&(e.removeEventListener(t.messageConstant,this.processMessage.bind(this)),e.addEventListener(t.messageConstant,this.processMessage.bind(this))),this.listWhitelistedDomains=n,r&&(this.messageHandlers=r),this.responseTargetWindow=i}addHandler(e,t){this.messageHandlers.has(e)?this.messageHandlers.get(e).add(t):this.messageHandlers.set(e,new Set().add(t))}getHandlers(e){return this.messageHandlers.has(e)?this.messageHandlers.get(e):null}removeHandler(e,t){this.messageHandlers.has(e)&&this.messageHandlers.get(e).delete(t)}getCorrelationId(){return(Math.random()+1).toString(36).substring(7)}createDeferred(n){const r={promise:null,resolve:null,reject:null,timerId:null},i=new Promise((e,t)=>{r.resolve=e,r.reject=t}),o=[i];if(!n){const n=new Promise((n,i)=>{r.timerId=setTimeout(()=>{i(e.CIFramework.Utility.createErrorMap("Timeout occurred as no response was received from listener window"))},t.promiseTimeOut)});o.push(n)}return r.promise=Promise.race(o).then(e=>(r.timerId&&clearTimeout(r.timerId),this.removePromise(r),e)).catch(e=>{throw r.timerId&&clearTimeout(r.timerId),this.removePromise(r),e}),r}removePromise(e){let t=null;for(const[n,r]of this.pendingPromises)if(r===e){t=n;break}t&&this.pendingPromises.delete(t)}postMsg(e,n,r,i,o){if(e&&"*"!==r){const i=this.createDeferred(o),s=this.getCorrelationId(),a=n;return a[t.messageCorrelationId]=s,this.pendingPromises.set(s,i),this.postMsgInternal(e,a,r,i)}return t.rejectWithErrorMessage("Receiving window or targetOrigin cannot be unspecified")}postMsgInternal(e,n,r,i){for(let o=0;;)try{return e.postMessage(n,r),i?i.promise:void 0}catch(e){if(++o===t.retryCount)return t.rejectWithErrorMessage("Not able to post the request to receiving window after multiple tries.")}}sendResponseMsg(e,t,n){e&&"*"!==n&&e.postMessage(t,n)}processMessage(n){try{const r=this.responseTargetWindow||n.source,i=this.listWhitelistedDomains.find(e=>{const t=new URL(n.origin),r=decodeURIComponent(t.hostname);let i="",o;return(null!=e&&(o=new URL(e),i=decodeURIComponent(o.hostname)),""!==i&&i===r)||!!(null!=e&&i.startsWith("*"))&&r.endsWith(i.substr(2))}),o=n.data[t.messageCorrelationId];let s=null,a;if(n.origin&&"*"!==n.origin&&n.source||(s=e.CIFramework.Utility.createErrorMap("Origin/Source of the message cant be null or all")),i||(s=e.CIFramework.Utility.createErrorMap("Sender domain is not a recognised or is invalid and hence the message cant be processed")),!o){if(s)return void console.trace("Ignoring message from unknown event source: "+n.origin);}else if(s)return a={messageOutcome:t.messageFailure,messageData:s,messageCorrelationId:o},this.sendResponseMsg(r,a,n.origin);let l;if(o&&this.pendingPromises&&(l=this.pendingPromises.get(o)),!l){const s=n.data;if("string"!=typeof s.messageData&&s.messageData.set(t.originURL,i),!this.messageHandlers.get(s.messageType))return void(o&&(a={messageOutcome:t.messageSuccess,messageData:e.CIFramework.Utility.createErrorMap("No handlers found to process the request."),messageCorrelationId:o},this.sendResponseMsg(r,a,n.origin)));this.messageHandlers.get(s.messageType).forEach(i=>{try{i(s.messageData).then(function(e){o&&(a={messageOutcome:t.messageSuccess,messageData:e,messageCorrelationId:o},this.sendResponseMsg(r,a,n.origin))}.bind(this),function(e){o&&(a={messageOutcome:t.messageFailure,messageData:e,messageCorrelationId:o},this.sendResponseMsg(r,a,n.origin))}.bind(this))}catch(i){o&&(a={messageOutcome:t.messageFailure,messageData:e.CIFramework.Utility.buildMap(i),messageCorrelationId:o},this.sendResponseMsg(r,a,n.origin))}})}else{const e=n.data;e.messageOutcome===t.messageSuccess?l.resolve(e.messageData):l.reject(e.messageData)}}catch(t){console.error("Error in PostMsgWrapper - processMessage. "+t)}}}})(n=t.postMessageNamespace||(t.postMessageNamespace={}))})(t=e.CIFramework||(e.CIFramework={}))})(Microsoft||(Microsoft={}));var Microsoft;(function(e){var t;(function(t){var n;(function(n){n.ProviderManager=class{constructor(e,t,n){this._client=e,this.ciProviders=new Map,this.ciProviders.set(t,n),this._defaultProvider=n}addProvider(e,t){this.ciProviders.set(e,t),n.isNullOrUndefined(this._activeProvider)&&(this._activeProvider=t)}setActiveProvider(e){this._activeProvider=e}getActiveProvider(){return this._activeProvider||this._defaultProvider}};n.CIProvider=class{constructor(e,n,r){this._state=n,this.name=e[t.Constants.nameParameter],this.providerId=e[t.Constants.providerId],this.label=e[t.Constants.label],this.landingUrl=e[t.Constants.landingUrl],this.clickToAct=e[t.Constants.clickToActAttributeName],this._widgetContainer=null,this.sortOrder=e[t.Constants.SortOrder],this.apiVersion=e[t.Constants.APIVersion],this.trustedDomain=e[t.Constants.trustedDomain],this.customParams=e[t.Constants.customParams],this.orgId=r.orgId,this.orgName=r.orgName,this.crmVersion=r.crmVersion,this.appId=r.appId,this.sessions=new Map,this.enableAnalytics=e[t.Constants.enableAnalyticsAttributeName]}raiseEvent(n,r,i){const o={messageType:r,messageData:JSON.stringify(e.CIFramework.Utility.buildEntity(n))};switch(r){case t.MessageType.onClickToAct:if(!this.clickToAct)return Promise.resolve(new Map().set(t.Constants.value,!1));}return this.getContainer()?this._state.messageLibrary.postMsg(this.getContainer().getContentWindow(),o,this.trustedDomain||this.landingUrl,!0,i):Promise.resolve(new Map().set(t.Constants.value,!1))}getContainer(){return this._widgetContainer}setContainer(e,t){this._widgetContainer=e,this._minimizedHeight=t}getAllSessions(){return Array.from(this.sessions.keys())}getFocusedSession(e){const t=this._state.sessionManager.getFocusedSession(e);return-1!==Array.from(this.sessions.keys()).indexOf(t)||this._state.sessionManager.isDefaultSession(t,e)?t:null}getSession(e){if(!this.sessions.has(e)){const r={reportTime:new Date().toUTCString(),errorMsg:"Session with ID:"+e+" does not exist",errorType:n.errorTypes.GenericError,sourceFunc:t.MessageType.getSession};return Promise.reject(r)}const r=this.sessions.get(e);return Promise.resolve(new Map().set("sessionId",e).set("focused",r.focused).set("context",r.context).set("conversationId",r.conversationId))}canCreateSession(e){return this._state.sessionManager.canCreateSession(e)}createSession(e,r,i,o,s,a,l){const d={notesDetails:new Map,resolve:null,reject:null};return new Promise(function(c,p){this._state.sessionManager.createSession(this,e,r,i,o,s,a,l).then(function(t){const n={sessionId:t.get("sessionId"),input:e,context:r,customerName:i,notesInfo:d,focused:!0,conversationId:t.get("conversationId")};this.sessions.set(t.get("sessionId"),n),c(t.get("sessionId"))}.bind(this),e=>{const r={};r.reportTime=new Date().toUTCString(),r.errorMsg=e,r.errorType=n.errorTypes.GenericError,r.sourceFunc=t.MessageType.createSession,p(r)})}.bind(this))}requestFocusSession(e,r,i){if(!this.sessions.has(e)){const r={reportTime:new Date().toUTCString(),errorMsg:"Session with ID:"+e+" does not exist",errorType:n.errorTypes.GenericError,sourceFunc:t.MessageType.requestFocusSession};return Promise.reject(r)}return new Promise(function(o,s){this._state.sessionManager.requestFocusSession(e,r,i).then(()=>{o()},e=>{const r={};r.reportTime=new Date().toUTCString(),r.errorMsg=e,r.errorType=n.errorTypes.GenericError,r.sourceFunc=t.MessageType.requestFocusSession,s(r)})}.bind(this))}notifyKpiBreach(e,r,i,o){if(!this.sessions.has(e)){const r={reportTime:new Date().toUTCString(),errorMsg:"Session with ID:"+e+" does not exist",errorType:n.errorTypes.GenericError,sourceFunc:t.MessageType.notifyKpiBreach};return Promise.reject(r)}return new Promise(function(s,a){this._state.sessionManager.notifyKpiBreach(e,r,i,o).then(()=>{s()},e=>{const r={};r.reportTime=new Date().toUTCString(),r.errorMsg=e,r.errorType=n.errorTypes.GenericError,r.sourceFunc=t.MessageType.notifyKpiBreach,a(r)})}.bind(this))}notifyNewActivity(e,r,i,o){if(!this.sessions.has(e)){const r={reportTime:new Date().toUTCString(),errorMsg:"Session with ID:"+e+" does not exist",errorType:n.errorTypes.GenericError,sourceFunc:t.MessageType.notifyNewActivity};return Promise.reject(r)}return new Promise(function(s,a){this._state.sessionManager.notifyNewActivity(e,r,i,o).then(()=>{s()},e=>{const r={};r.reportTime=new Date().toUTCString(),r.errorMsg=e,r.errorType=n.errorTypes.GenericError,r.sourceFunc=t.MessageType.notifyNewActivity,a(r)})}.bind(this))}setFocusedSession(e,n){this.sessions.get(e).focused=!0,this.raiseEvent(new Map().set("sessionId",e).set("focused",!0).set("context",this.sessions.get(e).context),t.MessageType.onSessionSwitched),n&&this._state.providerManager.setActiveProvider(this)}setUnfocusedSession(e,n){this.sessions.get(e).focused=!1,this.raiseEvent(new Map().set("sessionId",e).set("focused",!1).set("context",this.sessions.get(e).context),t.MessageType.onSessionSwitched),n&&this._state.providerManager.setActiveProvider(null)}closeSession(e){this.raiseEvent(new Map().set("sessionId",e).set("context",this.sessions.get(e).context),t.MessageType.onSessionClosed),this.sessions.delete(e)}getFocusedTab(e){const t=this.getFocusedSession();return null==t?null:this._state.sessionManager.getFocusedTab(t,e)}getTabsByTagOrName(e,t){const n=this.getFocusedSession();if(null==n)return Promise.reject("Session not in focus");try{const r=this._state.sessionManager.getTabsByTagOrName(n,e,t);return Promise.resolve(r)}catch(e){return Promise.reject(e)}}refreshTab(e){const r=this.getFocusedSession();if(null==r){const e={reportTime:new Date().toUTCString(),errorMsg:t.Constants.sessionNotValidErrorMessage,errorType:n.errorTypes.GenericError,sourceFunc:t.MessageType.refreshTab};return Promise.reject(e)}return new Promise(function(i,o){this._state.sessionManager.refreshTab(r,e).then(e=>{i(e)},e=>{const r={};r.reportTime=new Date().toUTCString(),r.errorMsg=e,r.errorType=n.errorTypes.GenericError,r.sourceFunc=t.MessageType.refreshTab,o(r)})}.bind(this))}setSessionTitle(e){const r=e.sessionId&&e.sessionId||this.getFocusedSession();if(null==r){const e={reportTime:new Date().toUTCString(),errorMsg:t.Constants.sessionNotValidErrorMessage,errorType:n.errorTypes.GenericError,sourceFunc:t.MessageType.setSessionTitle};return Promise.reject(e)}if(!this.sessions.has(r)){const e={reportTime:new Date().toUTCString(),errorMsg:"Session with ID:"+r+" does not exist",errorType:n.errorTypes.GenericError,sourceFunc:t.MessageType.setSessionTitle};return Promise.reject(e)}return new Promise(function(i,o){this._state.sessionManager.setSessionTitle(r,e).then(e=>{i(e)},e=>{const r={};r.reportTime=new Date().toUTCString(),r.errorMsg=e,r.errorType=n.errorTypes.GenericError,r.sourceFunc=t.MessageType.setSessionTitle,o(r)})}.bind(this))}setTabTitle(e,r){const i=this.getFocusedSession();if(null==i){const e={reportTime:new Date().toUTCString(),errorMsg:t.Constants.sessionNotValidErrorMessage,errorType:n.errorTypes.GenericError,sourceFunc:t.MessageType.setSessionTitle};return Promise.reject(e)}return new Promise(function(o,s){this._state.sessionManager.setTabTitle(i,e,r).then(e=>{o(e)},e=>{const r={};r.reportTime=new Date().toUTCString(),r.errorMsg=e,r.errorType=n.errorTypes.GenericError,r.sourceFunc=t.MessageType.setSessionTitle,s(r)})}.bind(this))}createTab(e,r,i,o,s){const a=this.getFocusedSession();if(null==a){const e={reportTime:new Date().toUTCString(),errorMsg:t.Constants.sessionNotValidErrorMessage,errorType:n.errorTypes.GenericError,sourceFunc:t.MessageType.createTab};return Promise.reject(e)}return new Promise(function(l,d){this._state.sessionManager.createTab(a,e,r,i,o,s).then(e=>{l(e)},e=>{const r={};r.reportTime=new Date().toUTCString(),r.errorMsg=e,r.errorType=n.errorTypes.GenericError,r.sourceFunc=t.MessageType.createTab,d(r)})}.bind(this))}focusTab(e,r){const i=this.getFocusedSession();if(null==i){const e={reportTime:new Date().toUTCString(),errorMsg:t.Constants.sessionNotValidErrorMessage,errorType:n.errorTypes.GenericError,sourceFunc:t.MessageType.focusTab};return Promise.reject(e)}return new Promise(function(o,s){this._state.sessionManager.focusTab(i,e,r).then(()=>{o()},e=>{const r={};r.reportTime=new Date().toUTCString(),r.errorMsg=e,r.errorType=n.errorTypes.GenericError,r.sourceFunc=t.MessageType.focusTab,s(r)})}.bind(this))}}})(n=t.Internal||(t.Internal={}))})(t=e.CIFramework||(e.CIFramework={}))})(Microsoft||(Microsoft={}));var Microsoft;(function(e){var t;(function(e){class t{constructor(e){this._queue=e||[]}enqueue(e){this._queue.push(e)}dequeue(){return this._queue.shift()}clearImmediate(){this._queue=[]}removeItem(e){this._queue.splice(e,1)}getItemAtIndex(e){return this._queue[e]}get count(){return this._queue.length}}e.Queue=t})(t=e.CIFramework||(e.CIFramework={}))})(Microsoft||(Microsoft={}));var Microsoft;(function(e){var t;(function(t){var n;(function(n){n.launchZFPNotificationFromTemplate=function(r,i,o,s){return new Promise(function(a){const l=n.isIFrameNullOrUndefined("SidePanelIFrame"),d=n.TemplatesUtility.resolveTemplateName(o,r);d.then(function(o){o.isFoundByResolver&&!n.isNullOrUndefined(o.templateName)&&(r=o.templateName);let d=null;d=n.UCINotificationTemplate.getTemplate(r),d.then(function(r){const o=r.showTimeout,d=r.timeout,c=function(r){const d=new Map().set(e.CIFramework.Constants.value,new Map().set(e.CIFramework.Constants.actionName,e.CIFramework.Constants.Accept).set(e.CIFramework.Constants.responseReason,r?t.ResponseReason.AutoAcceptOnTimeout:t.ResponseReason.AutoAccept)),c=i.originURL;return Xrm.Internal.clearPopupNotification(n.closeId),n.clearDesktopNotification(l,s),n.resetAndCloseMissedNotificationMessageBar(),n.closeId="",n.IsPlatformNotificationTimeoutInfra&&o!==t.ShowTimeoutOption.No||clearTimeout(n.displayedNotificationTimer),console.log("[NotifyEventFromTemplate] Notification Auto Accepted. Timer cleared"),r?n.logInfoToTelemetry("[NotifyEventFromTemplate] Notification Auto Accepted on Timeout",s):n.logInfoToTelemetry("[NotifyEventFromTemplate] Notification Opened by Agent with Auto Accept setting On",s),n.raiseSystemAnalyticsEvent(t.InternalEventName.NotificationAutoAccepted,d,new Map().set(t.Constants.correlationId,s).set(t.AnalyticsConstants.notificationResponseAction,t.AnalyticsConstants.acceptNotificationResponse).set(t.Constants.originURL,c)),n.showPopUpNotification(),a(d)}.bind(this),p=function(){const r=new Map().set(e.CIFramework.Constants.value,new Map().set(e.CIFramework.Constants.actionName,e.CIFramework.Constants.Accept).set(e.CIFramework.Constants.responseReason,t.ResponseReason.Accept)),d=i.originURL;return Xrm.Internal.clearPopupNotification(n.closeId),n.clearDesktopNotification(l,s),n.resetAndCloseMissedNotificationMessageBar(),n.closeId="",n.IsPlatformNotificationTimeoutInfra&&o!==t.ShowTimeoutOption.No||clearTimeout(n.displayedNotificationTimer),console.log("[NotifyEventFromTemplate] Notification accepted. Timer cleared"),n.logInfoToTelemetry("[NotifyEventFromTemplate] Notification Accepted on Agent Accept",s),n.raiseSystemAnalyticsEvent(t.InternalEventName.NotificationAccepted,r,new Map().set(t.Constants.correlationId,s).set(t.AnalyticsConstants.notificationResponseAction,t.AnalyticsConstants.acceptNotificationResponse).set(t.Constants.originURL,d)),n.showPopUpNotification(),a(r)}.bind(this),g=function(){const r=new Map().set(e.CIFramework.Constants.value,new Map().set(e.CIFramework.Constants.actionName,e.CIFramework.Constants.Reject).set(e.CIFramework.Constants.responseReason,t.ResponseReason.DeclinedByAgent)),d=i.originURL;return Xrm.Internal.clearPopupNotification(n.closeId),n.clearDesktopNotification(l,s),n.resetAndCloseMissedNotificationMessageBar(),n.closeId="",n.IsPlatformNotificationTimeoutInfra&&o!==t.ShowTimeoutOption.No||clearTimeout(n.displayedNotificationTimer),console.log("[NotifyEventFromTemplate] Notification rejected.Timer cleared"),n.logInfoToTelemetry("[NotifyEventFromTemplate] Notification Rejected on Agent Decline",s),n.raiseSystemAnalyticsEvent(t.InternalEventName.NotificationRejected,r,new Map().set(t.Constants.correlationId,s).set(t.AnalyticsConstants.notificationResponseAction,t.AnalyticsConstants.rejectNotificationResponse).set(t.Constants.originURL,d)),n.showPopUpNotification(),a(r)}.bind(this);!l&&n.isServiceWorkerSupportedInBrowser&&(window.top.frames.SidePanelIFrame.contentWindow.setHandler("accept",p,s),window.top.frames.SidePanelIFrame.contentWindow.setHandler("reject",g,s));const m=function(){if(r.isAutoAcceptNotification)return c(!0);const o=new Map().set(e.CIFramework.Constants.value,new Map().set(e.CIFramework.Constants.actionName,e.CIFramework.Constants.Timeout).set(e.CIFramework.Constants.responseReason,t.ResponseReason.DisplayTimeout).set(e.CIFramework.Constants.globalMissedNotificationMessageBarId,n.globalMissedNotificationMessageBarId)),d=i.originURL;return Xrm.Internal.clearPopupNotification(n.closeId),n.clearDesktopNotification(l,s),n.closeId="",console.log("[NotifyEventFromTemplate] Notification rejected due to timeout"),n.logInfoToTelemetry("[NotifyEventFromTemplate] Notification Rejected on display timeout",s),n.raiseSystemAnalyticsEvent(t.InternalEventName.NotificationTimedOut,o,new Map().set(t.Constants.correlationId,s).set(t.Constants.originURL,d)),n.showPopUpNotification(),a(o)}.bind(this),u=function(){return console.log("Hidden TimeoutHandler: Notification rejected due to timeout - Custom Timer"),m()}.bind(this),y=()=>{const r=new Map().set(e.CIFramework.Constants.value,new Map().set(e.CIFramework.Constants.actionName,e.CIFramework.Constants.Timeout).set(e.CIFramework.Constants.responseReason,t.ResponseReason.RejectAfterTimeoutNonPlatformTimer).set(e.CIFramework.Constants.globalMissedNotificationMessageBarId,n.globalMissedNotificationMessageBarId));return Xrm.Internal.clearPopupNotification(n.closeId),n.clearDesktopNotification(l,s),n.closeId="",clearTimeout(n.displayedNotificationTimer),console.log("[NotifyEventFromTemplate] Notification Timed out. Rejecting..."),n.logInfoToTelemetry("[NotifyEventFromTemplate] Notification Rejected on Display Timeout",s),n.showPopUpNotification(),a(r)};if(n.queue.count>=n.maxNotificationCount){const r=new Map().set(e.CIFramework.Constants.value,new Map().set(e.CIFramework.Constants.actionName,e.CIFramework.Constants.Reject).set(e.CIFramework.Constants.responseReason,t.ResponseReason.NotificationQueueLimitExceeded));return console.log("[NotifyEventFromTemplate] Queue has "+n.queue.count+" items. Rejecting new Incoming..."),n.logInfoToTelemetry("[NotifyEventFromTemplate] Notification Rejected as queue is full",s),a(r)}const T=()=>{const r=new Map().set(e.CIFramework.Constants.value,new Map().set(e.CIFramework.Constants.actionName,e.CIFramework.Constants.Reject).set(e.CIFramework.Constants.responseReason,t.ResponseReason.NotificationQueueTimeLimitExceeded));return console.log("[NotifyEventFromTemplate] Queue item timeout or addpopupNotification failed. Rejecting notification..."),n.logInfoToTelemetry("[NotifyEventFromTemplate] Notification Rejected QueueTimeout or addpopupNotification failed",s),a(r)};r.instantiateTemplate(i,r.isAutoAcceptNotification?c:p,g,m,s).then(e=>{let t=n.IsPlatformNotificationTimeoutInfra?e:{title:e.title,acceptAction:e.acceptAction,declineAction:e.declineAction,details:e.details,type:e.type,imageUrl:e.imageUrl};const r=n.isNullOrUndefined(d)?0:d,i={popUpNotificationItem:t,notificationCreatedAt:Date.now(),notificationExpiryTime:r,queueTimeOutMethod:T,timeOutMethod:y,correlationId:s,hiddenTimeoutMethod:u};n.queue.enqueue(i),n.logInfoToTelemetry("[NotifyEventFromTemplate] Notification Queued",s),console.log("[NotifyEventFromTemplate] Queued new notification. queue length - "+n.queue.count),n.interval||(console.log("[NotifyEventFromTemplate] starting interval to check for expired notifications in queue"),n.interval=setInterval(()=>{n.removeExpiredNotificationsFromQueue()},1e3)),""===n.closeId&&1===n.queue.count&&(console.log("[NotifyEventFromTemplate] calling show popup notification closeid = empty"),n.show())},r=>{const i=new Map().set(e.CIFramework.Constants.value,new Map().set(e.CIFramework.Constants.actionName,e.CIFramework.Constants.Reject).set(e.CIFramework.Constants.responseReason,t.ResponseReason.NotificationTemplateNotFoundError));return console.log("[NotifyEventFromTemplate] Notification Template not found. Rejecting notification. Error: "+r),n.logInfoToTelemetry("[NotifyEventFromTemplate] Notification Template not found."+r,s),a(i)})})}.bind(this),r=>{const i=new Map().set(e.CIFramework.Constants.value,new Map().set(e.CIFramework.Constants.actionName,e.CIFramework.Constants.Reject).set(e.CIFramework.Constants.responseReason,t.ResponseReason.NotificationTemplateResolverNotFoundError));return console.log("[NotifyEventFromTemplate] Notification Template name/ resolver not found. Rejecting notification. Error: "+r),n.logInfoToTelemetry("[NotifyEventFromTemplate] Notification Template not found."+r,s),a(i)})})}})(n=t.Internal||(t.Internal={}))})(t=e.CIFramework||(e.CIFramework={}))})(Microsoft||(Microsoft={}));var Microsoft;(function(e){var t;(function(t){var n;(function(n){function r(e){return Object.keys(e[0])[0]}function i(e,i,l){if((-1!==i.search(_.Chat)||-1!==i.search(_.Twitter)||-1!==i.search(_.Custom)||-1!==i.search(_.SMS)||-1!==i.search(_.Facebook))&&-1!==l[0].search(t.MessageType.notification)){const t=r(e);if(!n.isNullOrUndefined(t))return t+" "+e[0][t][0]}else{if((-1!==i.search(_.Chat)||-1!==i.search(_.Twitter)||-1!==i.search(_.Custom)||-1!==i.search(_.SMS)||-1!==i.search(_.Facebook))&&-1!==l[0].search(t.MessageType.softNotification))return e[0];if(-1!==i.search(_.Informational)&&(s(l)||a(l)||o(l)))return e[0]}return""}function o(e){return 2===e.length&&-1!==e[0].search(t.MessageType.softNotification)&&-1!==e[1].search(_.Chat)}function s(e){return 2===e.length&&-1!==e[1].search(_.Informational)}function a(e){return 2===e.length&&-1!==e[1].search(_.Failure)}function l(e,i,l,d){let c="";if((-1!==i.search(_.Chat)||-1!==i.search(_.Twitter)||-1!==i.search(_.Custom)||-1!==i.search(_.SMS)||-1!==i.search(_.Facebook))&&-1!==l[0].search(t.MessageType.notification)){c=r(e);const i={};return i[t.Utility.getResourceString("NOTIFICATION_DETAIL_COMMENT_TEXT")]=e[0][c],n.IsPlatformNotificationTimeoutInfra||(i[t.Utility.getResourceString("NOTIFICATION_DETAIL_WAIT_TIME_TEXT")]=d.toString()+" "+t.Utility.getResourceString("NOTIFICATION_WAIT_TIME_SECONDS")),i}return-1!==i.search(_.Informational)&&o(l)?(c=r(e),e[0][c]):-1!==i.search(_.Informational)&&(s(l)||a(l))?e:""}function d(e,n){if(-1!==e.search(_.Chat)&&-1!==n[0].search(t.MessageType.notification))return"/webresources/msdyn_chat_icon_zfp.svg";return-1!==e.search(_.SMS)&&-1!==n[0].search(t.MessageType.notification)?"/webresources/msdyn_sms_icon_zfp.svg":-1!==e.search(_.Facebook)&&-1!==n[0].search(t.MessageType.notification)?"/webresources/msdyn_facebook_icon_zfp.svg":-1!==e.search(_.Twitter)&&-1!==n[0].search(t.MessageType.notification)?"/webresources/msdyn_twitter_icon_zfp.svg":-1!==e.search(_.Custom)&&-1!==n[0].search(t.MessageType.notification)?"/webresources/msdyn_custom_icon_zfp.svg":(-1!==e.search(_.Chat)||-1!==e.search(_.SMS)||-1!==e.search(_.Custom)||-1!==e.search(_.Twitter)||-1!==e.search(_.Facebook))&&-1!==n[0].search(t.MessageType.softNotification)?"/webresources/msdyn_entity_icon_zfp.svg":void 0}function c(e,n){if((-1!==e.search(_.Chat)||-1!==e.search(_.SMS)||-1!==e.search(_.Twitter)||-1!==e.search(_.Custom)||-1!==e.search(_.Facebook))&&-1!==n[0].search(t.MessageType.notification))return t.Utility.getResourceString("ACCEPT_BUTTON_TEXT");return(-1!==e.search(_.Chat)||-1!==e.search(_.Twitter)||-1!==e.search(_.Custom)||-1!==e.search(_.SMS)||-1!==e.search(_.Facebook))&&-1!==n[0].search(t.MessageType.softNotification)?t.Utility.getResourceString("OPEN_ITEM_BUTTON_TEXT"):void 0}function p(e,t,n){Xrm.UI.addGlobalNotification(1,e,t+". "+n,null,null,null).then(()=>{},()=>{console.error("Failed to show notification")})}function g(r,g,y,C,S,h,A){const P=n.isIFrameNullOrUndefined("SidePanelIFrame");let E=!1,N=!1,b=0;if(null!=S&&"undefined"!==S)for(b=0;b<S.length;b++)for(const e in S[b])-1!==e.search(_.actionType)&&(-1!==S[b][e].search(_.Accept)&&(E=!0),-1!==S[b][e].search(_.Reject)&&(N=!0));return new Promise(function(S){const b=i(r,C,y),F=l(g,C,y,h/1e3);let M=0;const w=d(C,y);if(-1!==C.search(_.Informational)&&s(y)){p(1,b,F);const t=new Map().set(e.CIFramework.Constants.value,new Map().set(e.CIFramework.Constants.actionName,e.CIFramework.Constants.Accept));return S(t)}if(-1!==C.search(_.Informational)&&a(y)){p(2,b,F);const t=new Map().set(e.CIFramework.Constants.value,new Map().set(e.CIFramework.Constants.actionName,e.CIFramework.Constants.Accept));return S(t)}if(-1!==C.search(_.Informational)&&o(y)){p(4,b,F);const t=new Map().set(e.CIFramework.Constants.value,new Map().set(e.CIFramework.Constants.actionName,e.CIFramework.Constants.Accept));return S(t)}M=E&&N?0:1;const U=function(){const r=n.state.providerManager.getActiveProvider(),i=new Map().set(e.CIFramework.Constants.value,new Map().set(e.CIFramework.Constants.actionName,e.CIFramework.Constants.Accept).set(_.originURL,r.landingUrl).set(e.CIFramework.Constants.responseReason,t.ResponseReason.Accept));return Xrm.Internal.clearPopupNotification(n.closeId),n.closeId="",f(P,A),v(),n.IsPlatformNotificationTimeoutInfra||clearTimeout(n.displayedNotificationTimer),I("Notification Accepted on Agent Accept",A),n.raiseSystemAnalyticsEvent(t.InternalEventName.NotificationAccepted,i),T(),S(i)}.bind(this),O=function(){const r=n.state.providerManager.getActiveProvider(),i=new Map().set(e.CIFramework.Constants.value,new Map().set(e.CIFramework.Constants.actionName,e.CIFramework.Constants.Reject).set(_.originURL,r.landingUrl).set(e.CIFramework.Constants.responseReason,t.ResponseReason.DeclinedByAgent));return Xrm.Internal.clearPopupNotification(n.closeId),n.closeId="",f(P,A),v(),n.IsPlatformNotificationTimeoutInfra||clearTimeout(n.displayedNotificationTimer),I("Notification Rejected on Agent Decline",A),n.raiseSystemAnalyticsEvent(t.InternalEventName.NotificationRejected,i),T(),S(i)}.bind(this),D=function(){const r=n.state.providerManager.getActiveProvider(),i=new Map().set(e.CIFramework.Constants.value,new Map().set(e.CIFramework.Constants.actionName,e.CIFramework.Constants.Timeout).set(_.originURL,r.landingUrl).set(e.CIFramework.Constants.responseReason,t.ResponseReason.DisplayTimeout).set(e.CIFramework.Constants.globalMissedNotificationMessageBarId,n.globalMissedNotificationMessageBarId));return Xrm.Internal.clearPopupNotification(n.closeId),n.closeId="",f(P,A),I("Notification Rejected on display timeout",A),n.raiseSystemAnalyticsEvent(t.InternalEventName.NotificationTimedOut,i,new Map().set(e.CIFramework.Constants.correlationId,A)),T(),S(i)}.bind(this),k={actionLabel:t.Utility.getResourceString("NOTIFICATION_DETAIL_WAIT_TIME_TEXT"),eventHandler:D,timeout:h},R={actionLabel:c(C,y),eventHandler:U},B={actionLabel:t.Utility.getResourceString("REJECT_BUTTON_TEXT"),eventHandler:O};let W=-1;-1===y[0].search(t.MessageType.softNotification)?-1!==h&&(W=h):-1===h?W=2e4:W=h;if(n.queue.count>=n.maxNotificationCount){const r=new Map().set(e.CIFramework.Constants.value,new Map().set(e.CIFramework.Constants.actionName,e.CIFramework.Constants.Reject).set(e.CIFramework.Constants.responseReason,t.ResponseReason.NotificationQueueLimitExceeded));return console.log("[NotifyEvent] Queue has "+n.queue.count+" items. Rejecting new Incoming..."),I("Notification Rejected as queue is full",A),S(r)}var x=n.IsPlatformNotificationTimeoutInfra?{title:b,acceptAction:R,declineAction:B,timeoutAction:k,details:F,type:M,imageUrl:w}:{title:b,acceptAction:R,declineAction:B,details:F,type:M,imageUrl:w};const V={popUpNotificationItem:x,notificationCreatedAt:Date.now(),notificationExpiryTime:W,queueTimeOutMethod:()=>{const n=new Map().set(e.CIFramework.Constants.value,new Map().set(e.CIFramework.Constants.actionName,e.CIFramework.Constants.Reject).set(e.CIFramework.Constants.responseReason,t.ResponseReason.NotificationQueueTimeLimitExceeded));return console.log("[NotifyEvent] Queue item timeout or addpopupNotification failed. Rejecting notification..."),I("Notification Rejected QueueTimeout or addpopupNotification failed",A),S(n)},timeOutMethod:()=>{const r=new Map().set(e.CIFramework.Constants.value,new Map().set(e.CIFramework.Constants.actionName,e.CIFramework.Constants.Timeout).set(e.CIFramework.Constants.responseReason,t.ResponseReason.RejectAfterTimeoutNonPlatformTimer).set(e.CIFramework.Constants.globalMissedNotificationMessageBarId,n.globalMissedNotificationMessageBarId));return Xrm.Internal.clearPopupNotification(n.closeId),n.closeId="",f(P,A),clearTimeout(n.displayedNotificationTimer),console.log("[NotifyEvent] Notification Timed out. Rejecting..."),I("Notification Rejected on Display Timeout",A),T(),S(r)},correlationId:A,hiddenTimeoutMethod:D};n.queue.enqueue(V),I("Notification Queued",A),console.log("[NotifyEvent] Queued new notification. queue length - "+n.queue.count),n.interval||(console.log("[NotifyEvent] starting interval to check for expired notifications in queue"),n.interval=setInterval(()=>{m()},1e3)),""===n.closeId&&1===n.queue.count&&(console.log("[NotifyEvent] calling show popup notification closeid = empty"),u())})}function m(){if(!(1>n.queue.count))for(let e=0;e<n.queue.count;e++)Date.now()-n.queuedNotificationExpirtyTime>n.queue.getItemAtIndex(e).notificationCreatedAt&&(console.log("[NotifyEvent] removing item at index "+e+". Rejecting Notification..."),n.queue.getItemAtIndex(e).queueTimeOutMethod(),n.queue.removeItem(e))}function u(){const e=n.isIFrameNullOrUndefined("SidePanelIFrame");if(0<n.queue.count){const r=n.queue.getItemAtIndex(0);console.log("[NotifyEvent] peeked notification. queue length - "+n.queue.count);const i=r.popUpNotificationItem,o=r.notificationCreatedAt,s=r.notificationExpiryTime;let a=0;if(0<s){const e=Date.now()-o;if(console.log("[NotifyEvent] - The notification spent "+e/1e3+" seconds in queue"),a=s-e,0<a)if(n.IsPlatformNotificationTimeoutInfra&&!n.isNullOrUndefined(i.timeoutAction))i.timeoutAction.timeout=a;else if(!n.IsPlatformNotificationTimeoutInfra){const e=Math.ceil(a/1e3);i.details[t.Utility.getResourceString("NOTIFICATION_DETAIL_WAIT_TIME_TEXT")]=e.toString()+" "+t.Utility.getResourceString("NOTIFICATION_WAIT_TIME_SECONDS")}}if(!e&&n.isServiceWorkerSupportedInBrowser)if(i.desktopNotificationSettings===S.Never)I("Never option enabled, no desktop notification required",r.correlationId);else if(i.desktopNotificationSettings===S.OnlyWhenPageNotInFocus&&!n.isOCAppVisible){let e="";for(const r in i.details){const o=n.StringHelper.Format(t.Utility.getResourceString("NOTIFICATION_BODY"),r,i.details[r]);e+=o+"\n"}const o={header:i.title,body:e,acceptLabel:i.acceptAction.actionLabel,rejectLabel:i.declineAction.actionLabel,imageUrl:i.imageUrl,currentAppId:n.appId,correlationId:r.correlationId,timeout:a,buttoncount:i.buttonCount},s={clientType:Xrm.Utility.getGlobalContext().client.getClient(),crmVersion:Xrm.Utility.getGlobalContext().getVersion(),orgId:Xrm.Utility.getGlobalContext().organizationSettings.organizationId,orgName:Xrm.Utility.getGlobalContext().organizationSettings.uniqueName,userId:Xrm.Utility.getGlobalContext().userSettings.userId,navigationType:n.getNavigationType()};window.top.frames.SidePanelIFrame.contentWindow.showNotificationWithMessage(o,s)}Xrm.Internal.addPopupNotification(i).then(e=>{n.closeId=e,console.log(e),y(r),!n.IsPlatformNotificationTimeoutInfra&&0<a?n.displayedNotificationTimer=setTimeout(r.timeOutMethod,a):n.isNullOrUndefined(i.timeoutAction)&&0<a&&(console.log("Start notification timer for Id: "+n.closeId.toString()+"Timer value: "+s+" CorelationId: "+r.correlationId),I("Start notification timer for Id: "+n.closeId.toString()+"Timer value: "+s,r.correlationId),n.displayedNotificationTimer=setTimeout(r.hiddenTimeoutMethod,a)),C(t.NotificationState.DisplayStart,r.correlationId)}).catch(t=>{console.log("[NotifyEvent] Error creating new notification: "+t),I("Error creating popup notification: "+t,r.correlationId),r.queueTimeOutMethod(),y(r)})}}function y(e){if(0<n.queue.count){const t=n.queue.getItemAtIndex(0);e.notificationCreatedAt===t.notificationCreatedAt?(n.queue.dequeue(),I("Dequeued",e.correlationId),console.log("[NotifyEvent] Dequeued. Queue Length is "+n.queue.count)):console.log("[NotifyEvent] CurrentQueueTop and Displayed Notification are different. Not Dequeuing")}}function T(){setTimeout(u,n.displayDelayTimeMs)}function I(e,r){n.logAPIInternalInfo(n.appId,!1,null,t.MessageType.notifyEvent+"-"+e,n.cifVersion,"","","",r)}function f(e,t){!e&&n.isServiceWorkerSupportedInBrowser&&window.top.frames.SidePanelIFrame.contentWindow.clearDesktopNotification(t)}function C(e,t){const n=new CustomEvent(_.NotificationDisplayEvent,{detail:{action:e,correlationId:t}});window.parent.dispatchEvent(n)}function v(){""!==n.globalMissedNotificationMessageBarId&&n.resetPresence().then(()=>{n.closeMissedNotificationMessageBar()},e=>{const t=n.generateErrorObject(e,"resetAndCloseMissedNotificationMessageBar",n.errorTypes.GenericError);n.logFailure(n.appId,!0,t,"resetAgentPresenceAPI",n.cifVersion)})}n.queue=new e.CIFramework.Queue,n.closeId="";const _=e.CIFramework.Constants,S=e.CIFramework.DesktopNotificationConstants,h=window.parent;n.noOfNotifications=0;n.maxNotificationCount=10,n.queuedNotificationExpirtyTime=3e4,n.displayDelayTimeMs=2e3,n.globalMissedNotificationMessageBarId="",n.isOCAppVisible=!0,n.getNotificationTitle=i,n.isInformationChatSoftNotification=o,n.isInformationalNotification=s,n.isFailureInformationNotification=a,n.getNotificationDetails=l,n.getImageUrl=d,n.getAcceptButtonText=c,n.showGlobalToastNotification=p,n.launchZFPNotification=g,n.removeExpiredNotificationsFromQueue=m,n.show=u,n.CheckAndDequeueNotification=y,n.showPopUpNotification=T,n.logInfoToTelemetry=I,n.notifyEventClient=function(e){let r=0,o=-1,s=[],a,l,d,c,p,m,u,y;for(const[t,n]of e){if(-1!==t.search(_.eventType)&&(console.log(n),c=n),-1!==t.search(_.notificationUXObject))for(const[e,t]of n)-1===e.search(_.headerDataCIF)?-1===e.search(_.bodyDataCIF)?-1===e.search(_.actionsCIF)?-1!==e.search(_.notificationType)&&(s=t):d=t:l=t:a=t;-1!==t.search(_.correlationId)&&(p=n),t===_.templateName&&(m=n),-1!==t.search(_.templateParameters)&&(u=n),-1!==t.search(_.templateNameResolver)&&(y=n)}if(p||(p=""),y||m)return n.launchZFPNotificationFromTemplate(m,u,y,p);if(null==a||"undefined"===a)return t.postMessageNamespace.rejectWithErrorMessage("The header value is blank. Provide a value to the parameter.");if(-1!==s[0].search(t.MessageType.softNotification)&&(null==l||"undefined"===l))return t.postMessageNamespace.rejectWithErrorMessage("The body value is blank. Provide a value to the parameter.");if(null==s||"undefined"===s||0>=s.length)return t.postMessageNamespace.rejectWithErrorMessage("The notificationType value is blank. Provide a value to the parameter.");if(null!=d&&"undefined"!==d)for(r=0;r<d.length;r++)for(const e in d[r])-1!==e.search(_.Timer)&&(o=d[r][e]);return g(a,l,s,c,d,o,p)},n.clearDesktopNotification=f,n.raiseNotificationDisplayEvent=C,n.showMissedNotificationMessageBar=function(e){const r=localStorage.getItem(_.CURRENT_PRESENCE_INFO),i=r?JSON.parse(r).presenceName:t.Utility.getResourceString(t.MissedNotificationsConstants.PresencePlaceholderResourceKey),o=t.Utility.getResourceString(t.MissedNotificationsConstants.ActionResourceKey),s=String.format(t.Utility.getResourceString(t.MissedNotificationsConstants.MessageResourceKey),i,o),a={actionLabel:o,eventHandler:n.resetAndCloseMissedNotificationMessageBar},l={type:t.MissedNotificationsConstants.MessageType,level:t.MissedNotificationsConstants.Level,message:s,title:t.MissedNotificationsConstants.Title,action:a};return Xrm.App.addGlobalNotification(l).then(function(t){return n.globalMissedNotificationMessageBarId=t,I("Created global missed notification message bar with Id: "+t,e),Promise.resolve(t)},e=>Promise.reject(e))},n.resetAndCloseMissedNotificationMessageBar=v,n.closeMissedNotificationMessageBar=function(){""!==n.globalMissedNotificationMessageBarId&&(Xrm.App.clearGlobalNotification(n.globalMissedNotificationMessageBarId),n.globalMissedNotificationMessageBarId="")}})(n=t.Internal||(t.Internal={}))})(t=e.CIFramework||(e.CIFramework={}))})(Microsoft||(Microsoft={}));var Microsoft;(function(e){var t;(function(t){var n;(function(n){function r(e,t){let r,i,s,a,l;for(const[n,d]of e)-1===n.search(o.entityName)?-1===n.search(o.originURL)?-1===n.search(o.entityId)?-1===n.search(o.entitySetName)?-1!==n.search(o.annotationId)&&(l=d):a=d:s=d:i=d:r=d;const d=t.value,c=new Map().set(o.notetext,d);let p="";const g=new Map().set(o.entityName,o.annotation).set(o.value,c).set(o.originURL,i);return new Promise(e=>{if(!l)n.createRecord(g).then(t=>{for(const[e,n]of t)if(-1!==e.search(o.value))for(const[e,t]of n)-1!==e.search(o.Id)&&(l=t);let d=new Map;const c=a+"("+s+")",p="objectid_"+r+"@odata.bind",g=new Map().set(p,c),m=new Map().set(o.entityName,o.annotation).set(o.entityId,l).set(o.value,g).set(o.originURL,i);n.updateRecord(m).then(t=>{for(const[e,n]of t)-1!==e.search(o.value)&&(d=n);const n=new Map().set(o.value,l);e(n)})});else{const t="?$select=notetext&$filter=_objectid_value eq "+s,r=new Map().set(o.entityName,o.annotation).set(o.queryParameters,t).set(o.originURL,i);n.search(r).then(t=>{for(const[e,n]of t)if(-1!==e.search(o.value))for(let e=0;e<n.length;e++)if(n[e].annotationid===l)for(const t in n[e])-1!==t.search(o.notetext)&&(p=n[e][t]);const r=new Map().set(o.notetext,p+" "+d),s=new Map().set(o.entityName,o.annotation).set(o.entityId,l).set(o.value,r).set(o.originURL,i);n.updateRecord(s).then(t=>{for(const[e,n]of t)if(-1!==e.search(o.value))for(const[e,t]of n)-1!==e.search(o.Id)&&(l=t);const n=new Map().set(o.value,l);e(n)})})}})}function i(){const e=s.document.getElementById(o.widgetIframeId),t=e.contentWindow.document.getElementById("notesDiv");n.isNullOrUndefined(t)||(t.innerHTML=""),n.state.client.removeHandler(o.CollapseFlapHandler)}const o=e.CIFramework.Constants,s=window.parent;n.toggleNotesVisibility=function(){const e=s.document.getElementById(o.widgetIframeId),t=e.contentWindow.document.getElementById("notesDiv");"hidden"===t.style.visibility?(t.style.visibility="visible",t.tabIndex=0):(t.style.visibility="hidden",t.tabIndex=-1)},n.insertNotesClient=function(e){let a,l,d,c;const p=s.document.getElementById(o.widgetIframeId),g=p.contentWindow.document.getElementById("notesDiv"),m=g.getElementsByTagName("div");if(null!=m&&0<m.length)return t.postMessageNamespace.rejectWithErrorMessage("This conversation already has a note opened.");for(const[t,n]of e)-1===t.search(o.entityName)?-1===t.search(o.originURL)?-1===t.search(o.entityId)?-1!==t.search(o.entitySetName)&&(c=n):d=n:l=n:a=n;return new Promise((s,a)=>{const l="<div id= \"notesHeaderIdCIF\" class=\"notesHeader\"><div class=\"notesHeaderSpan_CIF\" aria-label=\""+t.Utility.getResourceString("ADD_NOTE_TEXT")+"\">"+t.Utility.getResourceString("ADD_NOTE_TEXT")+"</div><div class=\"notesCloseSpanDiv\"></div></div><div class=\"notesbodyDivider_CIF\"></div><div style=\"height: 14px;\"></div>";g.insertAdjacentHTML("beforeend",l),g.classList.add("notesDivCIF"),g.getElementsByClassName("notesHeader")[0].classList.add("notesHeaderCIF");p.clientHeight-26;p.contentWindow.document.getElementById("notesHeaderIdCIF").style.height="49px";const d=document.createElement("span");d.classList.add("closeNotes_CIF"),d.classList.add("FontIcons-closeSoftNotification_CIF"),d.setAttribute("aria-label",t.Utility.getResourceString("CLOSE_BUTTON_TEXT")),d.setAttribute("tabindex","0"),d.setAttribute("role","button"),g.getElementsByClassName("notesCloseSpanDiv")[0].appendChild(d);const c=document.createElement("TextArea"),m=g;m.appendChild(c),c.setAttribute("placeholder",t.Utility.getResourceString("START_NOTES_TOOLTIP_TEXT")),c.setAttribute("aria-label",t.Utility.getResourceString("NOTES_TOOLTIP_TEXT")),c.classList.add("newTextAreaCIF");c.id="notesTextAreaCIF",c.style.width="calc(100% - 40px)",c.style.height="calc(100% - 120px)";const u=document.createElement("BUTTON");u.classList.add("notesSaveButtonCIF"),u.innerText=t.Utility.getResourceString("ADD_NOTE_TEXT"),u.tabIndex=0,u.setAttribute("aria-label",t.Utility.getResourceString("ADD_NOTE_TEXT"));const y=document.createElement("BUTTON");y.classList.add("notesCancelButtonCIF"),y.innerText=t.Utility.getResourceString("CANCEL_BUTTON_TEXT"),y.tabIndex=0,y.setAttribute("aria-label",t.Utility.getResourceString("CANCEL_BUTTON_TEXT"));const T=document.createElement("DIV");if(T.classList.add("addCancelButtonContainer"),T.appendChild(u),T.appendChild(y),m.appendChild(T),!0===n.isConsoleAppInternal()){const e=p.contentWindow.document.getElementById("widgetArea"),t=p.contentWindow.document.getElementById("flapArea");e.classList.remove("widgetArea"),e.classList.add("widgetAreaZFP"),t.classList.add("flapAreaZFP")}const I=n.state.sessionManager.getFocusedSession(),f=n.state.providerManager.getActiveProvider().sessions.get(I);f.notesInfo.notesDetails=e,f.notesInfo.resolve=s,f.notesInfo.reject=a,u.addEventListener("click",function(){r(e,c).then(e=>(i(),s(new Map().set(o.value,e))),()=>t.postMessageNamespace.rejectWithErrorMessage("Failed in saving notes."))}),y.addEventListener("click",function(){return i(),s(new Map().set(o.value,new Map().set(o.value,"")))}),d.addEventListener("click",function(){return i(),s(new Map().set(o.value,new Map().set(o.value,"")))}),d.addEventListener("keydown",function(e){if(32===e.keyCode||13===e.keyCode)return i(),s(new Map().set(o.value,new Map().set(o.value,"")))})})},n.saveNotes=r,n.cancelNotes=i,n.intermediateSaveNotes=function(e){const t=window.parent.document.getElementById(o.widgetIframeId),s=t.contentWindow.document.getElementById("notesTextAreaCIF");let a="";a=n.isNullOrUndefined(e)||n.isNullOrUndefined(e.detail.sessionId)?n.state.sessionManager.getFocusedSession():e.detail.sessionId;const l=n.state.sessionManager.getProvider(a);if(n.isNullOrUndefined(l))return void i();const d=l.sessions.get(a),c=d.notesInfo.resolve,p=d.notesInfo.reject;r(d.notesInfo.notesDetails,s).then(e=>(i(),c(new Map().set(o.value,e))),()=>p(new Map().set(o.value,"Failed in saving notes.")))}})(n=t.Internal||(t.Internal={}))})(t=e.CIFramework||(e.CIFramework={}))})(Microsoft||(Microsoft={}));var Microsoft;(function(e){var t;(function(e){var t;(function(t){class n extends t.SessionManager{constructor(){super(...arguments),this.counter=0}focusSession(e){let n=!0,r;const i=this.getProvider(e);return t.isNullOrUndefined(i)?Promise.reject("Session Id is wrong"):this.focusedSession===e?Promise.resolve():(t.state.client.collapseFlap(),t.isNullOrUndefined(this.focusedSession)||(r=this.getProvider(this.focusedSession),null!=r&&(r===i&&(n=!1),r.setUnfocusedSession(this.focusedSession,n),t.state.client.updateSession(this.focusedSession,!1))),this.focusedSession=e,i.setFocusedSession(this.focusedSession,n),t.state.client.updateSession(this.focusedSession,!0),Promise.resolve())}getFocusedSession(){return this.focusedSession}isDefaultSession(){return!1}canCreateSession(){return!!(this.sessions.size<e.Constants.MaxSessions)}createSession(n,r,i,o){if(!this.canCreateSession())return Promise.reject("Cannot add the Session. Maximum sessions limit reached. Limit: "+e.Constants.MaxSessions);const s=t.state.messageLibrary.getCorrelationId();this.sessions.set(s,new t.SessionInfo(n));const a=e.Constants.sessionColors[this.counter++%e.Constants.sessionColors.length];let l="";const d=o.split(" ");return l=1===d.length?d[0][0]+d[0][1]:d[0][0]+d[d.length-1][0],t.state.client.createSession(s,l,a,n.providerId,o),window.setTimeout(this.focusSession.bind(this),0,s),n.raiseEvent(new Map().set("sessionId",s).set("focused",this.focusedSession===s).set("context",i),e.MessageType.onSessionCreated,!0),Promise.resolve(new Map().set("sessionId",s))}requestFocusSession(e,n){const r=this.getProvider(e);return t.isNullOrUndefined(r)?Promise.reject("Session Id is wrong"):(this.focusedSession!==e&&t.state.client.notifySession(e,n),Promise.resolve())}closeSession(n){const r=this.getProvider(n);return t.isNullOrUndefined(r)?Promise.reject("Session Id is wrong"):new Promise(function(i,o){r.raiseEvent(new Map().set("sessionId",n).set("focused",this.focusedSession===n).set("context",r.sessions.get(n).context),e.MessageType.onBeforeSessionClosed,!0).then(function(){this.sessions.delete(n),t.state.client.closeSession(n),this.focusedSession===n&&(this.focusedSession=null,0<this.sessions.size&&this.focusSession(Array.from(this.sessions.keys()).pop())),r.closeSession(n),i(!0)}.bind(this,r),()=>{o("Session not closed")})}.bind(this))}getFocusedTab(){return null}createTab(){return Promise.reject("Not implemented")}createTabInternal(){return Promise.reject("Not implemented")}focusTab(){return Promise.reject("Not implemented")}closeTab(){return Promise.reject("Not implemented")}refreshTab(){return Promise.reject("Not implemented")}setSessionTitle(){return Promise.reject("Not implemented")}setTabTitle(){return Promise.reject("Not implemented")}}t.SessionPanel=n})(t=e.Internal||(e.Internal={}))})(t=e.CIFramework||(e.CIFramework={}))})(Microsoft||(Microsoft={}));var Microsoft;(function(e){var t;(function(e){var t;(function(e){e.InitData=class{};e.Conversation=class{};e.CustomDataEntity=class{};e.Session=class{};e.ParticipantsEntity=class{};e.EventData=class{};e.EventEntity=class{}})(t=e.Analytics||(e.Analytics={}))})(t=e.CIFramework||(e.CIFramework={}))})(Microsoft||(Microsoft={}));var Microsoft;(function(e){var t;(function(t){var n;(function(n){class r{static copyToClipboardAndShowNotification(r){const i=new Date,o=Date.now()-i.getTime(),s={};s.DebugData=r,n.logApiData(s,i,o,"DebugInformationManager.copyToClipboardAndShowNotification");const a=document.createElement("textarea");a.value=r,a.setAttribute("readonly",""),a.setAttribute("role","presentation"),a.setAttribute("tabindex","-1"),a.style.setProperty("position","absolute"),a.style.setProperty("left","-9999px"),document.body.appendChild(a),setTimeout(()=>{a.select(),setTimeout(()=>{try{const t=document.execCommand("copy");t?(console.log("copyDebugDataToClipboard: The text is now on the clipboard"),e.CIFramework.Internal.showGlobalToastNotification(4,e.CIFramework.Utility.getResourceString("DIAGNOSTIC_TEXT"),"")):(console.error("copyDebugDataToClipboard: Cannot copy text"),e.CIFramework.Internal.showGlobalToastNotification(4,e.CIFramework.Utility.getResourceString("DIAGNOSTIC_TEXT_COPY_FAILURE"),""))}catch(e){console.log("Error : copyDebugDataToClipboard- Unable to copy."+e);const r=n.generateErrorObject(e,"copyToClipboardAndShowNotification - Unable to copy",n.errorTypes.GenericError);n.logFailure(n.appId,!0,r,t.MessageType.fetchDebugData,n.cifVersion)}document.body.removeChild(a)},500)},500)}static gatherDebugData(){const i={};try{i.timestamp=new Date().toUTCString();const o=n.state.providerManager.getActiveProvider();i.activeProviderName=n.isNullOrUndefined(o)?"No active provider":o.name;const s=n.state.client.getEnvironment(o,{});i.environmentDetails="ClientUrl: "+s.get(t.Constants.ClientUrl)+" AppUrl: "+s.get(t.Constants.AppUrl)+" OrgLcid: "+s.get(t.Constants.OrgLcid)+" OrgUniqueName: "+s.get(t.Constants.OrgUniqueName)+" OrgId: "+s.get(t.Constants.OrgId)+ +" UserId: "+s.get(t.Constants.UserId)+" UserLcid: "+s.get(t.Constants.UserLcid)+" UserRoles: "+s.get(t.Constants.UserRoles)+" crmVersion: "+s.get(t.Constants.crmVersion)+" TenantId: "+s.get(t.Constants.TenantId)+" isDirty: "+s.get(t.Constants.isDirty),n.isNullOrUndefined(o)?(console.log("No active provider: onFetchDebugInfoFromProvider Event will not be raised on the provider"),r.copyToClipboardAndShowNotification(JSON.stringify(i))):(console.log("Active provider exists: onFetchDebugInfoFromProvider Event raised on the provider - "+o.name),e.CIFramework.Internal.onFetchDebugInfoFromProvider(o).then(e=>{i.activeProviderInfo=e,r.copyToClipboardAndShowNotification(JSON.stringify(i))},e=>{i.activeProviderInfo=e,r.copyToClipboardAndShowNotification(JSON.stringify(i))}))}catch(r){console.log("Error: Debug event- gatherDebugData ");const i=n.generateErrorObject(r,"Error - gatherDebugData",n.errorTypes.GenericError);n.logFailure(n.appId,!0,i,t.MessageType.fetchDebugData,n.cifVersion),e.CIFramework.Internal.showGlobalToastNotification(4,e.CIFramework.Utility.getResourceString("DIAGNOSTIC_TEXT_COPY_FAILURE"),"")}}}n.DebugInformationManager=r})(n=t.Internal||(t.Internal={}))})(t=e.CIFramework||(e.CIFramework={}))})(Microsoft||(Microsoft={}));var Microsoft;(function(e){var t;(function(e){var t;(function(t){let n=new Date,r=!1,i=6e4,o=!1,s,a;class l{static startTimer(e,t,a){window.top.addEventListener("click",this.updateTime),window.top.addEventListener("mousemove",this.updateTime),window.top.addEventListener("touchstart",this.updateTime),n=new Date,s=e,r=!1,i=1e3*t,o=a}static checkStatus(){if(new Date().getTime()-n.getTime()>=i&&!1===r&&o){const n=t.state.sessionManager.getFocusedSession(),i=t.state.sessionManager.sessions.get(n);let o="";t.isNullOrUndefined(i)||(o=i.associatedProvider.sessions.get(n).context,r=!0,s(new Map().set(e.Constants.sessionId,n).set(e.Constants.idle,!0).set(e.Constants.context,o),e.MessageType.onSessionIdle),t.logAPIInternalInfo(t.appId,!1,null,e.MessageType.onSessionIdle,t.cifVersion,"","","SessionId: "+n+", Context: "+o+", IsIdle: "+r))}}static updateTime(){if(n=new Date,r&&o){const n=t.state.sessionManager.getFocusedSession(),i=t.state.sessionManager.sessions.get(n);let o="";t.isNullOrUndefined(i)||(o=i.associatedProvider.sessions.get(n).context,r=!1,s(new Map().set(e.Constants.sessionId,n).set(e.Constants.idle,!1).set(e.Constants.context,o),e.MessageType.onSessionIdle),t.logAPIInternalInfo(t.appId,!1,null,e.MessageType.onSessionIdle,t.cifVersion,"","","SessionId: "+n+", Context: "+o+", IsIdle: "+r))}clearInterval(a),a=setInterval(l.checkStatus,i)}}t.IdleTimeManager=l})(t=e.Internal||(e.Internal={}))})(t=e.CIFramework||(e.CIFramework={}))})(Microsoft||(Microsoft={}));var Microsoft;(function(e){var t;(function(t){var n;(function(n){function r(e){return e?e+"Hidden":"hidden"}function i(){for(let e=0;e<He.browserPrefixes.length;e++)if(r(He.browserPrefixes[e])in document)return He.browserPrefixes[e];return null}function o(){if(n.isOCAppVisible)return;n.isOCAppVisible=!0;const e={detail:{isVisible:n.isOCAppVisible}},t=new CustomEvent(Ge.WindowFocusEvent,e);window.parent.dispatchEvent(t)}function s(){if(!n.isOCAppVisible)return;n.isOCAppVisible=!1;const e={detail:{isVisible:n.isOCAppVisible}},t=new CustomEvent(Ge.WindowFocusEvent,e);window.parent.dispatchEvent(t)}function a(e){return"boolean"==typeof e?e?o():s():window.top.document[$e]?s():o()}function l(){return!!(He.BroadcastChannel in self)}function d(e){return null==e||"undefined"==typeof e}function c(){return"serviceWorker"in navigator}function p(e){return null==e||""===e}function g(e,t){const n=Xe.has(t)?Xe.get(t):[];for(const r of n)if(r.name===e)return r;return null}function m(){Xrm.Utility.getEntityMetadata(Ge.liveWorkItemEntity,null).then(e=>{n.state.isOmnichannelInstalled=!d(e)},e=>{n.state.isOmnichannelInstalled=!1;const r=n.generateErrorObject(e,"setOCInstallStatus - Xrm.Utility.getEntityMetadata - msdyn_ocliveworkitem",n.errorTypes.XrmApiError);n.logFailure(n.appId,!0,r,t.MessageType.setOCInstallStatus,n.cifVersion)})}function u(){Xrm.WebApi.retrieveMultipleRecords("solution","?$filter=uniquename eq 'msdyn_CIFrameworkPatch'").then(function(e){n.cifPatchVersion=e&&e.entities?e.entities[0].version:"",console.log("CIF patch version Installed: "+n.cifPatchVersion)},e=>{console.log("getCIFPatchVersionInstalled: "+e.message)})}function y(){n.crmVersion=Xrm.Utility.getGlobalContext().getVersion(),T()&&(n.IsPlatformNotificationTimeoutInfra=!0)}function T(){return t.Utility.compareVersion(n.crmVersion,"9.1.0000.5911")}function I(){const r=[],i=new Promise((i,o)=>{Xrm.WebApi.retrieveMultipleRecords(Ge.providerLogicalName,"?$filter=statecode eq 0 and contains("+Ge.appSelectorFieldName+",'"+n.appId+"')&$orderby="+Ge.sortOrderFieldName+" asc").then(s=>{if(s&&s.entities){const e=s.entities.filter(e=>e[Ge.nameParameter]===Ge.OmniChannelProvider);0<e.length?window&&window.top.Microsoft&&window.top.Microsoft.CIFramework&&window.top.Microsoft.CIFramework.PresenceCommand&&window.top.Microsoft.CIFramework.PresenceCommand.presenceCommandDeferred&&window.top.Microsoft.CIFramework.PresenceCommand.presenceCommandDeferred.resolve(!0):window&&window.top.Microsoft&&window.top.Microsoft.CIFramework&&window.top.Microsoft.CIFramework.PresenceCommand&&window.top.Microsoft.CIFramework.PresenceCommand.presenceCommandDeferred&&window.top.Microsoft.CIFramework.PresenceCommand.presenceCommandDeferred.resolve(!1),Ke.removeEventListener(Ge.CIClickToAct,x),Ke.addEventListener(Ge.CIClickToAct,x),Ke.removeEventListener(Ge.CISendKBArticle,V),Ke.addEventListener(Ge.CISendKBArticle,V),Ke.removeEventListener(Ge.SetPresenceEvent,j),Ke.addEventListener(Ge.SetPresenceEvent,j),Ke.removeEventListener(Ge.NotificationDisplayEvent,G),Ke.addEventListener(Ge.NotificationDisplayEvent,G),Ke.removeEventListener(Ge.WindowFocusEvent,H),Ke.addEventListener(Ge.WindowFocusEvent,H),window.top.removeEventListener(Ge.OnKeyDownEvent,W),window.top.addEventListener(Ge.OnKeyDownEvent,W),n.state.client.registerHandler(Ge.ModeChangeHandler,U),n.state.client.registerHandler(Ge.SizeChangeHandler,w),n.state.client.registerHandler(Ge.NavigationHandler,O),Xrm.Navigation.addOnOpenUrl(D);let l=!0;const d=[];d.orgId=Xrm.Utility.getGlobalContext().organizationSettings.organizationId,d.orgName=Xrm.Utility.getGlobalContext().organizationSettings.uniqueName,d.crmVersion=Xrm.Utility.getGlobalContext().getVersion(),d.appId=n.appId;for(const e of s.entities){n.cifVersion=e[Ge.cifSolVersion];let i=e[Ge.roleSelectorFieldName];i=null==i?null:i.split(";"),r.push(e[Ge.landingUrl]),""!==e[Ge.trustedDomain]&&r.push(e[Ge.trustedDomain]);var a;a=new n.CIProvider(e,n.state,d),a.isThirdPartyLWICreationOverridden="true"===t.Utility.extractParameter(new URL(a.landingUrl).search,Ge.skipLwiCreation),l?(n.state.providerManager=new n.ProviderManager(n.state.client,e[Ge.landingUrl],a),l=!1):n.state.providerManager.addProvider(e[Ge.landingUrl],a),n.state.isAnalyticsEnabledForAnyProvider=n.state.isAnalyticsEnabledForAnyProvider||e[Ge.enableAnalyticsAttributeName];const o=new n.UsageTelemetryData(e[Ge.providerId],e[Ge.nameParameter],e[Ge.APIVersion],"loadProvider",e[Ge.SortOrder],n.appId,n.cifVersion,!1,null);n.setUsageData(o)}const c=t.Utility.extractParameter(n.state.providerManager.getActiveProvider().landingUrl,Ge.idleTimeThreshold);p(c)||n.IdleTimeManager.startTimer(A,+c,!0),n.state.messageLibrary=new t.postMessageNamespace.postMsgWrapper(Ke,Array.from(r),qe),n.state.client.loadWidgets(n.state.providerManager.ciProviders).then(()=>{const e=new n.UsageTelemetryData(a.providerId,a.name,a.apiVersion,"loadProvider - loadWidgets",a.sortOrder,n.appId,n.cifVersion,!1,null);n.setUsageData(e),i()},e=>{o(e)}),f(),C()}else e.CIFramework.Internal.OpenPresenceDialogControl.Instance.presenceCommandDeferred.resolve(!1)},e=>{const r=n.generateErrorObject(e,"loadProvider - Xrm.WebApi.retrieveMultipleRecords - providerRecords",n.errorTypes.XrmApiError);n.logFailure(n.appId,!0,r,t.MessageType.loadProvider,n.cifVersion),o(e)})});return i}function f(){if(n.state.isAnalyticsEnabledForAnyProvider){const n=new Map().set(e.CIFramework.Constants.value,new Map().set(e.CIFramework.Constants.actionName,t.InternalEventName.CifSessionStart));Re(t.InternalEventName.CifSessionStart,n)}}function C(){try{Xrm.Utility.getGlobalContext().getCurrentAppProperties().then(e=>{if(!d(e)){const r=e.uniqueName,i=Xrm.WebApi.retrieveMultipleRecords(t.ProductivityPaneConfigConstants.entityName,v(r));i.then(e=>{if(0<e.entities.length){const e=new Date;n.state.client.loadPanel({}).then(()=>{const t=Date.now()-e.getTime();n.logApiData({},e,t,"Xrm.WebApi.loadPanel")},e=>{const t=n.generateErrorObject(e,"loadProductivityPanel - loadpanel api",n.errorTypes.XrmApiError);n.logFailure(n.appId,!0,t,"Failed to call loadpanel api",n.cifVersion)})}},e=>{if(!d(e)){const t=n.generateErrorObject(e,"loadProductivityPanel - Xrm.WebApi.retrieveMultipleRecords",n.errorTypes.XrmApiError);n.logFailure(n.appId,!0,t,"Failed to get productivity pane config data",n.cifVersion)}})}},e=>{const t=n.generateErrorObject(e,"loadProductivityPanel - get application name",n.errorTypes.XrmApiError);n.logFailure(n.appId,!0,t,"Failed to get application name",n.cifVersion)})}catch(t){const e=n.generateErrorObject(t,"loadProductivityPanel",n.errorTypes.XrmApiError);n.logFailure(n.appId,!0,e,"Failed to load ProductivityPanel",n.cifVersion)}}function v(e){const n=String.format("{0}{1},{2},{3}&{4}{5} eq '{6}'",t.QueryDataConstants.SelectOperator,t.ProductivityPaneConfigConstants.productivityPaneState,t.ProductivityPaneConfigConstants.productivityPaneMode,t.ProductivityPaneConfigConstants.applicationName,t.QueryDataConstants.FilterOperator,t.ProductivityPaneConfigConstants.applicationName,e);return n}function _(){return navigationType===n.SessionType.MultiSession}function S(e){let r;const i=new Date,[o,s]=P(e,[Ge.SearchString]);if(o){r=_();const s=new n.PerfTelemetryData(o,i,Date.now()-i.getTime(),t.MessageType.isConsoleApp,n.cifVersion,{},e.get(Ge.correlationId));n.setPerfData(s);const a=new n.APIUsageTelemetry(o.providerId,o.name,o.apiVersion,t.MessageType.isConsoleApp,o.sortOrder,n.appId,n.cifVersion,!1,null,"",e.get(Ge.correlationId));return n.setAPIUsageTelemetry(a),Promise.resolve(new Map().set(Ge.value,r))}return n.logAPIFailure(n.appId,!0,s,t.MessageType.isConsoleApp,n.cifVersion,"","","",e.get(Ge.correlationId))}function h(e){const r={},i=new Date,[o,s]=P(e,[Ge.value]);if(o){const s=n.state.client.setPanelPosition("setPanelPosition",e.get(Ge.value),r),a=new n.PerfTelemetryData(o,i,Date.now()-i.getTime(),t.MessageType.setPosition,n.cifVersion,r,e.get(Ge.correlationId));n.setPerfData(a);const l=new n.APIUsageTelemetry(o.providerId,o.name,o.apiVersion,t.MessageType.setPosition,o.sortOrder,n.appId,n.cifVersion,!1,null,"",e.get(Ge.correlationId));return n.setAPIUsageTelemetry(l),Promise.resolve(new Map().set(Ge.value,s))}return n.logAPIFailure(n.appId,!0,s,t.MessageType.setPosition,n.cifVersion,"","","",e.get(Ge.correlationId))}function A(e,t,r,i){const o=[];if(!1===i?(d(r)&&(r=n.state.providerManager.getActiveProvider()),o.push(r)):n.state.providerManager.ciProviders.forEach(e=>{o.push(e)}),0===o.length){const e=n.generateErrorObject(new Map().set("message","No active provider found"),"sendGenericMessage",n.errorTypes.GenericError);return n.logAPIFailure(n.appId,!0,e,t+" - sendGenericMessage",n.cifVersion,"","")}const s=[];for(const a of o){const r=new Promise((r,i)=>{a.raiseEvent(e,t).then(e=>{console.log("AppId: "+n.appId+" API: - sendMessage successful CIFVersion: "+n.cifVersion+" ProviderId: "+a.providerId+" ProviderName:"+a.name),r(e)},e=>{const r=n.generateErrorObject(e,t+" - sendMessage",n.errorTypes.GenericError);n.logAPIFailure(n.appId,!0,r,t+" - sendMessage",n.cifVersion,a.providerId,a.name),i(e)})});s.push(r)}return Promise.all(s)}function P(e,t){if(!e){const e={reportTime:new Date().toUTCString(),errorMsg:"Parameter list cannot be empty",errorType:n.errorTypes.InvalidParams,sourceFunc:"getProvider"};return[null,e]}if(!e.get(Ge.originURL)){const e={reportTime:new Date().toUTCString(),errorMsg:"Paramter:url cannot be empty",errorType:n.errorTypes.InvalidParams,sourceFunc:"getProvider"};return[null,e]}t&&t.forEach(t=>{if(d(e.get(t))){const e={reportTime:new Date().toUTCString(),errorMsg:"Parameter: "+t+" cannot be empty",errorType:n.errorTypes.InvalidParams,sourceFunc:"getProvider"};return[null,e]}});const r=n.state.providerManager.ciProviders.get(e.get(Ge.originURL));if(r&&r.providerId)return[r,null];else{const e={reportTime:new Date().toUTCString(),errorMsg:"Associated Provider record not found",errorType:n.errorTypes.InvalidParams,sourceFunc:"getProvider"};return[null,e]}}function E(e){const r={},i=new Date,[o,s]=P(e);if(o){const s=n.state.client.getEnvironment(o,r);s.set(Ge.customParams,o.customParams);const a=new n.PerfTelemetryData(o,i,Date.now()-i.getTime(),t.MessageType.getEnvironment,n.cifVersion,r,e.get(Ge.correlationId));n.setPerfData(a);const l=new n.APIUsageTelemetry(o.providerId,o.name,o.apiVersion,t.MessageType.getEnvironment,o.sortOrder,n.appId,n.cifVersion,!1,null,"",e.get(Ge.correlationId));return n.setAPIUsageTelemetry(l),Promise.resolve(new Map().set(Ge.value,s))}return n.logAPIFailure(n.appId,!0,s,t.MessageType.getEnvironment,n.cifVersion,"","","",e.get(Ge.correlationId))}function N(e){return 0<=Object.keys(t.MessageType).indexOf(e)}function b(e){const r={},i=new Date,[o,s]=P(e);if(o){const s=e.get(Ge.eventType),a=new n.PerfTelemetryData(o,i,Date.now()-i.getTime(),t.MessageType.addGenericHandler,n.cifVersion,{},e.get(Ge.correlationId));n.setPerfData(a),n.logParameterData(r,t.MessageType.addGenericHandler,{eventType:e.get(Ge.eventType)});const l=new n.APIUsageTelemetry(o.providerId,o.name,o.apiVersion,t.MessageType.addGenericHandler,o.sortOrder,n.appId,n.cifVersion,!1,null,r,e.get(Ge.correlationId));if(n.setAPIUsageTelemetry(l),!N(s))if(Xe.has(s)&&0<Xe.get(s).length)Xe.get(s).push(o);else{const e=[];e[0]=o,Xe.set(s,e),Ke.addEventListener(s,M)}return Promise.resolve(new Map().set(Ge.value,!0))}return n.logAPIFailure(n.appId,!0,s,t.MessageType.addGenericHandler,n.cifVersion,"","",r,e.get(Ge.correlationId))}function F(e){const r={},i=new Date,[o,s]=P(e,[Ge.eventType]);if(o){const s=e.get(Ge.eventType),a=new n.PerfTelemetryData(o,i,Date.now()-i.getTime(),t.MessageType.removeGenericHandler,n.cifVersion,{},e.get(Ge.correlationId));n.setPerfData(a),n.logParameterData(r,t.MessageType.removeGenericHandler,{eventType:e.get(Ge.eventType)});const l=new n.APIUsageTelemetry(o.providerId,o.name,o.apiVersion,t.MessageType.removeGenericHandler,o.sortOrder,n.appId,n.cifVersion,!1,null,r,e.get(Ge.correlationId));if(n.setAPIUsageTelemetry(l),!N(s)){if(Xe.has(s))for(let e=0;e<Xe.get(s).length;e++)Xe.get(s)[e]===o&&Xe.get(s).splice(e,1);0===Xe.get(s).length&&Ke.removeEventListener(s,M)}return Promise.resolve(new Map().set(Ge.value,!0))}return n.logAPIFailure(n.appId,!0,s,t.MessageType.removeGenericHandler,n.cifVersion,"","",r,e.get(Ge.correlationId))}function M(t){if(Xe.has(t.type))for(let n=0;n<Xe.get(t.type).length;n++)L(e.CIFramework.Utility.buildMap(t.detail),t.type)}function w(e){n.state.client.flapInUse()||A(e.detail,t.MessageType.onSizeChanged,n.state.providerManager.getActiveProvider())}function U(e){A(e.detail,t.MessageType.onModeChanged)}function O(e){A(e.detail,t.MessageType.onPageNavigate)}function D(r){if(k(r)){const n=r.getEventArgs(),o=r.getEventSource(),s=r.getFormContext().data.entity.attributes,a=n.url.substr(n.url.search(":")+1),l=o.getEntityReference().etn,d=o.getName(),c=o.getEntityReference().id.guid,p=r.getFormContext().data.entity.getPrimaryAttributeValue(),g=s.getByName(d)?s.getByName(d).getAttrDescriptor().Format:"";var i=R();if(null!=i){n.preventDefault();A(e.CIFramework.Utility.buildMap({value:a,name:d,format:g,entityLogicalName:l,entityId:c,recordTitle:p}),t.MessageType.onClickToAct,i,!1)}}else{console.log("eventContext or one of it's parameter for onOpenUrl event is null.");const e={};e.reportTime=new Date().toUTCString(),e.errorMsg="eventContext or one of it's parameter for onOpenUrl event is null.",e.errorType=n.errorTypes.InvalidParams,n.logFailure(n.appId,!0,e,"onOpenUrl",n.cifVersion)}}function k(e){return!(d(e)||d(e.getEventArgs())||d(e.getEventArgs().url)||d(e.getEventSource())||d(e.getEventSource().getEntityReference())||d(e.getEventSource().getEntityReference().id)||d(e.getFormContext())||d(e.getFormContext().data)||d(e.getFormContext().data.entity))}function R(){if(!n.state.providerManager)return null;var e=n.state.providerManager.getActiveProvider();if(e&&e.clickToAct)return e;var t=null,r=new Map([...n.state.providerManager.ciProviders.entries()].reverse());for(const[e,n]of r.entries())if(n.clickToAct){t=n;break}return t}function B(){const e=new Date;n.DebugInformationManager.gatherDebugData();const t=Date.now()-e.getTime();n.logApiData({},e,t,"debugInformationEvent.FetchDebugInformationEvent")}function W(e){const t=new Date;if(e.shiftKey&&e.altKey&&e.ctrlKey&&68===e.keyCode){n.DebugInformationManager.gatherDebugData();const e=Date.now()-t.getTime();n.logApiData({},t,e,"onKeyDownEvent.FetchDebugInformationEvent")}q()}function x(r){A(e.CIFramework.Utility.buildMap(r.detail),t.MessageType.onClickToAct,n.state.providerManager.getActiveProvider(),!1)}function V(r){A(e.CIFramework.Utility.buildMap(r.detail),t.MessageType.onSendKBArticle,n.state.providerManager.getActiveProvider())}function L(e,t){let r;if(r=d(e)||d(e.get("providerName"))?n.state.providerManager.getActiveProvider():g(e.get("providerName"),t),d(r)){const r=n.generateErrorObject(new Map().set("message","No active provider found"),"sendGenericMessage",n.errorTypes.InvalidParams);return n.logAPIFailure(n.appId,!0,r,t+" - sendGenericMessage",n.cifVersion,"",e.get("providerName"))}const i=new n.APIUsageTelemetry(r.providerId,r.name,r.apiVersion,t,r.sortOrder,n.appId,n.cifVersion,!1,null,"",e.get(Ge.correlationId));return n.setAPIUsageTelemetry(i),A(e,t,r)}function j(n){const r=e.CIFramework.Utility.buildMap(n.detail);ze.setAgentPresence(r.get("presenceInfo")),A(r,t.MessageType.onSetPresenceEvent,null,!0)}function G(n){const r=e.CIFramework.Utility.buildMap(n.detail);A(r,t.MessageType.notificationDisplayEvent,null,!0)}function H(n){const r=e.CIFramework.Utility.buildMap(n.detail);A(r,t.MessageType.windowFocusEvent,null,!0)}function q(){n.IdleTimeManager.updateTime()}function X(e){const r={},i=new Date,[o,s]=P(e,[Ge.value]);return o?new Promise((s,a)=>n.state.client.updateRecord(Ge.providerLogicalName,o.providerId,r,new Map([[Ge.clickToActAttributeName,e.get(Ge.value)]])).then(a=>{o.clickToAct=e.get(Ge.value),n.state.providerManager.ciProviders.set(e.get(Ge.originURL),o);const l=new n.PerfTelemetryData(o,i,Date.now()-i.getTime(),t.MessageType.setClickToAct,n.cifVersion,r,e.get(Ge.correlationId));n.setPerfData(l);const d=new n.APIUsageTelemetry(o.providerId,o.name,o.apiVersion,t.MessageType.setClickToAct,o.sortOrder,n.appId,n.cifVersion,!1,null,"",e.get(Ge.correlationId));return n.setAPIUsageTelemetry(d),s(a)},r=>(n.logAPIFailure(n.appId,!0,r,t.MessageType.setClickToAct,n.cifVersion,o.providerId,o.name,"",e.get(Ge.correlationId)),a(new Map().set(Ge.value,r))))):n.logAPIFailure(n.appId,!0,s,t.MessageType.setClickToAct,n.cifVersion,"","","",e.get(Ge.correlationId))}function z(e){const r=new Date,[i,o]=P(e);if(i){const o=new n.PerfTelemetryData(i,r,Date.now()-r.getTime(),t.MessageType.getClickToAct,n.cifVersion,null,e.get(Ge.correlationId));n.setPerfData(o);const s=new n.APIUsageTelemetry(i.providerId,i.name,i.apiVersion,t.MessageType.getClickToAct,i.sortOrder,n.appId,n.cifVersion,!1,null,"",e.get(Ge.correlationId));return n.setAPIUsageTelemetry(s),Promise.resolve(new Map().set(Ge.value,i.clickToAct))}return n.logAPIFailure(n.appId,!0,o,t.MessageType.getClickToAct,n.cifVersion,"","","",e.get(Ge.correlationId))}function K(e){const r={},i={},o=new Date,[s,a]=P(e,[Ge.value]);if(!s)return n.logAPIFailure(n.appId,!0,a,t.MessageType.setMode,n.cifVersion,"","",i,e.get(Ge.correlationId));else if(_()&&s!==n.state.providerManager.getActiveProvider()){const r={reportTime:new Date().toUTCString(),errorMsg:"This operation can be performed from the active provider",errorType:n.errorTypes.GenericError,sourceFunc:"setMode"};return n.logAPIFailure(n.appId,!0,r,t.MessageType.setMode,n.cifVersion,"","",i,e.get(Ge.correlationId))}else{n.state.client.collapseFlap();const a=e.get(Ge.value),l=n.state.client.setPanelMode("setPanelMode",a,r),d=new n.PerfTelemetryData(s,o,Date.now()-o.getTime(),t.MessageType.setMode,n.cifVersion,r,e.get(Ge.correlationId));n.setPerfData(d),n.logParameterData(i,t.MessageType.setMode,{value:e.get(Ge.value)});const c=new n.APIUsageTelemetry(s.providerId,s.name,s.apiVersion,t.MessageType.setMode,s.sortOrder,n.appId,n.cifVersion,!1,null,i,e.get(Ge.correlationId));return n.setAPIUsageTelemetry(c),Promise.resolve(new Map().set(Ge.value,l))}}function Q(e){const r=new Date,[i,o]=P(e);if(i){const o=new n.PerfTelemetryData(i,r,Date.now()-r.getTime(),t.MessageType.getMode,n.cifVersion,{},e.get(Ge.correlationId));n.setPerfData(o);const s=new n.APIUsageTelemetry(i.providerId,i.name,i.apiVersion,t.MessageType.getMode,i.sortOrder,n.appId,n.cifVersion,!1,null,"",e.get(Ge.correlationId));return n.setAPIUsageTelemetry(s),Promise.resolve(new Map().set(Ge.value,n.state.client.getWidgetMode()))}return n.logAPIFailure(n.appId,!0,o,t.MessageType.getMode,n.cifVersion,"","","",e.get(Ge.correlationId))}function $(e){const r={},i={},o=new Date,[s,a]=P(e,[Ge.value]);if(!s)return n.logAPIFailure(n.appId,!0,a,t.MessageType.setWidth,n.cifVersion,"","",i,e.get(Ge.correlationId));else if(_()&&s!==n.state.providerManager.getActiveProvider()){const r={reportTime:new Date().toUTCString(),errorMsg:"This operation can be performed from the active provider",errorType:n.errorTypes.GenericError,sourceFunc:"setWidth"};return n.logAPIFailure(n.appId,!0,r,t.MessageType.setWidth,n.cifVersion,"","",i,e.get(Ge.correlationId))}else{const a=n.state.client.setWidgetWidth("setWidgetWidth",e.get(Ge.value),r),l=new n.PerfTelemetryData(s,o,Date.now()-o.getTime(),t.MessageType.setWidth,n.cifVersion,r,e.get(Ge.correlationId));n.setPerfData(l),n.logParameterData(i,t.MessageType.setWidth,{value:e.get(Ge.value)});const d=new n.APIUsageTelemetry(s.providerId,s.name,s.apiVersion,t.MessageType.setWidth,s.sortOrder,n.appId,n.cifVersion,!1,null,i,e.get(Ge.correlationId));return n.setAPIUsageTelemetry(d),Promise.resolve(new Map().set(Ge.value,a))}}function Y(e){const r=new Date,[i,o]=P(e);if(i){const o=new n.PerfTelemetryData(i,r,Date.now()-r.getTime(),t.MessageType.getWidth,n.cifVersion,{},e.get(Ge.correlationId));n.setPerfData(o);const s=new n.APIUsageTelemetry(i.providerId,i.name,i.apiVersion,t.MessageType.getWidth,i.sortOrder,n.appId,n.cifVersion,!1,null,"",e.get(Ge.correlationId));return n.setAPIUsageTelemetry(s),Promise.resolve(new Map().set(Ge.value,+n.state.client.getWidgetWidth()))}return n.logAPIFailure(n.appId,!0,o,t.MessageType.getWidth,n.cifVersion,"","","",e.get(Ge.correlationId))}function Z(e){const r={},i=new Date,[o,s]=P(e,[Ge.SearchString]);if(!o)return n.logAPIFailure(n.appId,!0,s,t.MessageType.openKBSearchControl,n.cifVersion,"","","",e.get(Ge.correlationId));else if(_()&&o!==n.state.providerManager.getActiveProvider()){const r={reportTime:new Date().toUTCString(),errorMsg:"This operation can be performed from the active provider",errorType:n.errorTypes.GenericError,sourceFunc:"openKBSearchControl"};return n.logAPIFailure(n.appId,!0,r,t.MessageType.openKBSearchControl,n.cifVersion,"","","",e.get(Ge.correlationId))}else{const s=n.state.client.openKBSearchControl(e.get(Ge.SearchString),r),a=new n.PerfTelemetryData(o,i,Date.now()-i.getTime(),t.MessageType.openKBSearchControl,n.cifVersion,r,e.get(Ge.correlationId));n.setPerfData(a);const l=new n.APIUsageTelemetry(o.providerId,o.name,o.apiVersion,t.MessageType.openKBSearchControl,o.sortOrder,n.appId,n.cifVersion,!1,null,"",e.get(Ge.correlationId));return n.setAPIUsageTelemetry(l),Promise.resolve(new Map().set(Ge.value,s))}}function J(e){const[r,i]=P(e);return r?ee(e,!1,t.MessageType.searchAndOpenRecords):n.logAPIFailure(n.appId,!0,i,t.MessageType.searchAndOpenRecords,n.cifVersion,"","","",e.get(Ge.correlationId))}function ee(e,r,i){const o={},s={},a=new Date,[l,d]=P(e,[Ge.entityName,Ge.queryParameters]);if(!l)return n.logAPIFailure(n.appId,!0,d,i?i:t.MessageType.doSearch,n.cifVersion,"","",s,e.get(Ge.correlationId));else if(_()&&l!==n.state.providerManager.getActiveProvider()&&!0!==r){const r={reportTime:new Date().toUTCString(),errorMsg:"This operation can be performed from the active provider",errorType:n.errorTypes.GenericError,sourceFunc:"doSearch"};return n.logAPIFailure(n.appId,!0,r,t.MessageType.doSearch,n.cifVersion,"","",s,e.get(Ge.correlationId))}else{const d=n.state.client.retrieveMultipleAndOpenRecords(e.get(Ge.entityName),e.get(Ge.queryParameters),r,o),c=new n.PerfTelemetryData(l,a,Date.now()-a.getTime(),i?i:t.MessageType.doSearch,n.cifVersion,o,e.get(Ge.correlationId));n.setPerfData(c),n.logParameterData(s,t.MessageType.doSearch,{searchOnly:r});const p=new n.APIUsageTelemetry(l.providerId,l.name,l.apiVersion,i?i:t.MessageType.doSearch,l.sortOrder,n.appId,n.cifVersion,!1,null,s,e.get(Ge.correlationId));return n.setAPIUsageTelemetry(p),d}}function te(e){const[r,i]=P(e);return r?ee(e,!0,t.MessageType.search):n.logAPIFailure(n.appId,!0,i,t.MessageType.search,n.cifVersion,"","","",e.get(Ge.correlationId))}function ne(e){const r={},i={},o=new Date,[s,a]=P(e,[Ge.entityName]);if(s){if(_()&&s!==n.state.providerManager.getActiveProvider()){const r={reportTime:new Date().toUTCString(),errorMsg:"This operation can be performed from the active provider",errorType:n.errorTypes.GenericError,sourceFunc:"renderSearchPage"};return n.logAPIFailure(n.appId,!0,r,t.MessageType.renderSearchPage,n.cifVersion,"","",i,e.get(Ge.correlationId))}return new Promise((a,l)=>{n.state.client.renderSearchPage(e.get(Ge.entityName),e.get(Ge.SearchString)).then(l=>{const d=new n.PerfTelemetryData(s,o,Date.now()-o.getTime(),t.MessageType.renderSearchPage,n.cifVersion,r,e.get(Ge.correlationId));n.setPerfData(d),n.logParameterData(i,t.MessageType.renderSearchPage,{entityName:e.get(Ge.entityName)});const c=new n.APIUsageTelemetry(s.providerId,s.name,s.apiVersion,t.MessageType.renderSearchPage,s.sortOrder,n.appId,n.cifVersion,!1,null,i,e.get(Ge.correlationId));return n.setAPIUsageTelemetry(c),a(new Map().set(Ge.value,l))},r=>(n.logAPIFailure(n.appId,!0,r,t.MessageType.renderSearchPage,n.cifVersion,s.providerId,s.name,i,e.get(Ge.correlationId)),l(new Map().set(Ge.value,r))))})}return n.logAPIFailure(n.appId,!0,a,t.MessageType.renderSearchPage,n.cifVersion,"","",i,e.get(Ge.correlationId))}function re(e){const r={},i={},o=new Date,[s,a]=P(e,[Ge.entityName,Ge.value]);return s?new Promise((a,l)=>{n.state.client.createRecord(e.get(Ge.entityName),null,r,e.get(Ge.value)).then(l=>{const d=new n.PerfTelemetryData(s,o,Date.now()-o.getTime(),t.MessageType.createRecord,n.cifVersion,r,e.get(Ge.correlationId));n.setPerfData(d),n.logParameterData(i,t.MessageType.createRecord,{entityName:e.get(Ge.entityName)});const c=new n.APIUsageTelemetry(s.providerId,s.name,s.apiVersion,t.MessageType.createRecord,s.sortOrder,n.appId,n.cifVersion,!1,null,i,e.get(Ge.correlationId));return n.setAPIUsageTelemetry(c),a(new Map().set(Ge.value,l))},r=>(n.logAPIFailure(n.appId,!0,r,t.MessageType.createRecord,n.cifVersion,s.providerId,s.name,i,e.get(Ge.correlationId)),l(new Map().set(Ge.value,r))))}):n.logAPIFailure(n.appId,!0,a,t.MessageType.createRecord,n.cifVersion,"","",i,e.get(Ge.correlationId))}function ie(e){const r={},i={},o=new Date,[s,a]=P(e,[Ge.entityName,Ge.entityId,Ge.queryParameters]);return s?new Promise((a,l)=>{n.state.client.retrieveRecord(e.get(Ge.entityName),e.get(Ge.entityId),r,e.get(Ge.queryParameters)).then(l=>{const d=new n.PerfTelemetryData(s,o,Date.now()-o.getTime(),t.MessageType.retrieveRecord,n.cifVersion,r,e.get(Ge.correlationId));n.setPerfData(d),n.logParameterData(i,t.MessageType.retrieveRecord,{entityName:e.get(Ge.entityName),entityId:e.get(Ge.entityId)});const c=new n.APIUsageTelemetry(s.providerId,s.name,s.apiVersion,t.MessageType.retrieveRecord,s.sortOrder,n.appId,n.cifVersion,!1,null,i,e.get(Ge.correlationId));return n.setAPIUsageTelemetry(c),a(new Map().set(Ge.value,l))},r=>(n.logAPIFailure(n.appId,!0,r,t.MessageType.retrieveRecord,n.cifVersion,s.providerId,s.name,i,e.get(Ge.correlationId)),l(new Map().set(Ge.value,r))))}):n.logAPIFailure(n.appId,!0,a,t.MessageType.retrieveRecord,n.cifVersion,"","",i,e.get(Ge.correlationId))}function oe(e){const r={},i={},o=new Date,[s,a]=P(e,[Ge.entityName,Ge.entityId,Ge.value]);return s?new Promise((a,l)=>{n.state.client.updateRecord(e.get(Ge.entityName),e.get(Ge.entityId),r,e.get(Ge.value)).then(l=>{const d=new n.PerfTelemetryData(s,o,Date.now()-o.getTime(),t.MessageType.updateRecord,n.cifVersion,r,e.get(Ge.correlationId));n.setPerfData(d),n.logParameterData(i,t.MessageType.updateRecord,{entityName:e.get(Ge.entityName),entityId:e.get(Ge.entityId)});const c=new n.APIUsageTelemetry(s.providerId,s.name,s.apiVersion,t.MessageType.updateRecord,s.sortOrder,n.appId,n.cifVersion,!1,null,i,e.get(Ge.correlationId));return n.setAPIUsageTelemetry(c),a(new Map().set(Ge.value,l))},r=>(n.logAPIFailure(n.appId,!0,r,t.MessageType.updateRecord,n.cifVersion,s.providerId,s.name,i,e.get(Ge.correlationId)),l(new Map().set(Ge.value,r))))}):n.logAPIFailure(n.appId,!0,a,t.MessageType.updateRecord,n.cifVersion,"","",i,e.get(Ge.correlationId))}function se(e){const r={},i={},o=new Date,[s,a]=P(e,[Ge.entityName,Ge.entityId,Ge.value]);return s?new Promise((a,l)=>{n.state.client.updateRecord(e.get(Ge.entityName),e.get(Ge.entityId),r,e.get(Ge.value)).then(l=>{const d=new n.PerfTelemetryData(s,o,Date.now()-o.getTime(),t.MessageType.updateConversation,n.cifVersion,r,e.get(Ge.correlationId));n.setPerfData(d),n.logParameterData(i,t.MessageType.updateConversation,{entityName:e.get(Ge.entityName),entityId:e.get(Ge.entityId)});const c=new n.APIUsageTelemetry(s.providerId,s.name,s.apiVersion,t.MessageType.updateConversation,s.sortOrder,n.appId,n.cifVersion,!1,null,i,e.get(Ge.correlationId));return n.setAPIUsageTelemetry(c),a(new Map().set(Ge.value,l))},r=>(n.logAPIFailure(n.appId,!0,r,t.MessageType.updateConversation,n.cifVersion,s.providerId,s.name,i,e.get(Ge.correlationId)),l(new Map().set(Ge.value,r))))}):n.logAPIFailure(n.appId,!0,a,t.MessageType.updateConversation,n.cifVersion,"","",i,e.get(Ge.correlationId))}function ae(e){const r={},i={},o=new Date,[s,a]=P(e,[Ge.entityName,Ge.entityId]);return s?new Promise((a,l)=>{n.state.client.deleteRecord(e.get(Ge.entityName),e.get(Ge.entityId),r).then(l=>{const d=new n.PerfTelemetryData(s,o,Date.now()-o.getTime(),t.MessageType.deleteRecord,n.cifVersion,r,e.get(Ge.correlationId));n.setPerfData(d),n.logParameterData(i,t.MessageType.deleteRecord,{entityName:e.get(Ge.entityName),entityId:e.get(Ge.entityId)});const c=new n.APIUsageTelemetry(s.providerId,s.name,s.apiVersion,t.MessageType.deleteRecord,s.sortOrder,n.appId,n.cifVersion,!1,null,i,e.get(Ge.correlationId));return n.setAPIUsageTelemetry(c),a(new Map().set(Ge.value,l))},r=>(n.logAPIFailure(n.appId,!0,r,t.MessageType.deleteRecord,n.cifVersion,s.providerId,s.name,i,e.get(Ge.correlationId)),l(new Map().set(Ge.value,r))))}):n.logAPIFailure(n.appId,!0,a,t.MessageType.deleteRecord,n.cifVersion,"","",i,e.get(Ge.correlationId))}function le(e){const[r,i]=P(e,[Ge.entityFormOptions,Ge.entityFormParameters]),o={};if(!r)return n.logAPIFailure(n.appId,!0,i,t.MessageType.openForm,n.cifVersion,"","",o,e.get(Ge.correlationId));else if(_()&&r!==n.state.providerManager.getActiveProvider()){const r={reportTime:new Date().toUTCString(),errorMsg:"This operation can be performed from the active provider",errorType:n.errorTypes.GenericError,sourceFunc:"openForm"};return n.logAPIFailure(n.appId,!0,r,t.MessageType.openForm,n.cifVersion,"","",o,e.get(Ge.correlationId))}else{const i=n.state.client.openForm(e.get(Ge.entityFormOptions),e.get(Ge.entityFormParameters));n.logParameterData(o,t.MessageType.openForm,{entityFormOptions:e.get(Ge.entityFormOptions)});const s=new n.APIUsageTelemetry(r.providerId,r.name,r.apiVersion,t.MessageType.openForm,r.sortOrder,n.appId,n.cifVersion,!1,null,o,e.get(Ge.correlationId));return n.setAPIUsageTelemetry(s),i}}function de(e){const[r,i]=P(e,[Ge.dialogStrings,Ge.dialogOptions]),o={};if(!r)return n.logAPIFailure(n.appId,!0,i,t.MessageType.openDialog,n.cifVersion,"","",o,e.get(Ge.correlationId));else if(_()&&r!==n.state.providerManager.getActiveProvider()){const r={reportTime:new Date().toUTCString(),errorMsg:"This operation can be performed from the active provider",errorType:n.errorTypes.GenericError,sourceFunc:"openDialog"};return n.logAPIFailure(n.appId,!0,r,t.MessageType.openDialog,n.cifVersion,"","",o,e.get(Ge.correlationId))}else{const i=n.state.client.openDialog(e.get(Ge.dialogStrings),e.get(Ge.dialogOptions));n.logParameterData(o,t.MessageType.openDialog,{dialogStrings:e.get(Ge.dialogStrings),dialogOptions:e.get(Ge.dialogOptions)});const s=new n.APIUsageTelemetry(r.providerId,r.name,r.apiVersion,t.MessageType.openDialog,r.sortOrder,n.appId,n.cifVersion,!1,null,o,e.get(Ge.correlationId));return n.setAPIUsageTelemetry(s),i}}function ce(e){const r={},i=new Date,[o,s]=P(e);if(o){const i=n.state.client.showGlobalNotification(e.get(Ge.notificationOptions));n.logParameterData(r,t.MessageType.showGlobalNotification,{notificationOptions:e.get(Ge.notificationOptions)});const s=new n.APIUsageTelemetry(o.providerId,o.name,o.apiVersion,t.MessageType.showGlobalNotification,o.sortOrder,n.appId,n.cifVersion,!1,null,r,e.get(Ge.correlationId));return n.setAPIUsageTelemetry(s),i}return n.logAPIFailure(n.appId,!0,s,t.MessageType.showGlobalNotification,n.cifVersion,"","",r,e.get(Ge.correlationId))}function pe(e){const r={},i=new Date,[o,s]=P(e);return o?new Promise((i,s)=>{n.state.client.clearGlobalNotification(e.get(Ge.notificationId)).then(e=>i(new Map().set(Ge.value,e)),i=>(n.logAPIFailure(n.appId,!0,i,t.MessageType.clearGlobalNotification,n.cifVersion,o.providerId,o.name,r,e.get(Ge.notificationId)),s(new Map().set(Ge.value,i))))}):n.logFailure(n.appId,!0,s,t.MessageType.clearGlobalNotification,n.cifVersion,"","",r,e.get(Ge.correlationId))}function ge(e){const[r,i]=P(e,[Ge.Save]);return r?new Promise((t,r)=>{n.state.client.refreshForm(e.get(Ge.Save)).then(e=>t(new Map().set(Ge.value,e)),e=>r(new Map().set(Ge.value,e)))}):n.logFailure(n.appId,!0,i,t.MessageType.refreshForm,n.cifVersion,"","","",e.get(Ge.correlationId))}function me(e){const r={},i={},o=new Date,[s,a]=P(e,[Ge.entityName]);return s?new Promise((a,l)=>{n.state.client.getEntityMetadata(e.get(Ge.entityName),e.get(Ge.Attributes)).then(l=>{const d=new n.PerfTelemetryData(s,o,Date.now()-o.getTime(),t.MessageType.getEntityMetadata,n.cifVersion,r,e.get(Ge.correlationId));n.setPerfData(d),n.logParameterData(i,t.MessageType.getEntityMetadata,{entityName:e.get(Ge.entityName),Attributes:e.get(Ge.Attributes)});const c=new n.APIUsageTelemetry(s.providerId,s.name,s.apiVersion,t.MessageType.getEntityMetadata,s.sortOrder,n.appId,n.cifVersion,!1,null,i,e.get(Ge.correlationId));return n.setAPIUsageTelemetry(c),a(new Map().set(Ge.value,l))},r=>(n.logAPIFailure(n.appId,!0,r,t.MessageType.getEntityMetadata,n.cifVersion,s.providerId,s.name,i,e.get(Ge.correlationId)),l(new Map().set(Ge.value,r))))}):n.logAPIFailure(n.appId,!0,a,t.MessageType.getEntityMetadata,n.cifVersion,"","",i,e.get(Ge.correlationId))}function ue(r){const i=r.get(Ge.correlationId),o=r.get(Ge.customParamsKey),s={},a=new Date,l=n.state.client.getClientSessionId().toString();n.logTelemetryMarker(i,t.ScenarioEvent.NotificationReceived,t.ScenarioState.Started,o,l);const[c,p]=P(r,[Ge.value]);return c?(Re(t.InternalEventName.NotificationReceived,r),new Promise((p,g)=>{d(r.get(Ge.templateParameters))||(r.get(Ge.templateParameters).originURL=r.get(Ge.originURL)),n.notifyEventClient(r).then(e=>{const r=new n.PerfTelemetryData(c,a,Date.now()-a.getTime(),t.MessageType.notifyEvent,n.cifVersion,s,i);n.setPerfData(r);const d=new n.APIUsageTelemetry(c.providerId,c.name,c.apiVersion,t.MessageType.notifyEvent,c.sortOrder,n.appId,n.cifVersion,!1,null,o,i);return n.setAPIUsageTelemetry(d),n.logTelemetryMarker(i,t.ScenarioEvent.NotificationReceived,t.ScenarioState.Completed,o,l,t.ScenarioStatus.Success),p(e)},r=>(n.logTelemetryMarker(i,t.ScenarioEvent.NotificationReceived,t.ScenarioState.Completed,o,l,t.ScenarioStatus.Failure),n.logAPIFailure(n.appId,!0,r,t.MessageType.notifyEvent,n.cifVersion,c.providerId,c.name,o,i),g(e.CIFramework.Utility.createErrorMap(r.errorMsg,t.MessageType.notifyEvent))))})):n.logAPIFailure(n.appId,!0,p,t.MessageType.notifyEvent,n.cifVersion,"","","",i)}function ye(e){const r={},i=new Date,[o,s]=P(e,[Ge.value]);return o?new Promise((s,a)=>{const l=n.state.client.expandFlap(n.intermediateSaveNotes);return l?void n.insertNotesClient(e).then(a=>{const l=new n.PerfTelemetryData(o,i,Date.now()-i.getTime(),t.MessageType.insertNotes,n.cifVersion,r,e.get(Ge.correlationId));n.setPerfData(l);const d=new n.APIUsageTelemetry(o.providerId,o.name,o.apiVersion,t.MessageType.insertNotes,o.sortOrder,n.appId,n.cifVersion,!1,null,"",e.get(Ge.correlationId));return n.setAPIUsageTelemetry(d),n.state.client.collapseFlap(),s(a)},r=>(n.state.client.collapseFlap(),n.logAPIFailure(n.appId,!0,r,t.MessageType.insertNotes,n.cifVersion,o.providerId,o.name,"",e.get(Ge.correlationId)),a(new Map().set(Ge.value,r)))):a(new Map().set(Ge.value,"Flap already expanded").set(Ge.ErrorCode,t.ErrorCode.Notes_Flap_Already_Expanded))}):n.logAPIFailure(n.appId,!0,s,t.MessageType.insertNotes,n.cifVersion,"","","",e.get(Ge.correlationId))}function Te(e){const r={},i={},o=new Date,s=e.get(Ge.correlationId);r.correlationId=s;const a=e.get(Ge.presenceInfo),l=n.state.client.getClientSessionId().toString();n.logTelemetryMarker(s,t.ScenarioEvent.SetAgentPresence,t.ScenarioState.Started,{presenceInfo:a},l);const[d,c]=P(e,[Ge.entityName]);if(d){const c=ze.setAgentPresence(JSON.parse(a),r),p=new n.PerfTelemetryData(d,o,Date.now()-o.getTime(),t.MessageType.setAgentPresence,n.cifVersion,r,e.get(Ge.correlationId));n.setPerfData(p),n.logParameterData(i,t.MessageType.setAgentPresence,{presenceInfo:a});const g=new n.APIUsageTelemetry(d.providerId,d.name,d.apiVersion,t.MessageType.setAgentPresence,d.sortOrder,n.appId,n.cifVersion,!1,null,i,e.get(Ge.correlationId));return n.setAPIUsageTelemetry(g),n.logTelemetryMarker(s,t.ScenarioEvent.SetAgentPresence,t.ScenarioState.Completed,{presenceInfo:a,agentPresenceStatus:c},l,t.ScenarioStatus.Success),Promise.resolve(new Map().set(Ge.value,c))}return n.logTelemetryMarker(s,t.ScenarioEvent.SetAgentPresence,t.ScenarioState.Completed,{presenceInfo:a,errorData:c},l,t.ScenarioStatus.Failure),n.logAPIFailure(n.appId,!0,c,t.MessageType.setAgentPresence,n.cifVersion,"","",i,e.get(Ge.correlationId))}function Ie(e){const r={},i={},o=new Date,s=e.get(Ge.correlationId);r.correlationId=s;const a=e.get(Ge.presenceList),l=n.state.client.getClientSessionId().toString();n.logTelemetryMarker(s,t.ScenarioEvent.InitAgentPresenceList,t.ScenarioState.Started,{presenceList:a},l);const[d,c]=P(e,[Ge.entityName]);if(d){const c=ze.initializeAgentPresenceList(JSON.parse(a),r),p=new n.PerfTelemetryData(d,o,Date.now()-o.getTime(),t.MessageType.initializeAgentPresenceList,n.cifVersion,r,e.get(Ge.correlationId));n.setPerfData(p),n.logParameterData(i,t.MessageType.initializeAgentPresenceList,{presenceList:a});const g=new n.APIUsageTelemetry(d.providerId,d.name,d.apiVersion,t.MessageType.initializeAgentPresenceList,d.sortOrder,n.appId,n.cifVersion,!1,null,i,e.get(Ge.correlationId));return n.setAPIUsageTelemetry(g),n.logTelemetryMarker(s,t.ScenarioEvent.InitAgentPresenceList,t.ScenarioState.Completed,{presenceList:a,presenceListDivStatus:c},l,t.ScenarioStatus.Success),Promise.resolve(new Map().set(Ge.value,c))}return n.logTelemetryMarker(s,t.ScenarioEvent.InitAgentPresenceList,t.ScenarioState.Completed,{presenceList:a,errorData:c},l,t.ScenarioStatus.Failure),n.logAPIFailure(n.appId,!0,c,t.MessageType.initializeAgentPresenceList,n.cifVersion,"","",i,e.get(Ge.correlationId))}function fe(e){const r=new Date,[i,o]=P(e,[Ge.entityName]);if(i){const o=i.getAllSessions(),s=new n.PerfTelemetryData(i,r,Date.now()-r.getTime(),t.MessageType.getAllSessions,n.cifVersion,{},e.get(Ge.correlationId));n.setPerfData(s);const a=new n.APIUsageTelemetry(i.providerId,i.name,i.apiVersion,t.MessageType.getAllSessions,i.sortOrder,n.appId,n.cifVersion,!1,null,"",e.get(Ge.correlationId));return n.setAPIUsageTelemetry(a),Promise.resolve(new Map().set(Ge.value,o))}return n.logAPIFailure(n.appId,!0,o,t.MessageType.getAllSessions,n.cifVersion,"","","",e.get(Ge.correlationId))}function Ce(e){const r={},i=new Date,[o,s]=P(e);if(o){const s=o.getFocusedSession(r),a=new n.PerfTelemetryData(o,i,Date.now()-i.getTime(),t.MessageType.getFocusedSession,n.cifVersion,r,e.get(Ge.correlationId));n.setPerfData(a);const l=new n.APIUsageTelemetry(o.providerId,o.name,o.apiVersion,t.MessageType.getFocusedSession,o.sortOrder,n.appId,n.cifVersion,!1,null,"",e.get(Ge.correlationId));return n.setAPIUsageTelemetry(l),Promise.resolve(new Map().set(Ge.value,s))}return n.logAPIFailure(n.appId,!0,s,t.MessageType.getFocusedSession,n.cifVersion,"","","",e.get(Ge.correlationId))}function ve(r){const i={},o={},s=new Date,[a,l]=P(r);return a?new Promise((l,d)=>{a.getSession(r.get(Ge.sessionId)).then(e=>{const d=new n.PerfTelemetryData(a,s,Date.now()-s.getTime(),t.MessageType.getSession,n.cifVersion,i,r.get(Ge.correlationId));n.setPerfData(d),n.logParameterData(o,t.MessageType.getSession,{sessionId:r.get(Ge.sessionId)});const c=new n.APIUsageTelemetry(a.providerId,a.name,a.apiVersion,t.MessageType.getSession,a.sortOrder,n.appId,n.cifVersion,!1,null,o,r.get(Ge.correlationId));return n.setAPIUsageTelemetry(c),l(new Map().set(Ge.value,e))},i=>(n.logAPIFailure(n.appId,!0,i,t.MessageType.getSession,n.cifVersion,a.providerId,a.name,o,r.get(Ge.correlationId)),d(e.CIFramework.Utility.createErrorMap(i.errorMsg,t.MessageType.getSession))))}):n.logAPIFailure(n.appId,!0,l,t.MessageType.getSession,n.cifVersion,"","",o,r.get(Ge.correlationId))}function _e(e){const r={},i=new Date,[o,s]=P(e);if(o){const s=o.canCreateSession(r),a=new n.PerfTelemetryData(o,i,Date.now()-i.getTime(),t.MessageType.canCreateSession,n.cifVersion,r,e.get(Ge.correlationId));n.setPerfData(a);const l=new n.APIUsageTelemetry(o.providerId,o.name,o.apiVersion,t.MessageType.canCreateSession,o.sortOrder,n.appId,n.cifVersion,!1,null,"",e.get(Ge.correlationId));return n.setAPIUsageTelemetry(l),Promise.resolve(new Map().set(Ge.value,s))}return n.logAPIFailure(n.appId,!0,s,t.MessageType.canCreateSession,n.cifVersion,"","","",e.get(Ge.correlationId))}function Se(r){const i={},o=new Date,[s,a]=P(r);return s?new Promise((a,l)=>{s.createSession(r.get(Ge.input),r.get(Ge.context),r.get(Ge.customerName),i,n.appId,n.cifVersion,r.get(Ge.correlationId)).then(e=>{Re(t.InternalEventName.SessionStarted,r,new Map().set(t.AnalyticsConstants.clientSessionId,e));const l=new n.PerfTelemetryData(s,o,Date.now()-o.getTime(),t.MessageType.createSession,n.cifVersion,i,r.get(Ge.correlationId));n.setPerfData(l);const d=new n.APIUsageTelemetry(s.providerId,s.name,s.apiVersion,t.MessageType.createSession,s.sortOrder,n.appId,n.cifVersion,!1,null,"",r.get(Ge.correlationId));return n.setAPIUsageTelemetry(d),a(new Map().set(Ge.value,e))},i=>(n.logAPIFailure(n.appId,!0,i,t.MessageType.createSession,n.cifVersion,s.providerId,s.name,"",r.get(Ge.correlationId)),l(e.CIFramework.Utility.createErrorMap(i.errorMsg,t.MessageType.createSession))))}):n.logAPIFailure(n.appId,!0,a,t.MessageType.createSession,n.cifVersion,"","","",r.get(Ge.correlationId))}function he(r){const i={},o=new Date,[s,a]=P(r);return s?new Promise((a,l)=>{s.setSessionTitle(r.get(Ge.input)).then(e=>{const l=new n.PerfTelemetryData(s,o,Date.now()-o.getTime(),t.MessageType.setSessionTitle,n.cifVersion,i,r.get(Ge.correlationId));n.setPerfData(l);const d=new n.UsageTelemetryData(s.providerId,s.name,s.apiVersion,t.MessageType.setSessionTitle,s.sortOrder,n.appId,n.cifVersion,!1,null,"",r.get(Ge.correlationId));return n.setUsageData(d),a(new Map().set(Ge.value,e))},i=>(n.logFailure(n.appId,!0,i,t.MessageType.setSessionTitle,n.cifVersion,s.providerId,s.name,"",r.get(Ge.correlationId)),l(e.CIFramework.Utility.createErrorMap(i.errorMsg,t.MessageType.setSessionTitle))))}):n.logFailure(n.appId,!0,a,t.MessageType.setSessionTitle,n.cifVersion,"","","",r.get(Ge.correlationId))}function Ae(r){const i={},o=new Date,[s,a]=P(r);return s?new Promise((a,l)=>{s.setTabTitle(r.get(Ge.tabId),r.get(Ge.input)).then(e=>{const l=new n.PerfTelemetryData(s,o,Date.now()-o.getTime(),t.MessageType.setTabTitle,n.cifVersion,i,r.get(Ge.correlationId));n.setPerfData(l);const d=new n.UsageTelemetryData(s.providerId,s.name,s.apiVersion,t.MessageType.setTabTitle,s.sortOrder,n.appId,n.cifVersion,!1,null,"",r.get(Ge.correlationId));return n.setUsageData(d),a(new Map().set(Ge.value,e))},i=>(n.logFailure(n.appId,!0,i,t.MessageType.setTabTitle,n.cifVersion,s.providerId,s.name,"",r.get(Ge.correlationId)),l(e.CIFramework.Utility.createErrorMap(i.errorMsg,t.MessageType.setTabTitle))))}):n.logFailure(n.appId,!0,a,t.MessageType.setTabTitle,n.cifVersion,"","","",r.get(Ge.correlationId))}function Pe(r){const i={},o={},s=new Date,[a,l]=P(r);return a?new Promise((l,d)=>{a.requestFocusSession(r.get(Ge.sessionId),r.get(Ge.messagesCount),i).then(()=>{const e=new n.PerfTelemetryData(a,s,Date.now()-s.getTime(),t.MessageType.requestFocusSession,n.cifVersion,i,r.get(Ge.correlationId));n.setPerfData(e),n.logParameterData(o,t.MessageType.requestFocusSession,{sessionId:r.get(Ge.sessionId)});const d=new n.APIUsageTelemetry(a.providerId,a.name,a.apiVersion,t.MessageType.requestFocusSession,a.sortOrder,n.appId,n.cifVersion,!1,null,o,r.get(Ge.correlationId));return n.setAPIUsageTelemetry(d),l(new Map)},i=>(n.logAPIFailure(n.appId,!0,i,t.MessageType.requestFocusSession,n.cifVersion,a.providerId,a.name,o,r.get(Ge.correlationId)),d(e.CIFramework.Utility.createErrorMap(i.errorMsg,t.MessageType.requestFocusSession))))}):n.logAPIFailure(n.appId,!0,l,t.MessageType.requestFocusSession,n.cifVersion,"","",o,r.get(Ge.correlationId))}function Ee(r){const i={},o={},s=new Date,[a,l]=P(r);return a?new Promise((l,d)=>{a.notifyKpiBreach(r.get(Ge.sessionId),r.get(Ge.resetKpiBreach),r.get(Ge.kpiBreachDetails),i).then(()=>{const e=new n.PerfTelemetryData(a,s,Date.now()-s.getTime(),t.MessageType.notifyKpiBreach,n.cifVersion,i,r.get(Ge.correlationId));n.setPerfData(e),n.logParameterData(o,t.MessageType.notifyKpiBreach,{sessionId:r.get(Ge.sessionId)});const d=new n.APIUsageTelemetry(a.providerId,a.name,a.apiVersion,t.MessageType.notifyKpiBreach,a.sortOrder,n.appId,n.cifVersion,!1,null,o,r.get(Ge.correlationId));return n.setAPIUsageTelemetry(d),l(new Map)},i=>(n.logAPIFailure(n.appId,!0,i,t.MessageType.notifyKpiBreach,n.cifVersion,a.providerId,a.name,o,r.get(Ge.correlationId)),d(e.CIFramework.Utility.createErrorMap(i.errorMsg,t.MessageType.notifyKpiBreach))))}):n.logAPIFailure(n.appId,!0,l,t.MessageType.notifyKpiBreach,n.cifVersion,"","",o,r.get(Ge.correlationId))}function Ne(r){const i={},o={},s=new Date,[a,l]=P(r);return a?new Promise((l,d)=>{a.notifyNewActivity(r.get(Ge.sessionId),r.get(Ge.messagesCount),r.get(Ge.shouldReset),i).then(()=>{const e=new n.PerfTelemetryData(a,s,Date.now()-s.getTime(),t.MessageType.notifyNewActivity,n.cifVersion,i,r.get(Ge.correlationId));n.setPerfData(e),n.logParameterData(o,t.MessageType.notifyNewActivity,{sessionId:r.get(Ge.sessionId)});const d=new n.APIUsageTelemetry(a.providerId,a.name,a.apiVersion,t.MessageType.notifyNewActivity,a.sortOrder,n.appId,n.cifVersion,!1,null,o,r.get(Ge.correlationId));return n.setAPIUsageTelemetry(d),l(new Map)},i=>(n.logAPIFailure(n.appId,!0,i,t.MessageType.notifyNewActivity,n.cifVersion,a.providerId,a.name,o,r.get(Ge.correlationId)),d(e.CIFramework.Utility.createErrorMap(i.errorMsg,t.MessageType.notifyNewActivity))))}):n.logAPIFailure(n.appId,!0,l,t.MessageType.notifyNewActivity,n.cifVersion,"","",o,r.get(Ge.correlationId))}function be(e){const r={},i=new Date,[o,s]=P(e);if(o){const s=o.getFocusedTab(r),a=new n.PerfTelemetryData(o,i,Date.now()-i.getTime(),t.MessageType.getFocusedTab,n.cifVersion,r,e.get(Ge.correlationId));n.setPerfData(a);const l=new n.APIUsageTelemetry(o.providerId,o.name,o.apiVersion,t.MessageType.getFocusedTab,o.sortOrder,n.appId,n.cifVersion,!1,null,"",e.get(Ge.correlationId));return n.setAPIUsageTelemetry(l),Promise.resolve(new Map().set(Ge.value,s))}return n.logAPIFailure(n.appId,!0,s,t.MessageType.getFocusedTab,n.cifVersion,"","","",e.get(Ge.correlationId))}function Fe(r){const i={},o={},s=new Date,[a,l]=P(r);return a?new Promise((l,d)=>{a.getTabsByTagOrName(r.get(Ge.nameParameter),r.get(Ge.templateTag)).then(e=>{const d=new n.PerfTelemetryData(a,s,Date.now()-s.getTime(),t.MessageType.getTabsByTagOrName,n.cifVersion,i,r.get(Ge.correlationId));n.setPerfData(d),n.logParameterData(o,t.MessageType.getTabsByTagOrName,{input:r.get(Ge.templateTag)});const c=new n.UsageTelemetryData(a.providerId,a.name,a.apiVersion,t.MessageType.getTabsByTagOrName,a.sortOrder,n.appId,n.cifVersion,!1,null,o,r.get(Ge.correlationId));return n.setUsageData(c),l(new Map().set(Ge.value,e))},i=>(n.logFailure(n.appId,!0,i,t.MessageType.getTabsByTagOrName,n.cifVersion,a.providerId,a.name,o,r.get(Ge.correlationId)),d(e.CIFramework.Utility.createErrorMap(i.errorMsg,t.MessageType.getTabsByTagOrName))))}):n.logFailure(n.appId,!0,l,t.MessageType.getTabsByTagOrName,n.cifVersion,"","",o,r.get(Ge.correlationId))}function Me(r){const i={},o={},s=new Date,[a,l]=P(r);return a?new Promise((l,d)=>{a.refreshTab(r.get(Ge.tabId)).then(()=>{const e=new n.PerfTelemetryData(a,s,Date.now()-s.getTime(),t.MessageType.refreshTab,n.cifVersion,i,r.get(Ge.correlationId));n.setPerfData(e),n.logParameterData(o,t.MessageType.refreshTab,{tabId:r.get(Ge.tabId)});const d=new n.UsageTelemetryData(a.providerId,a.name,a.apiVersion,t.MessageType.refreshTab,a.sortOrder,n.appId,n.cifVersion,!1,null,o,r.get(Ge.correlationId));return n.setUsageData(d),l(new Map)},i=>(n.logFailure(n.appId,!0,i,t.MessageType.refreshTab,n.cifVersion,a.providerId,a.name,o,r.get(Ge.correlationId)),d(e.CIFramework.Utility.createErrorMap(i.errorMsg,t.MessageType.refreshTab))))}):n.logFailure(n.appId,!0,l,t.MessageType.refreshTab,n.cifVersion,"","",o,r.get(Ge.correlationId))}function we(r){const i={},o=new Date,[s,a]=P(r);return s?new Promise((a,l)=>{s.createTab(r.get(Ge.input),i,n.appId,n.cifVersion,r.get(Ge.correlationId)).then(e=>{Re(t.InternalEventName.NewTabOpened,r,new Map().set(Ge.tabId,e));const l=new n.PerfTelemetryData(s,o,Date.now()-o.getTime(),t.MessageType.createTab,n.cifVersion,i,r.get(Ge.correlationId));n.setPerfData(l);const d=new n.APIUsageTelemetry(s.providerId,s.name,s.apiVersion,t.MessageType.createTab,s.sortOrder,n.appId,n.cifVersion,!1,null,"",r.get(Ge.correlationId));return n.setAPIUsageTelemetry(d),a(new Map().set(Ge.value,e))},i=>(n.logAPIFailure(n.appId,!0,i,t.MessageType.createTab,n.cifVersion,s.providerId,s.name,"",r.get(Ge.correlationId)),l(e.CIFramework.Utility.createErrorMap(i.errorMsg,t.MessageType.createTab))))}):n.logAPIFailure(n.appId,!0,a,t.MessageType.createTab,n.cifVersion,"","","",r.get(Ge.correlationId))}function Ue(r){const i={},o=new Date,[s,a]=P(r);return s?new Promise((a,l)=>{s.focusTab(r.get(Ge.tabId),i).then(()=>{const e=new n.PerfTelemetryData(s,o,Date.now()-o.getTime(),t.MessageType.focusTab,n.cifVersion,i,r.get(Ge.correlationId));n.setPerfData(e);const l=new n.APIUsageTelemetry(s.providerId,s.name,s.apiVersion,t.MessageType.focusTab,s.sortOrder,n.appId,n.cifVersion,!1,null,"",r.get(Ge.correlationId));return n.setAPIUsageTelemetry(l),a(new Map)},i=>(n.logAPIFailure(n.appId,!0,i,t.MessageType.focusTab,n.cifVersion,s.providerId,s.name,"",r.get(Ge.correlationId)),l(e.CIFramework.Utility.createErrorMap(i.errorMsg,t.MessageType.focusTab))))}):n.logAPIFailure(n.appId,!0,a,t.MessageType.focusTab,n.cifVersion,"","","",r.get(Ge.correlationId))}function Oe(r){let i=r.get(Ge.sessionId)?r.get(Ge.sessionId):n.state.sessionManager.getFocusedSession();const[o,s]=P(r);return o&&o.sessions.has(i)?new Promise((o,s)=>{n.state.sessionManager.sessions.has(i)?(r.get(Ge.isDelete)?n.state.sessionManager.sessions.get(i).removeTemplateParams(r.get(Ge.input)):n.state.sessionManager.sessions.get(i).setTemplateParams(r.get(Ge.input)),o(new Map().set(Ge.value,n.state.sessionManager.sessions.get(i).templateParams))):s(e.CIFramework.Utility.createErrorMap("Please provide valid session id",t.MessageType.updateContext))}):Promise.reject(e.CIFramework.Utility.createErrorMap("Please provide valid session id",t.MessageType.updateContext))}function De(e){const r={};return r.reportTime=new Date().toUTCString(),r.errorMsg=e.get(Ge.errorMessage),r.errorType=n.errorTypes.InvalidParams,r.sourceFunc=e.get(Ge.functionName),n.logAPIInternalInfo(n.appId,!0,r,t.MessageType.logErrorsAndReject,n.cifVersion,"","","",e.get(Ge.correlationId)),Promise.resolve()}function ke(e){return e.set(t.AnalyticsConstants.telemetryApiName,t.AnalyticsConstants.telemetryInitApiName),new Promise((n,r)=>{Ve(t.AnalyticsConstants.initAnalyticsPlatformEventName,e)?n(new Map().set(Ge.value,"Success")):r(new Map().set(Ge.value,"Failure"))})}function Re(e,r,i){d(i)||i.forEach((e,t)=>r.set(t,e)),r.set(t.AnalyticsConstants.telemetryApiName,t.AnalyticsConstants.telemetryLogSystemEventApiName),r.get(t.AnalyticsConstants.analyticsEventType)!==t.EventType.CustomEvent&&r.set(t.AnalyticsConstants.analyticsEventType,t.EventType.SystemEvent);const o=n.state.sessionManager.getFocusedSession(),s=t.InternalEventName[e];r.set(t.AnalyticsConstants.analyticsEventName,s).set(t.AnalyticsConstants.focussedSession,o);const a=Ve(t.AnalyticsConstants.logAnalyticsPlatformEventName,r);return Promise.resolve(new Map().set(Ge.value,a))}function Be(e){const r=n.state.sessionManager.getFocusedSession();return e.set(t.AnalyticsConstants.focussedSession,r),e.set(t.AnalyticsConstants.telemetryApiName,t.AnalyticsConstants.telemetryLogCustomEventApiName),new Promise((n,r)=>{Ve(t.AnalyticsConstants.logAnalyticsPlatformEventName,e)?n(new Map().set(Ge.value,"Success")):r(new Map().set(Ge.value,"Failure"))})}function We(e){const r=n.state.sessionManager.getFocusedSession(),i=e.get(t.AnalyticsConstants.analyticsEventName);return i===t.AnalyticsConstants.sessionStarted?e.get(t.AnalyticsConstants.focussedSession):i===t.AnalyticsConstants.SessionFocusOut?e.get(Ge.previousSessionId):i===t.AnalyticsConstants.SessionFocusIn?e.get(Ge.newSessionId):i===t.AnalyticsConstants.sessionClosed?e.get(Ge.sessionId):i===t.AnalyticsConstants.cifSessionStart||i===t.AnalyticsConstants.cifSessionEnd?e.get(Ge.defaultSessionId):i===t.AnalyticsConstants.notificationReceived||i===t.AnalyticsConstants.notificationAccepted||i===t.AnalyticsConstants.notificationRejected||i===t.AnalyticsConstants.notificationTimedOut?r:r}function xe(e){const n=e.get(t.AnalyticsConstants.analyticsEventName);return!(n!==t.AnalyticsConstants.notificationReceived&&n!==t.AnalyticsConstants.notificationAccepted&&n!==t.AnalyticsConstants.notificationRejected&&n!==t.AnalyticsConstants.notificationTimedOut)}function Ve(e,r){let i=null,o=null,s=We(r);d(s)&&(s=n.state.sessionManager.getFocusedSession()),s!==Ge.defaultSessionId&&(i=n.state.sessionManager.sessions.get(s)),o=xe(r)?r.get(Ge.correlationId):null==i?null:i.correlationId;let a="",l="",c="",p="";const[g,m]=P(r,[Ge.SearchString]);d(g)||(a=g.name,l=g.providerId,c=g.apiVersion,p=g.sortOrder),r.set(t.AnalyticsConstants.channelProviderName,null==g?null:g.name),r.set(t.AnalyticsConstants.channelProviderId,null==g?null:g.providerId),r.set(t.AnalyticsConstants.enableAnalytics,null==g?null:g.enableAnalytics),r.set(t.AnalyticsConstants.clientSessionId,s),r.set(t.AnalyticsConstants.sessionUniqueId,null==i?null:i.sessionUniqueId),r.set(t.AnalyticsConstants.correlationId,o),r.set(t.AnalyticsConstants.conversationId,null==i?null:i.conversationId),r.set(t.AnalyticsConstants.providerSessionId,null==i?null:i.providerSessionId);try{n.logAPIFailure(n.appId,!0,m,t.MessageType.isConsoleApp,n.cifVersion,"","","",r.get(Ge.correlationId))}catch(e){console.log("Error in method logAPIFailure.")}const u=r.get(t.AnalyticsConstants.telemetryApiName),y=new n.AnalyticsAPIUsageTelemetry(l,a,c,u,e,p,n.appId,n.cifVersion,!1,null,"",r.get(Ge.correlationId));n.setAnalyticsAPIUsageTelemetry(y);const T=new CustomEvent(e,{bubbles:!1,cancelable:!1,detail:r});return window.dispatchEvent(T)}function Le(e){return new Promise((t,n)=>{const r=Xrm.Utility.getGlobalContext().getClientUrl()+"/api/data/v9.0/"+e.get("entityName")+e.get("options");fetch(r).then(e=>e.json()).then(e=>t(new Map().set(Ge.value,e))).catch(e=>n(new Map().set(Ge.value,e)))})}function je(r){const i={},o={},s=new Date,a=r.get(Ge.correlationId),[l,d]=P(r,[Ge.entityName]);return l?new Promise((d,c)=>{n.showMissedNotificationMessageBar(a).then(e=>{const r=new n.PerfTelemetryData(l,s,Date.now()-s.getTime(),t.MessageType.showTimeoutGlobalNotification,n.cifVersion,i,a);n.setPerfData(r);const c=new n.APIUsageTelemetry(l.providerId,l.name,l.apiVersion,t.MessageType.showTimeoutGlobalNotification,l.sortOrder,n.appId,n.cifVersion,!1,null,o,a);return n.setAPIUsageTelemetry(c),d(new Map().set(Ge.value,e))},i=>(n.logAPIFailure(n.appId,!0,i,t.MessageType.showTimeoutGlobalNotification,n.cifVersion,l.providerId,l.name,"",r.get(Ge.correlationId)),c(e.CIFramework.Utility.createErrorMap(i.errorMsg,t.MessageType.showTimeoutGlobalNotification))))}):n.logAPIFailure(n.appId,!0,d,t.MessageType.showTimeoutGlobalNotification,n.cifVersion,"","",o,r.get(Ge.correlationId))}const Ge=e.CIFramework.Constants,He=e.CIFramework.DesktopNotificationConstants,qe=new Map([["setclicktoact",[X]],["getclicktoact",[z]],["getEntityMetadata",[me]],["getenvironment",[E]],["createrecord",[re]],["retrieverecord",[ie]],["updaterecord",[oe]],["deleterecord",[ae]],["openform",[le]],["refreshform",[ge]],["setmode",[K]],["setPosition",[h]],["getmode",[Q]],["setwidth",[$]],["isConsoleApp",[S]],["getwidth",[Y]],["addGenericHandler",[b]],["removeGenericHandler",[F]],["setAgentPresence",[Te]],["initializeAgentPresenceList",[Ie]],["search",[te]],["searchandopenrecords",[J]],["renderSearchPage",[ne]],["getAllSessions",[fe]],["getFocusedSession",[Ce]],["getSession",[ve]],["canCreateSession",[_e]],["createSession",[Se]],["requestFocusSession",[Pe]],["getFocusedTab",[be]],["getTabsByTagOrName",[Fe]],["refreshTab",[Me]],["setSessionTitle",[he]],["setTabTitle",[Ae]],["createTab",[we]],["focusTab",[Ue]],["openkbsearchcontrol",[Z]],["notifyEvent",[ue]],["insertNotes",[ye]],["logErrorsAndReject",[De]],["initLogAnalytics",[ke]],["logAnalyticsEvent",[Be]],["updateContext",[Oe]],["openDialog",[de]],["notifyKpiBreach",[Ee]],["notifyNewActivity",[Ne]],["updateConversation",[se]],["debugInformationEvent",[B]],["onUserActivity",[q]],["showGlobalNotification",[ce]],["clearGlobalNotification",[pe]],["showTimeoutGlobalNotification",[je]],["executeFetchQuery",[Le]]]),Xe=new Map;n.state={};let ze={};const Ke=window.parent;n.cifVersion="",navigationType="",n.crmVersion="",n.IsPlatformNotificationTimeoutInfra=!1,n.cifPatchVersion="";const Qe=i(),$e=r(Qe),Ye=function(e){return(e?e:"")+"visibilitychange"}(Qe);n.registerOCApplicationTabVisibilityEvents=function(){window.top.document.addEventListener(Ye,a,!1),window.top.document.addEventListener("focus",()=>{a(!0)},!1),window.top.document.addEventListener("blur",()=>{a(!1)},!1),window.top.addEventListener("focus",()=>{a(!0)},!1),window.top.addEventListener("blur",()=>{a(!1)},!1)},n.requestPermissionForDesktopNotifications=function(){Notification.requestPermission()},n.isBroadcastChannelSupportedInBroswer=l,n.isNullOrUndefined=d,n.isIFrameNullOrUndefined=function(e){return d(window.top.frames[e])},n.isServiceWorkerSupported=c,n.initializeCI=function(r,i){new Date;n.initializeTelemetry(),n.state.client=n.setClient(r);const o=n.state.client.getClientSessionId().toString();if(n.logTelemetryMarker(o,t.ScenarioEvent.InitCIF,t.ScenarioState.Started,null,o),!n.state.client.checkCIFCapability())return n.logTelemetryMarker(o,t.ScenarioEvent.InitCIF,t.ScenarioState.Completed,{error:"checkCIFCapability returned false"},o,t.ScenarioStatus.Failure),!1;const s=t.Utility.extractParameter(window.top.location.search,"flags");if(s){const e=s.toLowerCase();navigationType=e.includes("navigationtype=multisession")?n.SessionType.MultiSession:e.includes("navigationtype=singlesession")?n.SessionType.SingleSession:i}else navigationType=i;n.state.sessionManager=n.GetSessionManager(r);let a=n.state.sessionManager.initPromises;a||(a=[]),ze=n.GetPresenceManager(r),n.appId=top.location.search.split("appid=")[1].split("&")[0];try{const e=document.createElement("script");e.src=Xrm.Page.context.getClientUrl()+"/WebResources/CRMClients/msdyn_ProductivityMacros_internal_library.js",document.getElementsByTagName("body")[0].appendChild(e)}catch(e){console.log("Failed to load msdyn_ProductivityMacros_internal_library.js")}try{const e=document.createElement("script");e.src=Xrm.Page.context.getClientUrl()+"/WebResources/CRMClients/msdyn_LogicAppExecutor.js",document.getElementsByTagName("body")[0].appendChild(e)}catch(e){console.log("Failed to load LogicAppExecutor.js")}try{const r=document.createElement("script");r.src=Xrm.Page.context.getClientUrl()+"/WebResources/CRMClients/msdyn_CIFAnalytics_internal_library.js",window.addEventListener("beforeunload",()=>{if(n.state.isAnalyticsEnabledForAnyProvider){const n=new Map().set(e.CIFramework.Constants.value,new Map().set(e.CIFramework.Constants.actionName,t.InternalEventName.CifSessionEnd));Re(t.InternalEventName.CifSessionEnd,n)}}),document.getElementsByTagName("body")[0].appendChild(r)}catch(e){console.log("Failed to load msdyn_CIFAnalytics_internal_library.js")}return m(),y(),u(),a.push(I()),Promise.all(a).then(()=>{n.logTelemetryMarker(o,t.ScenarioEvent.InitCIF,t.ScenarioState.Completed,null,o,t.ScenarioStatus.Success)},e=>{n.logTelemetryMarker(o,t.ScenarioEvent.InitCIF,t.ScenarioState.Completed,e,o,t.ScenarioStatus.Failure)}),!1},n.isConsoleAppInternal=_,n.isConsoleApp=S,n.setPosition=h,n.getPosition=function(e){const r={},i=new Date,o=n.state.client.getPanelPosition(r),s=new n.PerfTelemetryData(e,i,Date.now()-i.getTime(),t.MessageType.getPosition,r);return n.setPerfData(s),o},n.getEnvironment=E,n.addGenericHandler=b,n.removeGenericHandler=F,n.onOpenUrl=D,n.onFetchDebugInfoFromProvider=function(n){console.log("Debug event : Raise event on active provider to fetch diagnostic data");let r="";return new Promise((i,o)=>{A(e.CIFramework.Utility.buildMap(event),t.MessageType.fetchDebugData,n).then(e=>{r=d(e)?"No data fetched from provider":e,i(r)},e=>{o(JSON.stringify(e))})})},n.debugInformationEvent=B,n.onKeyDownEvent=W,n.onClickToAct=x,n.onSendKBArticle=V,n.sendGenericMessage=L,n.onSetPresence=j,n.onNotificationDisplay=G,n.onWindowFocusChange=H,n.onUserActivity=q,n.setClickToAct=X,n.getClickToAct=z,n.setMode=K,n.getMode=Q,n.setWidth=$,n.getWidth=Y,n.openKBSearchControl=Z,n.searchAndOpenRecords=J,n.search=te,n.renderSearchPage=ne,n.createRecord=re,n.retrieveRecord=ie,n.updateRecord=oe,n.updateConversation=se,n.deleteRecord=ae,n.openForm=le,n.openDialog=de,n.showGlobalNotification=ce,n.clearGlobalNotification=pe,n.refreshForm=ge,n.getEntityMetadata=me,n.notifyEvent=ue,n.insertNotes=ye,n.setAgentPresence=Te,n.initializeAgentPresenceList=Ie,n.getAllSessions=fe,n.getFocusedSession=Ce,n.getSession=ve,n.canCreateSession=_e,n.createSession=Se,n.setSessionTitle=he,n.setTabTitle=Ae,n.requestFocusSession=Pe,n.notifyKpiBreach=Ee,n.notifyNewActivity=Ne,n.getFocusedTab=be,n.getTabsByTagOrName=Fe,n.refreshTab=Me,n.createTab=we,n.focusTab=Ue,n.updateContext=Oe,n.logErrorsAndReject=De,n.raiseInitAnalyticsEvent=ke,n.raiseSystemAnalyticsEvent=Re,n.raiseCustomAnalyticsEvent=Be,n.raiseAnalyticsEventInternal=Ve,n.resetPresence=function(){return A(new Map,t.MessageType.onResetPresenceEvent,null,!0).then(e=>(e&&e instanceof Array&&0<e.length&&ze.setAgentPresence(e[0].currentPresenceStatusInfo),e))},n.executeFetchQuery=Le,n.showTimeoutGlobalNotification=je})(n=t.Internal||(t.Internal={}))})(t=e.CIFramework||(e.CIFramework={}))})(Microsoft||(Microsoft={}));var Microsoft;(function(t){var e;(function(e){var n;(function(n){class r{constructor(){}static get Instance(){return null==this.instance&&(this.instance=new r),this.instance}setAllPresences(e){if(null!=e){const t=document.createElement("div");t.classList.add("PresenceListInnerNode"),t.setAttribute("role","menu");const n=document.createElement("div");n.classList.add("headerDiv"),n.innerText="Set Presence",t.appendChild(n);for(let n=0;n<e.length;n++){const r=document.createElement("div");r.id=e[n].presenceId,r.classList.add("PresenceListItem"),r.tabIndex=0,r.setAttribute("role","menuitem"),r.setAttribute("aria-label",e[n].presenceText);const i=document.createElement("div");i.classList.add("ColorNode"),i.style.backgroundColor=e[n].presenceColor,r.appendChild(i);const o=document.createElement("div");o.classList.add("textNode"),o.innerText=e[n].presenceText,r.appendChild(o);const s=document.createElement("br");r.appendChild(s),t.appendChild(r)}return t.addEventListener("click",this.raiseSetPresence,!1),t.addEventListener("keydown",this.keyboardPresenceHandler,!1),t}else{const e=document.createElement("div");return e}}setAgentPresence(t){const r=document.createElement("div");r.classList.add("agentPresenceDiv"),r.title=t.presenceText,r.tabIndex=0,r.setAttribute("role","button"),r.setAttribute("aria-label","set your presence status . current presence status is "+r.title),r.addEventListener("click",this.toggleList,!1),r.addEventListener("keypress",this.keyboardToggleList,!1);const i=document.createElement("div");i.classList.add("innerDiv"),n.isConsoleAppInternal()||(i.style.display="flex");const o=document.createElement("div");o.classList.add("backgroundColorDiv");const s=document.createElement("img");s.classList.add("userImageNode"),s.src="/_imgs/svg_2.svg",s.alt=e.Utility.getResourceString("AGENT_IMAGE_ALT_TEXT"),o.appendChild(s),i.appendChild(o);const a=document.createElement("div");a.style.backgroundColor=t.presenceColor,a.innerText=" ",a.classList.add("agentPresenceColorNode"),i.appendChild(a);const l=document.createElement("div");return l.innerText=t.presenceText,l.id="TextNode",l.classList.add("textNode"),r.appendChild(i),r.appendChild(l),r}toggleList(){const e=window.top.document.getElementById("SidePanelIFrame").contentDocument.getElementById("PresenceList");"none"===window.getComputedStyle(e).display?(window.top.Xrm&&!window.top.Xrm.Panel.state&&(window.top.Xrm.Panel.state=1),e.style.display="block",window.top.document.getElementById("SidePanelIFrame").contentDocument.getElementsByClassName("PresenceListItem")[0].focus()):e.style.display="none"}keyboardToggleList(n){if((13===n.keyCode||32===n.keyCode)&&t.CIFramework.Internal.PresenceControl.Instance.toggleList(),27===n.keyCode){const e=window.top.document.getElementById("SidePanelIFrame").contentDocument.getElementById("PresenceList");e&&(e.style.display="none")}}raiseSetPresence(t){const e=window.top.document.getElementById("SidePanelIFrame").contentDocument.getElementById("PresenceList");e.style.display="none";const r={},i=t.target;if("headerDiv"!==i.className&&"PresenceListInnerNode"!==i.className){n.isNullOrUndefined(i.getAttribute("id"))||""===i.getAttribute("id")?(r.presenceId=i.parentElement.getAttribute("id"),r.presenceText=i.parentElement.firstElementChild.nextSibling.innerText,r.presenceColor=i.parentElement.firstChild.style.backgroundColor,r.basePresenceStatus=i.parentElement.firstElementChild.nextSibling.innerText):(r.presenceId=i.getAttribute("id"),r.presenceText=i.firstElementChild.nextSibling.innerText,r.presenceColor=i.firstChild.style.backgroundColor,r.basePresenceStatus=i.firstElementChild.nextSibling.innerText);const e=new CustomEvent("setPresenceEvent",{detail:{presenceId:r.presenceId,presenceInfo:r}});window.parent.dispatchEvent(e)}}keyboardPresenceHandler(n){const e=n.target,r=n.currentTarget;if((13===n.keyCode||32===n.keyCode)&&t.CIFramework.Internal.PresenceControl.Instance.raiseSetPresence(n),27===n.keyCode){const e=window.top.document.getElementById("SidePanelIFrame").contentDocument.getElementById("PresenceList");e&&(e.style.display="none")}if(38===n.keyCode&&null!=e.previousSibling&&0<e.previousSibling.classList.length)if(e.previousSibling.classList.contains("headerDiv")){const e=r.getElementsByClassName("PresenceListItem");e[e.length-1].focus()}else e.previousSibling.focus();40===n.keyCode&&(null==e.nextSibling?r.getElementsByClassName("PresenceListItem")[0].focus():e.nextSibling.focus())}}n.PresenceControl=r})(n=e.Internal||(e.Internal={}))})(e=t.CIFramework||(t.CIFramework={}))})(Microsoft||(Microsoft={}));var Microsoft;(function(e){var t;(function(e){var t;(function(e){e.setClient=function(t){return t===e.ClientType.UnifiedClient?e.unifiedClient():e.unifiedClient()},e.GetPresenceManager=function(t){return t===e.ClientType.UnifiedClient?e.isConsoleAppInternal()?e.UCIConsoleAppManager():e.UCIPresenceManager():e.UCIPresenceManager()}})(t=e.Internal||(e.Internal={}))})(t=e.CIFramework||(e.CIFramework={}))})(Microsoft||(Microsoft={}));var Microsoft;(function(e){var t;(function(t){var n;(function(t){t.SessionImageHelper=class{constructor(){this.backgroundColors=["#005C62","#358717","#725A0D","#A42B1A","#652F4E","#6A1E7A","#315FA2"],this.sessionIconSvg="<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"32\" height=\"32\" id=\"SESSION_ID\"><g id=\"indicator-container\"><circle id=\"user-image\" cx=\"14\" cy=\"14\" r=\"14\" fill=\"ICON_BACKGROUND\"/><text id=\"user-initials\" x=\"14\" y=\"19\" font-size=\"0.714286rem\" font-family=\"Segoe UI\" font-weight=\"600\" font-style=\"normal\" letter-spacing=\"0\" text-anchor=\"middle\" fill=\"#FFF\">Test</text></g><g id=\"sentiment-overlay-container\"></g><g id=\"unread-activity-container\"></g></svg>",this.sentimentOverlay="<g id=\"sentiment-overlay\"><circle cx=\"14\" cy=\"14\" r=\"14\" fill=\"rgba(191, 9, 0, 0.8)\" fill-opacity=\"0.8\"/><text x=\"14\" y=\"19\" text-anchor=\"middle\" fill=\"#FFF\" font-size=\"14px\" font-family=\"Segoe UI\" font-weight=\"bold\">!</text></g>",this.unreadMessageCount="<g id=\"unread-activity\"><circle id =\"unread-circle\" cx =\"24\" cy =\"25\" r =\"7\" stroke=\"#FFF\" stroke-width=\"1.5\" fill=\"#006dd1\"/><text id=\"unread-value\" x=\"24\" y=\"29\" font-size=\"12px\" font-family=\"Segoe UI\" font-weight=\"semibold\" font-style=\"normal\" letter-spacing=\"0\" text-anchor=\"middle\" fill=\"#FFF\">2</text></g>",this.parser=new DOMParser}getUserInitials(e){let t="";if(e)for(let n=e.split(" "),r=0;r<n.length&&2>t.length;r++)if(0<n[r].length){const e=n[r].charCodeAt(0);if(97<=e&&122>=e||65<=e&&90>=e)t+=n[r].charAt(0);else{t+=n[r].charAt(0);break}}return t.toUpperCase()}getTitleForSessionIcon(t,n,r){let i="";const o=t.getElementById("sentiment-overlay"),s=t.getElementById("unread-activity"),a=e.CIFramework.Utility.getResourceString("KPI_BREACH_TEXT"),l=e.CIFramework.Utility.getResourceString("ACTIVITY_INDICATOR_TEXT");return null!=n&&""!==n&&(i=n),o?i+=". "+a:s&&(0===r?i+=".  "+l:i+=". "+r+" "+l),i}createImageForSession(t){let e=this.sessionIconSvg;const n=this.getUserInitials(t);let r=0;for(let n=t.length-1;0<=n;n--){const i=t.charCodeAt(n),o=n%8;r^=(i<<o)+(i>>8-o)}const i=this.backgroundColors[r%this.backgroundColors.length];e=e.replace("ICON_BACKGROUND",i);const o=this.parser.parseFromString(e,"image/svg+xml");return o.getElementById("user-initials").textContent=n,{iconPath:"data:image/svg+xml;charset=utf-8,"+encodeURIComponent(o.documentElement.outerHTML),iconTitle:this.getTitleForSessionIcon(o,t)}}getImageForSession(e){if(null!=e){const t=e.iconPath;if(null!=t){const e=t.lastIndexOf(","),n=t.substr(e+1);return decodeURIComponent(n)}}return null}updateImageOnTitleUpdate(e,t){const n=this.getImageForSession(e),r=e.iconTitle,i=this.getUserInitials(t),o=this.parser.parseFromString(n,"image/svg+xml");return o.getElementById("user-initials").textContent=i,{iconPath:"data:image/svg+xml;charset=utf-8,"+encodeURIComponent(o.documentElement.outerHTML),iconTitle:r.replace(e.title,t)}}getImageOptionsForKPIBreach(e,t,n){const r=e.title,i=this.getImageForSession(e);let o=e.iconTitle;const s=this.parser.parseFromString(i,"image/svg+xml");if(null==t||!t)s.getElementById("sentiment-overlay")&&s.getElementById("sentiment-overlay").remove();else if(t&&null==s.getElementById("sentiment-overlay")){const e=this.sentimentOverlay;s.getElementById("sentiment-overlay-container").innerHTML=e}return o=this.getTitleForSessionIcon(s,r,n?n:0),{iconPath:"data:image/svg+xml;charset=utf-8,"+encodeURIComponent(s.documentElement.outerHTML),iconTitle:o}}getImageOptionsForActivityIndicator(e,t,n){const r=e.title,i=this.getImageForSession(e);let o=e.iconTitle;const s=this.parser.parseFromString(i,"image/svg+xml");if(null!=s.getElementById("unread-activity")&&s.getElementById("unread-activity").remove(),null!=t&&(null==n||!n)){const e=this.unreadMessageCount;s.getElementById("unread-activity-container").innerHTML+=e,s.getElementById("unread-value").textContent=0===t?"":9<t?"+":t.toString()}return o=this.getTitleForSessionIcon(s,r,t),{iconPath:"data:image/svg+xml;charset=utf-8,"+encodeURIComponent(s.documentElement.outerHTML),iconTitle:o}}}})(n=t.Internal||(t.Internal={}))})(t=e.CIFramework||(e.CIFramework={}))})(Microsoft||(Microsoft={}));
+var Microsoft;
+(function(e) {
+    var t;
+    (function(t) {
+        var n;
+        (function(t) {
+            t.retryCount = 3,
+            t.promiseTimeOut = 1e4,
+            t.messageCorrelationId = "messageCorrelationId",
+            t.messageSuccess = "success",
+            t.messageFailure = "failure",
+            t.messageConstant = "message",
+            t.originURL = "originURL",
+            t.message = "message",
+            t.rejectWithErrorMessage = function(t) {
+                return Promise.reject(JSON.stringify(e.CIFramework.Utility.buildEntity(e.CIFramework.Utility.createErrorMap(t))))
+            }
+        }
+        )(n = t.postMessageNamespace || (t.postMessageNamespace = {}))
+    }
+    )(t = e.CIFramework || (e.CIFramework = {}))
+}
+)(Microsoft || (Microsoft = {}));
+var Microsoft;
+(function(e) {
+    var t;
+    (function(t) {
+        var n;
+        (function(n) {
+            function i(e, n) {
+                return new Map().set(t.Constants.message, e).set(t.Constants.name, n)
+            }
+            function r(e) {
+                return e.message !== void 0
+            }
+            function a(e) {
+                let t = {}
+                  , n = Object.getOwnPropertyNames(Object.getPrototypeOf(e)).filter(e=>"constructor" != e);
+                for (let i in n) {
+                    let r = n[i];
+                    t[r] = "object" == typeof e[r] ? a(e[r]) : e[r]
+                }
+                return t
+            }
+            n.createErrorMap = i,
+            n.isError = r,
+            n.launchSearchPage = function(t, n) {
+                try {
+                    const i = {
+                        pageType: "search",
+                        searchText: e.CIFramework.Utility.extractSearchText(t),
+                        searchType: 1,
+                        EntityNames: [n],
+                        EntityGroupName: ""
+                    };
+                    Xrm.Navigation.navigateTo(i)
+                } catch (e) {}
+            }
+            ,
+            n.buildMap = function(e) {
+                if (r(e))
+                    return i(e.message);
+                else {
+                    let t = new Map;
+                    return Object.keys(e).forEach(n=>{
+                        t.set(n, e[n])
+                    }
+                    ),
+                    t
+                }
+            }
+            ,
+            n.mapToString = function(e, t=[]) {
+                let n = "";
+                return e ? (e.forEach((e,i)=>{
+                    -1 == t.indexOf(i) && (n += i + " : " + e + ", ")
+                }
+                ),
+                n) : ""
+            }
+            ,
+            n.flatten = a,
+            n.buildEntity = function(e) {
+                let t = {};
+                return e.forEach((e,n)=>{
+                    t[n] = e
+                }
+                ),
+                t
+            }
+            ,
+            n.extractParameter = function(e, t) {
+                var n = {};
+                if (e) {
+                    var i = e.substr(1).split("&");
+                    i.forEach(e=>{
+                        var t = e.split("=")
+                          , i = decodeURIComponent(t.shift())
+                          , r = decodeURIComponent(t.join("="));
+                        n[i] = r
+                    }
+                    )
+                }
+                return n.hasOwnProperty(t) ? n[t] : ""
+            }
+            ,
+            n.extractSearchText = function(e) {
+                if (e) {
+                    let t = e.split("=");
+                    return null != t[1] && "" != t[1] ? t[1] : ""
+                }
+                return ""
+            }
+            ,
+            n.splitQueryForSearch = function(e) {
+                var t = [];
+                e && (t = e.split("&"));
+                let n = ["", ""];
+                return t.forEach(e=>{
+                    e.startsWith("$search") || e.startsWith("?$search") ? n[1] = e : "" == n[0] ? n[0] += e : n[0] += "&" + e
+                }
+                ),
+                n[0].startsWith("?") || (n[0] = "?" + n[0]),
+                n[1].startsWith("?") && (n[1] = n[1].substr(1)),
+                n
+            }
+            ,
+            n.rgb2hex = function(e) {
+                var t = e.replace(/\s/g, "").match(/^rgba?\((\d+),(\d+),(\d+)/i);
+                return t && 4 === t.length ? "#" + ("0" + parseInt(t[1], 10).toString(16)).slice(-2).toUpperCase() + ("0" + parseInt(t[2], 10).toString(16)).slice(-2).toUpperCase() + ("0" + parseInt(t[3], 10).toString(16)).slice(-2).toUpperCase() : e
+            }
+            ,
+            n.getElementFromIframe = function(e, t) {
+                return e.contentWindow.document.getElementById(t)
+            }
+            ,
+            n.getElementsByClassName = function(e, t) {
+                return e.contentWindow.document.getElementsByClassName(t)
+            }
+        }
+        )(n = t.Utility || (t.Utility = {}))
+    }
+    )(t = e.CIFramework || (e.CIFramework = {}))
+}
+)(Microsoft || (Microsoft = {}));
+var Microsoft;
+(function(e) {
+    var t;
+    (function(e) {
+        class t {
+        }
+        t.setClickToAct = "setclicktoact",
+        t.getClickToAct = "getclicktoact",
+        t.searchAndOpenRecords = "searchandopenrecords",
+        t.openForm = "openform",
+        t.createRecord = "createrecord",
+        t.deleteRecord = "deleterecord",
+        t.retrieveRecord = "retrieverecord",
+        t.updateRecord = "updaterecord",
+        t.search = "search",
+        t.setMode = "setmode",
+        t.setWidth = "setwidth",
+        t.getMode = "getmode",
+        t.getEnvironment = "getenvironment",
+        t.getWidth = "getwidth",
+        t.onClickToAct = "onclicktoact",
+        t.onModeChanged = "onmodechanged",
+        t.onSizeChanged = "onsizechanged",
+        t.onPageNavigate = "onpagenavigate",
+        t.onSendKBArticle = "onsendkbarticle",
+        t.onSetPresence = "onSetPresence",
+        t.onUISessionVisibilityChanged = "onUISessionVisibilityChanged",
+        t.onUISessionStarted = "onUISessionStarted",
+        t.onUISessionEnded = "onUISessionEnded",
+        t.getEntityMetadata = "getEntityMetadata",
+        t.notifyEvent = "notifyEvent",
+        t.softNotification = "softNotification",
+        t.broadCast = "broadCast",
+        t.internalCommunication = "internalCommunication",
+        t.notification = "notification",
+        t.transfer = "transfer",
+        t.escalation = "escalation",
+        t.renderSearchPage = "renderSearchPage",
+        t.startUISession = "startUISession",
+        t.switchUISession = "switchUISession",
+        t.endUISession = "endUISession",
+        t.onMaxUISessionsReached = "onMaxUISessionsReached",
+        t.setAgentPresence = "setAgentPresence",
+        t.initializeAgentPresenceList = "initializeAgentPresenceList",
+        t.insertNotes = "insertNotes",
+        t.openKBSearchControl = "openkbsearchcontrol",
+        t.onSetPresenceEvent = "setPresenceEvent",
+        t.hardNotification = "hardNotification",
+        t.removeGenericHandler = "removeGenericHandler",
+        t.addGenericHandler = "addGenericHandler",
+        e.MessageType = t;
+        class n {
+        }
+        n.customParams = "msdyn_customparams",
+        n.customParamsKey = "customParams",
+        n.value = "value",
+        n.entityName = "entityName",
+        n.entityId = "entityId",
+        n.queryParameters = "queryParameters",
+        n.message = "message",
+        n.searchOnly = "searchOnly",
+        n.entityFormOptions = "entityFormOptions",
+        n.entityFormParameters = "entityFormParameters",
+        n.ScriptIdAttributeName = "data-cifid",
+        n.ScriptIdAttributeValue = "CIFMainLibrary",
+        n.ScriptCRMUrlAttributeName = "data-crmurl",
+        n.name = "msdyn_name",
+        n.originURL = "originURL",
+        n.CIClickToAct = "CIClickToAct",
+        n.CISendKBArticle = "KMClickToSend",
+        n.SetPresenceEvent = "setPresenceEvent",
+        n.widgetIframeId = "SidePanelIFrame",
+        n.clickToActAttributeName = "msdyn_clicktoact",
+        n.systemUserLogicalName = "systemuser",
+        n.appSelectorFieldName = "msdyn_appselector",
+        n.sortOrderFieldName = "msdyn_sortorder",
+        n.roleSelectorFieldName = "msdyn_roleselector",
+        n.providerOdataQuery = "?$select=fullname&$expand=msdyn_ciprovider_systemuser_membership($filter=statecode eq 0;$orderby=msdyn_sortorder asc,createdon asc;$top={0})",
+        n.providerNavigationProperty = "msdyn_ciprovider_systemuser_membership",
+        n.providerId = "msdyn_ciproviderid",
+        n.landingUrl = "msdyn_landingurl",
+        n.label = "msdyn_label",
+        n.providerLogicalName = "msdyn_ciprovider",
+        n.widgetHeight = "msdyn_widgetheight",
+        n.widgetWidth = "msdyn_widgetwidth",
+        n.SizeChangeHandler = "sizeChangeHandler",
+        n.ModeChangeHandler = "modeChangedHandler",
+        n.NavigationHandler = "NavigationHandler",
+        n.AppName = "appName",
+        n.ClientUrl = "clientUrl",
+        n.AppUrl = "appUrl",
+        n.Theme = "themeName",
+        n.OrgLcid = "orgLcid",
+        n.OrgUniqueName = "orgUniqueName",
+        n.UserId = "userId",
+        n.UserLcid = "userLcid",
+        n.UserName = "username",
+        n.DefaultCountryCode = "defaultCountryCode",
+        n.MinimizedHeight = 34,
+        n.DefaultFullWidth = 100,
+        n.APIVersion = "msdyn_ciproviderapiversion",
+        n.SortOrder = "msdyn_sortorder",
+        n.crmVersion = "crmVersion",
+        n.CIFInitEvent = "CIFInitDone",
+        n.Attributes = "attributes",
+        n.UciLib = "ucilib",
+        n.OrgId = "orgId",
+        n.trustedDomain = "msdyn_trusteddomain",
+        n.eventType = "eventType",
+        n.headerDataCIF = "headerDataCIF",
+        n.bodyDataCIF = "bodyDataCIF",
+        n.notificationUXObject = "notificationUXObject",
+        n.actionDisplayText = "actionDisplayText",
+        n.actionReturnValue = "actionReturnValue",
+        n.actionsCIF = "actions",
+        n.actionName = "actionName",
+        n.CIFNotificationIcon = "CIFNotificationIcon",
+        n.actionColor = "actionColor",
+        n.actionImage = "actionImage",
+        n.Timeout = "Timeout",
+        n.Accept = "Accept",
+        n.Reject = "Reject",
+        n.actionType = "actionType",
+        n.notificationType = "notificationType",
+        n.Timer = "Timer",
+        n.NoOfNotifications = "NoOfNotifications",
+        n.SMS = "sms",
+        n.Chat = "chat",
+        n.Call = "call",
+        n.Case = "case",
+        n.SearchString = "searchString",
+        n.context = "context",
+        n.initials = "initials",
+        n.sessionId = "sessionId",
+        n.MaxUISessions = 5,
+        n.sessionColors = ["#2A757D", "#70278B", "#FF8C00", "#427825", "#B4009E", "#B4A0FF"],
+        n.sessionPanel = "sessionPanel",
+        n.DEFAULT_WIDGET_WIDTH = 378,
+        n.DEFAULT_SIDEPANEL_WIDTH = 34,
+        n.DEFAULT_SIDEPANEL_WIDTH_WITH_BORDER = 36,
+        n.presenceInfo = "presenceInfo",
+        n.presenceList = "presenceList",
+        n.activityType = "activityType",
+        n.sessionDetails = "sessionDetails",
+        n.activityId = "activityId",
+        n.Id = "id",
+        n.notetext = "notetext",
+        n.annotation = "annotation",
+        n.entitySetName = "entitySetName",
+        n.annotationId = "annotationid",
+        n.secRemaining = "secs remaining",
+        n.Informational = "informational",
+        n.Failure = "failure",
+        n.cifSolVersion = "msdyn_cifsolversion",
+        n.isDirty = "isDirty",
+        e.Constants = n,
+        e.isNullOrUndefined = function(e) {
+            return null == e || "undefined" == typeof e
+        }
+    }
+    )(t = e.CIFramework || (e.CIFramework = {}))
+}
+)(Microsoft || (Microsoft = {})),
+function(e, t) {
+    if ("object" == typeof exports && "object" == typeof module)
+        module.exports = t();
+    else if ("function" == typeof define && define.amd)
+        define([], t);
+    else {
+        var n = t();
+        for (var r in n)
+            ("object" == typeof exports ? exports : e)[r] = n[r]
+    }
+}(this, function() {
+    var e = Math.abs
+      , t = Math.floor;
+    return function(e) {
+        function t(i) {
+            if (n[i])
+                return n[i].exports;
+            var r = n[i] = {
+                i: i,
+                l: !1,
+                exports: {}
+            };
+            return e[i].call(r.exports, r, r.exports, t),
+            r.l = !0,
+            r.exports
+        }
+        var n = {};
+        return t.m = e,
+        t.c = n,
+        t.i = function(e) {
+            return e
+        }
+        ,
+        t.d = function(e, n, i) {
+            t.o(e, n) || Object.defineProperty(e, n, {
+                configurable: !1,
+                enumerable: !0,
+                get: i
+            })
+        }
+        ,
+        t.n = function(e) {
+            var n = e && e.__esModule ? function() {
+                return e["default"]
+            }
+            : function() {
+                return e
+            }
+            ;
+            return t.d(n, "a", n),
+            n
+        }
+        ,
+        t.o = function(e, t) {
+            return Object.prototype.hasOwnProperty.call(e, t)
+        }
+        ,
+        t.p = "",
+        t(t.s = 30)
+    }([function(e, t) {
+        "use strict";
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        });
+        var n;
+        (function(e) {
+            e[e.Unspecified = 0] = "Unspecified",
+            e[e.String = 1] = "String",
+            e[e.Int64 = 2] = "Int64",
+            e[e.Double = 3] = "Double",
+            e[e.Boolean = 4] = "Boolean",
+            e[e.Date = 5] = "Date"
+        }
+        )(n = t.AWTPropertyType || (t.AWTPropertyType = {}));
+        var i;
+        (function(e) {
+            e[e.NotSet = 0] = "NotSet",
+            e[e.DistinguishedName = 1] = "DistinguishedName",
+            e[e.GenericData = 2] = "GenericData",
+            e[e.IPV4Address = 3] = "IPV4Address",
+            e[e.IPv6Address = 4] = "IPv6Address",
+            e[e.MailSubject = 5] = "MailSubject",
+            e[e.PhoneNumber = 6] = "PhoneNumber",
+            e[e.QueryString = 7] = "QueryString",
+            e[e.SipAddress = 8] = "SipAddress",
+            e[e.SmtpAddress = 9] = "SmtpAddress",
+            e[e.Identity = 10] = "Identity",
+            e[e.Uri = 11] = "Uri",
+            e[e.Fqdn = 12] = "Fqdn",
+            e[e.IPV4AddressLegacy = 13] = "IPV4AddressLegacy"
+        }
+        )(i = t.AWTPiiKind || (t.AWTPiiKind = {}));
+        var r;
+        (function(e) {
+            e[e.NotSet = 0] = "NotSet",
+            e[e.GenericContent = 1] = "GenericContent"
+        }
+        )(r = t.AWTCustomerContentKind || (t.AWTCustomerContentKind = {}));
+        var a;
+        (function(e) {
+            e[e.Low = 1] = "Low",
+            e[e.Normal = 2] = "Normal",
+            e[e.High = 3] = "High",
+            e[e.Immediate_sync = 5] = "Immediate_sync"
+        }
+        )(a = t.AWTEventPriority || (t.AWTEventPriority = {}));
+        var s;
+        (function(e) {
+            e[e.NonRetryableStatus = 1] = "NonRetryableStatus",
+            e[e.QueueFull = 3] = "QueueFull"
+        }
+        )(s = t.AWTEventsDroppedReason || (t.AWTEventsDroppedReason = {}));
+        var o;
+        (function(e) {
+            e[e.InvalidEvent = 1] = "InvalidEvent",
+            e[e.SizeLimitExceeded = 2] = "SizeLimitExceeded",
+            e[e.KillSwitch = 3] = "KillSwitch"
+        }
+        )(o = t.AWTEventsRejectedReason || (t.AWTEventsRejectedReason = {}))
+    }
+    , function(e, n, i) {
+        "use strict";
+        function r(e) {
+            return "string" == typeof e
+        }
+        function a(e) {
+            return "number" == typeof e
+        }
+        function s(e) {
+            return "boolean" == typeof e
+        }
+        function o(e) {
+            return e instanceof Date
+        }
+        function d(e) {
+            return (e + 62135596800000) * 10000
+        }
+        function l() {
+            return A === b && (A = "undefined" != typeof navigator && !!navigator.sendBeacon),
+            A
+        }
+        function c() {
+            return P === b && (P = "undefined" != typeof Uint8Array && !C() && !m()),
+            P
+        }
+        function p() {
+            if (N === b) {
+                var e = new XMLHttpRequest;
+                N = !("undefined" != typeof e.withCredentials || "undefined" == typeof XDomainRequest)
+            }
+            return N
+        }
+        function m() {
+            return !!("undefined" != typeof navigator && navigator.product) && "ReactNative" === navigator.product
+        }
+        function u(e) {
+            return 10 > e ? "0" + e : e.toString()
+        }
+        function g(e) {
+            if (10 > e)
+                return "00" + e;
+            return 100 > e ? "0" + e : e.toString()
+        }
+        function y(e, t) {
+            return t = v(t) ? t : E.AWTPropertyType.Unspecified,
+            t === E.AWTPropertyType.Unspecified ? _(e) : t === E.AWTPropertyType.String ? r(e) ? t : b : t === E.AWTPropertyType.Boolean ? s(e) ? t : b : t === E.AWTPropertyType.Date ? o(e) && e.getTime() !== NaN ? t : b : t === E.AWTPropertyType.Int64 ? a(e) && 0 == e % 1 ? t : b : t === E.AWTPropertyType.Double ? a(e) ? t : b : b
+        }
+        function _(e) {
+            switch (typeof e) {
+            case "string":
+                return E.AWTPropertyType.String;
+            case "boolean":
+                return E.AWTPropertyType.Boolean;
+            case "number":
+                return E.AWTPropertyType.Double;
+            case "object":
+                return o(e) ? E.AWTPropertyType.Date : b;
+            }
+            return b
+        }
+        function I(e) {
+            return !!(a(e) && 0 <= e && 13 >= e)
+        }
+        function T(e) {
+            return !!(a(e) && 0 <= e && 1 >= e)
+        }
+        function v(e) {
+            return !!(a(e) && 0 <= e && 4 >= e)
+        }
+        function C() {
+            if ("undefined" != typeof navigator && navigator.userAgent) {
+                var e = navigator.userAgent.toLowerCase();
+                if ((0 <= e.indexOf("safari") || 0 <= e.indexOf("firefox")) && 0 > e.indexOf("chrome"))
+                    return !0
+            }
+            return !1
+        }
+        function h(e) {
+            return e === void 0 || e === b || "" === e
+        }
+        Object.defineProperty(n, "__esModule", {
+            value: !0
+        });
+        var f = i(4)
+          , E = i(0)
+          , S = /[xy]/g
+          , b = null;
+        n.EventNameAndTypeRegex = /^[a-zA-Z]([a-zA-Z0-9]|_){2,98}[a-zA-Z0-9]$/,
+        n.EventNameDotRegex = /\./g,
+        n.PropertyNameRegex = /^[a-zA-Z](([a-zA-Z0-9|_|\.]){0,98}[a-zA-Z0-9])?$/,
+        n.StatsApiKey = "a387cfcf60114a43a7699f9fbb49289e-9bceb9fe-1c06-460f-96c5-6a0b247358bc-7238";
+        var A = b
+          , P = b
+          , N = b;
+        n.numberToBondInt64 = function(e) {
+            var n = new f.Int64("0");
+            return n.low = 4294967295 & e,
+            n.high = t(e / 4294967296),
+            n
+        }
+        ,
+        n.newGuid = function() {
+            return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(S, function(e) {
+                var t = 0 | 16 * Math.random()
+                  , n = "x" === e ? t : 8 | 3 & t;
+                return n.toString(16)
+            })
+        }
+        ,
+        n.isString = r,
+        n.isNumber = a,
+        n.isBoolean = s,
+        n.isDate = o,
+        n.msToTicks = d,
+        n.getTenantId = function(e) {
+            var t = e.indexOf("-");
+            return -1 < t ? e.substring(0, t) : ""
+        }
+        ,
+        n.isBeaconsSupported = l,
+        n.isUint8ArrayAvailable = c,
+        n.isPriority = function(e) {
+            return !!(a(e) && (1 <= e && 3 >= e || 5 === e))
+        }
+        ,
+        n.sanitizeProperty = function(e, t) {
+            return !n.PropertyNameRegex.test(e) || h(t) ? b : (h(t.value) && (t = {
+                value: t,
+                type: E.AWTPropertyType.Unspecified
+            }),
+            t.type = y(t.value, t.type),
+            !t.type) ? b : (o(t.value) && (t.value = d(t.value.getTime())),
+            0 < t.pii && 0 < t.cc ? b : t.pii ? I(t.pii) ? t : b : t.cc ? T(t.cc) ? t : b : t)
+        }
+        ,
+        n.getISOString = function(e) {
+            return e.getUTCFullYear() + "-" + u(e.getUTCMonth() + 1) + "-" + u(e.getUTCDate()) + "T" + u(e.getUTCHours()) + ":" + u(e.getUTCMinutes()) + ":" + u(e.getUTCSeconds()) + "." + g(e.getUTCMilliseconds()) + "Z"
+        }
+        ,
+        n.useXDomainRequest = p,
+        n.isReactNative = m
+    }
+    , function(e, t) {
+        "use strict";
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        });
+        var n = function() {
+            function e() {}
+            return e.addNotificationListener = function(e) {
+                this.listeners.push(e)
+            }
+            ,
+            e.removeNotificationListener = function(e) {
+                for (var t = this.listeners.indexOf(e); -1 < t; )
+                    this.listeners.splice(t, 1),
+                    t = this.listeners.indexOf(e)
+            }
+            ,
+            e.eventsSent = function(e) {
+                for (var t = this, n = function(n) {
+                    r.listeners[n].eventsSent && setTimeout(function() {
+                        return t.listeners[n].eventsSent(e)
+                    }, 0)
+                }, r = this, a = 0; a < this.listeners.length; ++a)
+                    n(a)
+            }
+            ,
+            e.eventsDropped = function(e, t) {
+                for (var n = this, r = function(r) {
+                    a.listeners[r].eventsDropped && setTimeout(function() {
+                        return n.listeners[r].eventsDropped(e, t)
+                    }, 0)
+                }, a = this, s = 0; s < this.listeners.length; ++s)
+                    r(s)
+            }
+            ,
+            e.eventsRetrying = function(e) {
+                for (var t = this, n = function(n) {
+                    r.listeners[n].eventsRetrying && setTimeout(function() {
+                        return t.listeners[n].eventsRetrying(e)
+                    }, 0)
+                }, r = this, a = 0; a < this.listeners.length; ++a)
+                    n(a)
+            }
+            ,
+            e.eventsRejected = function(e, t) {
+                for (var n = this, r = function(r) {
+                    a.listeners[r].eventsRejected && setTimeout(function() {
+                        return n.listeners[r].eventsRejected(e, t)
+                    }, 0)
+                }, a = this, s = 0; s < this.listeners.length; ++s)
+                    r(s)
+            }
+            ,
+            e.listeners = [],
+            e
+        }();
+        t.default = n
+    }
+    , function(e, t, n) {
+        "use strict";
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        });
+        var i = n(14)
+          , r = n(0)
+          , a = n(28)
+          , s = n(10)
+          , o = n(5)
+          , d = n(11)
+          , l = n(1)
+          , c = "awt_stats"
+          , p = function() {
+            function e() {}
+            return e.setEventsHandler = function(e) {
+                this._eventHandler = e
+            }
+            ,
+            e.getEventsHandler = function() {
+                return this._eventHandler
+            }
+            ,
+            e.scheduleTimer = function() {
+                var e = this
+                  , t = this._profiles[this._currentProfile][2];
+                0 > this._timeout && 0 <= t && !this._paused && (this._eventHandler.hasEvents() ? (0 === t && 0 < this._currentBackoffCount && (t = 1),
+                this._timeout = setTimeout(function() {
+                    return e._batchAndSendEvents()
+                }, 1e3 * (t * (1 << this._currentBackoffCount)))) : this._timerCount = 0)
+            }
+            ,
+            e.initialize = function(e) {
+                var t = this;
+                this._newEventsAllowed = !0,
+                this._config = e,
+                this._eventHandler = new a.default(e.collectorUri,e.cacheMemorySizeLimitInNumberOfEvents,e.httpXHROverride,e.clockSkewRefreshDurationInMins),
+                this._initializeProfiles(),
+                s.default.initialize(function(e, n) {
+                    if (t._config.canSendStatEvent(c)) {
+                        var i = new o.default(c);
+                        for (var a in i.setEventPriority(r.AWTEventPriority.High),
+                        i.setProperty("TenantId", n),
+                        e)
+                            e.hasOwnProperty(a) && i.setProperty(a, e[a].toString());
+                        d.default.getLogger(l.StatsApiKey).logEvent(i)
+                    }
+                })
+            }
+            ,
+            e.setTransmitProfile = function(e) {
+                this._currentProfile !== e && void 0 !== this._profiles[e] && (this.clearTimeout(),
+                this._currentProfile = e,
+                this.scheduleTimer())
+            }
+            ,
+            e.loadTransmitProfiles = function(e) {
+                for (var t in this._resetTransmitProfiles(),
+                e)
+                    if (e.hasOwnProperty(t)) {
+                        if (3 !== e[t].length)
+                            continue;
+                        for (var n = 2; 0 <= n; --n)
+                            if (0 > e[t][n]) {
+                                for (var r = n; 0 <= r; --r)
+                                    e[t][r] = -1;
+                                break
+                            }
+                        for (var n = 2; 0 < n; --n)
+                            if (0 < e[t][n] && 0 < e[t][n - 1]) {
+                                var a = e[t][n - 1] / e[t][n];
+                                e[t][n - 1] = Math.ceil(a) * e[t][n]
+                            }
+                        this._profiles[t] = e[t]
+                    }
+            }
+            ,
+            e.sendEvent = function(e) {
+                this._newEventsAllowed && (0 < this._currentBackoffCount && e.priority === r.AWTEventPriority.Immediate_sync && (e.priority = r.AWTEventPriority.High),
+                this._eventHandler.addEvent(e),
+                this.scheduleTimer())
+            }
+            ,
+            e.flush = function(e) {
+                var t = new Date().getTime();
+                !this._paused && this._lastUploadNowCall + 3e4 < t && (this._lastUploadNowCall = t,
+                -1 < this._timeout && (clearTimeout(this._timeout),
+                this._timeout = -1),
+                this._eventHandler.uploadNow(e))
+            }
+            ,
+            e.pauseTransmission = function() {
+                this._paused || (this.clearTimeout(),
+                this._eventHandler.pauseTransmission(),
+                this._paused = !0)
+            }
+            ,
+            e.resumeTransmision = function() {
+                this._paused && (this._paused = !1,
+                this._eventHandler.resumeTransmission(),
+                this.scheduleTimer())
+            }
+            ,
+            e.flushAndTeardown = function() {
+                s.default.teardown(),
+                this._newEventsAllowed = !1,
+                this.clearTimeout(),
+                this._eventHandler.teardown()
+            }
+            ,
+            e.backOffTransmission = function() {
+                this._currentBackoffCount < 4 && (this._currentBackoffCount++,
+                this.clearTimeout(),
+                this.scheduleTimer())
+            }
+            ,
+            e.clearBackOff = function() {
+                0 < this._currentBackoffCount && (this._currentBackoffCount = 0,
+                this.clearTimeout(),
+                this.scheduleTimer())
+            }
+            ,
+            e._resetTransmitProfiles = function() {
+                this.clearTimeout(),
+                this._initializeProfiles(),
+                this._currentProfile = i.AWT_REAL_TIME,
+                this.scheduleTimer()
+            }
+            ,
+            e.clearTimeout = function() {
+                0 < this._timeout && (clearTimeout(this._timeout),
+                this._timeout = -1,
+                this._timerCount = 0)
+            }
+            ,
+            e._batchAndSendEvents = function() {
+                var e = r.AWTEventPriority.High;
+                this._timerCount++,
+                this._timerCount * this._profiles[this._currentProfile][2] === this._profiles[this._currentProfile][0] ? (e = r.AWTEventPriority.Low,
+                this._timerCount = 0) : this._timerCount * this._profiles[this._currentProfile][2] === this._profiles[this._currentProfile][1] && (e = r.AWTEventPriority.Normal),
+                this._eventHandler.sendEventsForPriorityAndAbove(e),
+                this._timeout = -1,
+                this.scheduleTimer()
+            }
+            ,
+            e._initializeProfiles = function() {
+                this._profiles = {},
+                this._profiles[i.AWT_REAL_TIME] = [4, 2, 1],
+                this._profiles[i.AWT_NEAR_REAL_TIME] = [12, 6, 3],
+                this._profiles[i.AWT_BEST_EFFORT] = [36, 18, 9]
+            }
+            ,
+            e._newEventsAllowed = !1,
+            e._currentProfile = i.AWT_REAL_TIME,
+            e._timeout = -1,
+            e._currentBackoffCount = 0,
+            e._paused = !1,
+            e._timerCount = 0,
+            e._lastUploadNowCall = 0,
+            e
+        }();
+        t.default = p
+    }
+    , function(e, t) {
+        "use strict";
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        });
+        var n = function() {
+            function e(e) {
+                this.low = 0,
+                this.high = 0,
+                this.low = parseInt(e, 10),
+                0 > this.low && (this.high = -1)
+            }
+            return e.prototype._Equals = function(t) {
+                var n = new e(t);
+                return this.low === n.low && this.high === n.high
+            }
+            ,
+            e
+        }();
+        t.Int64 = n;
+        var i = function() {
+            function e(e) {
+                this.low = 0,
+                this.high = 0,
+                this.low = parseInt(e, 10)
+            }
+            return e.prototype._Equals = function(t) {
+                var n = new e(t);
+                return this.low === n.low && this.high === n.high
+            }
+            ,
+            e
+        }();
+        t.UInt64 = i;
+        var r = function() {
+            function e() {}
+            return e._ToByte = function(e) {
+                return this._ToUInt8(e)
+            }
+            ,
+            e._ToUInt8 = function(e) {
+                return 255 & e
+            }
+            ,
+            e._ToInt32 = function(e) {
+                return 2147483647 & e | 2147483648 & e
+            }
+            ,
+            e._ToUInt32 = function(e) {
+                return 4294967295 & e
+            }
+            ,
+            e
+        }();
+        t.Number = r
+    }
+    , function(e, t, n) {
+        "use strict";
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        });
+        var i = n(1)
+          , r = n(0)
+          , a = function() {
+            function e(e) {
+                this._event = {
+                    name: "",
+                    properties: {}
+                },
+                e && this.setName(e)
+            }
+            return e.prototype.setName = function(e) {
+                this._event.name = e
+            }
+            ,
+            e.prototype.getName = function() {
+                return this._event.name
+            }
+            ,
+            e.prototype.setType = function(e) {
+                this._event.type = e
+            }
+            ,
+            e.prototype.getType = function() {
+                return this._event.type
+            }
+            ,
+            e.prototype.setTimestamp = function(e) {
+                this._event.timestamp = e
+            }
+            ,
+            e.prototype.getTimestamp = function() {
+                return this._event.timestamp
+            }
+            ,
+            e.prototype.setEventPriority = function(e) {
+                this._event.priority = e
+            }
+            ,
+            e.prototype.getEventPriority = function() {
+                return this._event.priority
+            }
+            ,
+            e.prototype.setProperty = function(e, t, n) {
+                void 0 === n && (n = r.AWTPropertyType.Unspecified);
+                var a = {
+                    value: t,
+                    type: n,
+                    pii: r.AWTPiiKind.NotSet,
+                    cc: r.AWTCustomerContentKind.NotSet
+                };
+                return a = i.sanitizeProperty(e, a),
+                null === a ? void delete this._event.properties[e] : void (this._event.properties[e] = a)
+            }
+            ,
+            e.prototype.setPropertyWithPii = function(e, t, n, a) {
+                void 0 === a && (a = r.AWTPropertyType.Unspecified);
+                var s = {
+                    value: t,
+                    type: a,
+                    pii: n,
+                    cc: r.AWTCustomerContentKind.NotSet
+                };
+                return s = i.sanitizeProperty(e, s),
+                null === s ? void delete this._event.properties[e] : void (this._event.properties[e] = s)
+            }
+            ,
+            e.prototype.setPropertyWithCustomerContent = function(e, t, n, a) {
+                void 0 === a && (a = r.AWTPropertyType.Unspecified);
+                var s = {
+                    value: t,
+                    type: a,
+                    pii: r.AWTPiiKind.NotSet,
+                    cc: n
+                };
+                return s = i.sanitizeProperty(e, s),
+                null === s ? void delete this._event.properties[e] : void (this._event.properties[e] = s)
+            }
+            ,
+            e.prototype.getPropertyMap = function() {
+                return this._event.properties
+            }
+            ,
+            e.prototype.getEvent = function() {
+                return this._event
+            }
+            ,
+            e
+        }();
+        t.default = a
+    }
+    , function(e, t) {
+        "use strict";
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        });
+        var n;
+        (function(e) {
+            e[e.Unknown = 0] = "Unknown",
+            e[e.MSACID = 1] = "MSACID",
+            e[e.MSAPUID = 2] = "MSAPUID",
+            e[e.ANID = 3] = "ANID",
+            e[e.OrgIdCID = 4] = "OrgIdCID",
+            e[e.OrgIdPUID = 5] = "OrgIdPUID",
+            e[e.UserObjectId = 6] = "UserObjectId",
+            e[e.Skype = 7] = "Skype",
+            e[e.Yammer = 8] = "Yammer",
+            e[e.EmailAddress = 9] = "EmailAddress",
+            e[e.PhoneNumber = 10] = "PhoneNumber",
+            e[e.SipAddress = 11] = "SipAddress",
+            e[e.MUID = 12] = "MUID"
+        }
+        )(n = t.AWTUserIdType || (t.AWTUserIdType = {}));
+        var i;
+        (function(e) {
+            e[e.Started = 0] = "Started",
+            e[e.Ended = 1] = "Ended"
+        }
+        )(i = t.AWTSessionState || (t.AWTSessionState = {}))
+    }
+    , function(t, n, i) {
+        "use strict";
+        Object.defineProperty(n, "__esModule", {
+            value: !0
+        });
+        var r = i(1)
+          , a = "MicrosoftApplicationsTelemetryDeviceId"
+          , s = "MicrosoftApplicationsTelemetryFirstLaunchTime"
+          , o = {
+            MSIE: "MSIE",
+            CHROME: "Chrome",
+            FIREFOX: "Firefox",
+            SAFARI: "Safari",
+            EDGE: "Edge",
+            ELECTRON: "Electron",
+            SKYPE_SHELL: "SkypeShell",
+            PHANTOMJS: "PhantomJS",
+            OPERA: "Opera"
+        }
+          , d = {
+            WINDOWS: "Windows",
+            MACOSX: "Mac OS X",
+            WINDOWS_PHONE: "Windows Phone",
+            WINDOWS_RT: "Windows RT",
+            IOS: "iOS",
+            ANDROID: "Android",
+            LINUX: "Linux",
+            CROS: "Chrome OS",
+            UNKNOWN: "Unknown"
+        }
+          , l = {
+            WIN: /(windows|win32)/i,
+            WINRT: / arm;/i,
+            WINPHONE: /windows\sphone\s\d+\.\d+/i,
+            OSX: /(macintosh|mac os x)/i,
+            IOS: /(iPad|iPhone|iPod)(?=.*like Mac OS X)/i,
+            LINUX: /(linux|joli|[kxln]?ubuntu|debian|[open]*suse|gentoo|arch|slackware|fedora|mandriva|centos|pclinuxos|redhat|zenwalk)/i,
+            ANDROID: /android/i,
+            CROS: /CrOS/i
+        }
+          , c = {
+            5.1: "XP",
+            "6.0": "Vista",
+            6.1: "7",
+            6.2: "8",
+            6.3: "8.1",
+            "10.0": "10"
+        }
+          , p = "([\\d,.]+)"
+          , m = "Unknown"
+          , u = "undefined"
+          , g = function() {
+            function t() {}
+            return t.addPropertyStorageOverride = function(e) {
+                return !!e && (this._propertyStorage = e,
+                !0)
+            }
+            ,
+            t.autoCollect = function(e, t, n) {
+                return this._semanticContext = e,
+                this._disableCookies = t,
+                this._autoCollect(),
+                n || typeof navigator === u || (n = navigator.userAgent || ""),
+                this._autoCollectFromUserAgent(n),
+                this._disableCookies && !this._propertyStorage ? (this._deleteCookie(a),
+                void this._deleteCookie(s)) : void ((this._propertyStorage || this._areCookiesAvailable && !this._disableCookies) && this._autoCollectDeviceId())
+            }
+            ,
+            t.checkAndSaveDeviceId = function(e) {
+                if (e) {
+                    var t = this._getData(a)
+                      , n = this._getData(s);
+                    t !== e && (n = r.getISOString(new Date)),
+                    this._saveData(a, e),
+                    this._saveData(s, n),
+                    this._setFirstLaunchTime(n)
+                }
+            }
+            ,
+            t._autoCollectDeviceId = function() {
+                var e = this._getData(a);
+                e || (e = r.newGuid()),
+                this._semanticContext.setDeviceId(e)
+            }
+            ,
+            t._autoCollect = function() {
+                typeof document !== u && document.documentElement && this._semanticContext.setAppLanguage(document.documentElement.lang),
+                typeof navigator !== u && this._semanticContext.setUserLanguage(navigator.userLanguage || navigator.language);
+                var t = new Date().getTimezoneOffset()
+                  , n = t % 60
+                  , i = (t - n) / 60
+                  , r = "+";
+                0 < i && (r = "-"),
+                i = e(i),
+                n = e(n),
+                this._semanticContext.setUserTimeZone(r + (10 > i ? "0" + i : i.toString()) + ":" + (10 > n ? "0" + n : n.toString()))
+            }
+            ,
+            t._autoCollectFromUserAgent = function(e) {
+                if (e) {
+                    var t = this._getBrowserName(e);
+                    this._semanticContext.setDeviceBrowserName(t),
+                    this._semanticContext.setDeviceBrowserVersion(this._getBrowserVersion(e, t));
+                    var n = this._getOsName(e);
+                    this._semanticContext.setDeviceOsName(n),
+                    this._semanticContext.setDeviceOsVersion(this._getOsVersion(e, n))
+                }
+            }
+            ,
+            t._getBrowserName = function(e) {
+                return this._userAgentContainsString("OPR/", e) ? o.OPERA : this._userAgentContainsString(o.PHANTOMJS, e) ? o.PHANTOMJS : this._userAgentContainsString(o.EDGE, e) ? o.EDGE : this._userAgentContainsString(o.ELECTRON, e) ? o.ELECTRON : this._userAgentContainsString(o.CHROME, e) ? o.CHROME : this._userAgentContainsString("Trident", e) ? o.MSIE : this._userAgentContainsString(o.FIREFOX, e) ? o.FIREFOX : this._userAgentContainsString(o.SAFARI, e) ? o.SAFARI : this._userAgentContainsString(o.SKYPE_SHELL, e) ? o.SKYPE_SHELL : m
+            }
+            ,
+            t._setFirstLaunchTime = function(e) {
+                if (!isNaN(e)) {
+                    var t = new Date;
+                    t.setTime(parseInt(e, 10)),
+                    e = r.getISOString(t)
+                }
+                this.firstLaunchTime = e
+            }
+            ,
+            t._userAgentContainsString = function(e, t) {
+                return -1 < t.indexOf(e)
+            }
+            ,
+            t._getBrowserVersion = function(e, t) {
+                return t === o.MSIE ? this._getIeVersion(e) : this._getOtherVersion(t, e)
+            }
+            ,
+            t._getIeVersion = function(e) {
+                var t = e.match(new RegExp(o.MSIE + " " + p));
+                if (t)
+                    return t[1];
+                var n = e.match(new RegExp("rv:" + p));
+                if (n)
+                    return n[1]
+            }
+            ,
+            t._getOtherVersion = function(e, t) {
+                e === o.SAFARI && (e = "Version");
+                var n = t.match(new RegExp(e + "/" + p));
+                return n ? n[1] : m
+            }
+            ,
+            t._getOsName = function(e) {
+                return e.match(l.WINPHONE) ? d.WINDOWS_PHONE : e.match(l.WINRT) ? d.WINDOWS_RT : e.match(l.IOS) ? d.IOS : e.match(l.ANDROID) ? d.ANDROID : e.match(l.LINUX) ? d.LINUX : e.match(l.OSX) ? d.MACOSX : e.match(l.WIN) ? d.WINDOWS : e.match(l.CROS) ? d.CROS : m
+            }
+            ,
+            t._getOsVersion = function(e, t) {
+                return t === d.WINDOWS ? this._getGenericOsVersion(e, "Windows NT") : t === d.ANDROID ? this._getGenericOsVersion(e, t) : t === d.MACOSX ? this._getMacOsxVersion(e) : m
+            }
+            ,
+            t._getGenericOsVersion = function(e, t) {
+                var n = e.match(new RegExp(t + " " + p));
+                return n ? c[n[1]] ? c[n[1]] : n[1] : m
+            }
+            ,
+            t._getMacOsxVersion = function(e) {
+                var t = e.match(new RegExp(d.MACOSX + " " + "([\\d,_,.]+)"));
+                if (t) {
+                    var n = t[1].replace(/_/g, ".");
+                    if (n) {
+                        var i = this._getDelimiter(n);
+                        if (i) {
+                            var r = n.split(i);
+                            return r[0]
+                        }
+                        return n
+                    }
+                }
+                return m
+            }
+            ,
+            t._getDelimiter = function(e) {
+                return -1 < e.indexOf(".") ? "." : -1 < e.indexOf("_") ? "_" : null
+            }
+            ,
+            t._saveData = function(e, t) {
+                if (this._propertyStorage)
+                    this._propertyStorage.setProperty(e, t);
+                else if (this._areCookiesAvailable) {
+                    var n = new Date;
+                    n.setTime(n.getTime() + 31536e6);
+                    var i = "expires=" + n.toUTCString();
+                    document.cookie = e + "=" + t + "; " + i
+                }
+            }
+            ,
+            t._getData = function(e) {
+                if (this._propertyStorage)
+                    return this._propertyStorage.getProperty(e) || "";
+                if (this._areCookiesAvailable) {
+                    e += "=";
+                    for (var t = document.cookie.split(";"), n = 0; n < t.length; n++) {
+                        for (var r = t[n], a = 0; " " === r.charAt(a); )
+                            a++;
+                        if (r = r.substring(a),
+                        0 === r.indexOf(e))
+                            return r.substring(e.length, r.length)
+                    }
+                }
+                return ""
+            }
+            ,
+            t._deleteCookie = function(e) {
+                this._areCookiesAvailable && (document.cookie = e + "=;expires=Thu, 01 Jan 1970 00:00:01 GMT;")
+            }
+            ,
+            t._disableCookies = !1,
+            t._areCookiesAvailable = typeof document !== u && typeof document.cookie !== u,
+            t
+        }();
+        n.default = g
+    }
+    , function(e, t, n) {
+        "use strict";
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        });
+        var i = n(7)
+          , r = n(0)
+          , a = n(6)
+          , s = "UserInfo.IdType"
+          , o = function() {
+            function e(e, t) {
+                this._allowDeviceFields = e,
+                this._properties = t
+            }
+            return e.prototype.setAppId = function(e) {
+                this._addContext("AppInfo.Id", e)
+            }
+            ,
+            e.prototype.setAppVersion = function(e) {
+                this._addContext("AppInfo.Version", e)
+            }
+            ,
+            e.prototype.setAppLanguage = function(e) {
+                this._addContext("AppInfo.Language", e)
+            }
+            ,
+            e.prototype.setDeviceId = function(e) {
+                this._allowDeviceFields && (i.default.checkAndSaveDeviceId(e),
+                this._addContext("DeviceInfo.Id", e))
+            }
+            ,
+            e.prototype.setDeviceOsName = function(e) {
+                this._allowDeviceFields && this._addContext("DeviceInfo.OsName", e)
+            }
+            ,
+            e.prototype.setDeviceOsVersion = function(e) {
+                this._allowDeviceFields && this._addContext("DeviceInfo.OsVersion", e)
+            }
+            ,
+            e.prototype.setDeviceBrowserName = function(e) {
+                this._allowDeviceFields && this._addContext("DeviceInfo.BrowserName", e)
+            }
+            ,
+            e.prototype.setDeviceBrowserVersion = function(e) {
+                this._allowDeviceFields && this._addContext("DeviceInfo.BrowserVersion", e)
+            }
+            ,
+            e.prototype.setDeviceMake = function(e) {
+                this._allowDeviceFields && this._addContext("DeviceInfo.Make", e)
+            }
+            ,
+            e.prototype.setDeviceModel = function(e) {
+                this._allowDeviceFields && this._addContext("DeviceInfo.Model", e)
+            }
+            ,
+            e.prototype.setUserId = function(e, t, n) {
+                if (!isNaN(n) && null !== n && 0 <= n && 12 >= n)
+                    this._addContext(s, n.toString());
+                else {
+                    var i;
+                    i = t === r.AWTPiiKind.SipAddress ? a.AWTUserIdType.SipAddress : t === r.AWTPiiKind.PhoneNumber ? a.AWTUserIdType.PhoneNumber : t === r.AWTPiiKind.SmtpAddress ? a.AWTUserIdType.EmailAddress : a.AWTUserIdType.Unknown,
+                    this._addContext(s, i.toString())
+                }
+                (isNaN(t) || null === t || t === r.AWTPiiKind.NotSet || 13 < t) && (t = n === a.AWTUserIdType.Skype ? r.AWTPiiKind.Identity : n === a.AWTUserIdType.EmailAddress ? r.AWTPiiKind.SmtpAddress : n === a.AWTUserIdType.PhoneNumber ? r.AWTPiiKind.PhoneNumber : n === a.AWTUserIdType.SipAddress ? r.AWTPiiKind.SipAddress : r.AWTPiiKind.NotSet),
+                this._addContextWithPii("UserInfo.Id", e, t)
+            }
+            ,
+            e.prototype.setUserAdvertisingId = function(e) {
+                this._addContext("UserInfo.AdvertisingId", e)
+            }
+            ,
+            e.prototype.setUserTimeZone = function(e) {
+                this._addContext("UserInfo.TimeZone", e)
+            }
+            ,
+            e.prototype.setUserLanguage = function(e) {
+                this._addContext("UserInfo.Language", e)
+            }
+            ,
+            e.prototype._addContext = function(e, t) {
+                "string" == typeof t && this._properties.setProperty(e, t)
+            }
+            ,
+            e.prototype._addContextWithPii = function(e, t, n) {
+                "string" == typeof t && this._properties.setPropertyWithPii(e, t, n)
+            }
+            ,
+            e
+        }();
+        t.default = o
+    }
+    , function(e, t, n) {
+        "use strict";
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        });
+        var r = n(21)
+          , a = n(0)
+          , s = n(2)
+          , o = n(1)
+          , d = 2936012
+          , i = function() {
+            function e() {}
+            return e.getPayloadBlob = function(e, t) {
+                var n = !1, l = new r.IO.MemoryStream, c = new r.CompactBinaryProtocolWriter(l), p;
+                for (var m in c._WriteFieldBegin(r._BondDataType._BT_MAP, 3, null),
+                c._WriteMapContainerBegin(t, r._BondDataType._BT_STRING, r._BondDataType._BT_LIST),
+                e)
+                    if (!!n)
+                        p || (p = {}),
+                        p[m] = e[m],
+                        delete e[m];
+                    else if (e.hasOwnProperty(m)) {
+                        c._WriteString(m);
+                        var u = e[m];
+                        c._WriteContainerBegin(1, r._BondDataType._BT_STRUCT),
+                        c._WriteFieldBegin(r._BondDataType._BT_STRING, 2, null),
+                        c._WriteString("act_default_source"),
+                        c._WriteFieldBegin(r._BondDataType._BT_STRING, 5, null),
+                        c._WriteString(o.newGuid()),
+                        c._WriteFieldBegin(r._BondDataType._BT_INT64, 6, null),
+                        c._WriteInt64(o.numberToBondInt64(Date.now())),
+                        c._WriteFieldBegin(r._BondDataType._BT_LIST, 8, null);
+                        var g = l._GetBuffer().length + 1;
+                        c._WriteContainerBegin(e[m].length, r._BondDataType._BT_STRUCT);
+                        for (var y = l._GetBuffer().length - g, _ = 0, I; _ < u.length; ++_) {
+                            if (I = l._GetBuffer().length,
+                            this.writeEvent(u[_], c),
+                            l._GetBuffer().length - I > d) {
+                                s.default.eventsRejected([u[_]], a.AWTEventsRejectedReason.SizeLimitExceeded),
+                                u.splice(_--, 1),
+                                l._GetBuffer().splice(I),
+                                this._addNewDataPackageSize(u.length, l, y, g);
+                                continue
+                            }
+                            if (l._GetBuffer().length > d) {
+                                l._GetBuffer().splice(I),
+                                p || (p = {}),
+                                e[m] = u.splice(0, _),
+                                p[m] = u,
+                                this._addNewDataPackageSize(e[m].length, l, y, g),
+                                n = !0;
+                                break
+                            }
+                        }
+                        c._WriteStructEnd(!1)
+                    }
+                return c._WriteStructEnd(!1),
+                {
+                    payloadBlob: l._GetBuffer(),
+                    remainingRequest: p
+                }
+            }
+            ,
+            e._addNewDataPackageSize = function(e, t, n, i) {
+                for (var a = r._Encoding._Varint_GetBytes(r.Number._ToUInt32(e)), s = 0; s < n; ++s)
+                    if (s < a.length)
+                        t._GetBuffer()[i + s] = a[s];
+                    else {
+                        t._GetBuffer().slice(i + s, n - s);
+                        break
+                    }
+            }
+            ,
+            e.writeEvent = function(e, t) {
+                t._WriteFieldBegin(r._BondDataType._BT_STRING, 1, null),
+                t._WriteString(e.id),
+                t._WriteFieldBegin(r._BondDataType._BT_INT64, 3, null),
+                t._WriteInt64(o.numberToBondInt64(e.timestamp)),
+                t._WriteFieldBegin(r._BondDataType._BT_STRING, 5, null),
+                t._WriteString(e.type),
+                t._WriteFieldBegin(r._BondDataType._BT_STRING, 6, null),
+                t._WriteString(e.name);
+                var n = {}
+                  , i = 0
+                  , s = {}
+                  , d = 0
+                  , l = {}
+                  , c = 0
+                  , p = {}
+                  , m = 0
+                  , u = {}
+                  , g = 0
+                  , y = {}
+                  , _ = 0
+                  , I = {}
+                  , T = 0;
+                for (var v in e.properties)
+                    if (e.properties.hasOwnProperty(v)) {
+                        var C = e.properties[v];
+                        if (0 < C.cc)
+                            I[v] = C,
+                            T++;
+                        else if (0 < C.pii)
+                            y[v] = C,
+                            _++;
+                        else
+                            switch (C.type) {
+                            case a.AWTPropertyType.String:
+                                n[v] = C.value,
+                                i++;
+                                break;
+                            case a.AWTPropertyType.Int64:
+                                s[v] = C.value,
+                                d++;
+                                break;
+                            case a.AWTPropertyType.Double:
+                                l[v] = C.value,
+                                c++;
+                                break;
+                            case a.AWTPropertyType.Boolean:
+                                p[v] = C.value,
+                                m++;
+                                break;
+                            case a.AWTPropertyType.Date:
+                                u[v] = C.value,
+                                g++;
+                            }
+                    }
+                if (i)
+                    for (var v in t._WriteFieldBegin(r._BondDataType._BT_MAP, 13, null),
+                    t._WriteMapContainerBegin(i, r._BondDataType._BT_STRING, r._BondDataType._BT_STRING),
+                    n)
+                        if (n.hasOwnProperty(v)) {
+                            var h = n[v];
+                            t._WriteString(v),
+                            t._WriteString(h.toString())
+                        }
+                if (_)
+                    for (var v in t._WriteFieldBegin(r._BondDataType._BT_MAP, 30, null),
+                    t._WriteMapContainerBegin(_, r._BondDataType._BT_STRING, r._BondDataType._BT_STRUCT),
+                    y)
+                        if (y.hasOwnProperty(v)) {
+                            var C = y[v];
+                            t._WriteString(v),
+                            t._WriteFieldBegin(r._BondDataType._BT_INT32, 1, null),
+                            t._WriteInt32(1),
+                            t._WriteFieldBegin(r._BondDataType._BT_INT32, 2, null),
+                            t._WriteInt32(C.pii),
+                            t._WriteFieldBegin(r._BondDataType._BT_STRING, 3, null),
+                            t._WriteString(C.value.toString()),
+                            t._WriteStructEnd(!1)
+                        }
+                if (m)
+                    for (var v in t._WriteFieldBegin(r._BondDataType._BT_MAP, 31, null),
+                    t._WriteMapContainerBegin(m, r._BondDataType._BT_STRING, r._BondDataType._BT_BOOL),
+                    p)
+                        if (p.hasOwnProperty(v)) {
+                            var h = p[v];
+                            t._WriteString(v),
+                            t._WriteBool(h)
+                        }
+                if (g)
+                    for (var v in t._WriteFieldBegin(r._BondDataType._BT_MAP, 32, null),
+                    t._WriteMapContainerBegin(g, r._BondDataType._BT_STRING, r._BondDataType._BT_INT64),
+                    u)
+                        if (u.hasOwnProperty(v)) {
+                            var h = u[v];
+                            t._WriteString(v),
+                            t._WriteInt64(o.numberToBondInt64(h))
+                        }
+                if (d)
+                    for (var v in t._WriteFieldBegin(r._BondDataType._BT_MAP, 33, null),
+                    t._WriteMapContainerBegin(d, r._BondDataType._BT_STRING, r._BondDataType._BT_INT64),
+                    s)
+                        if (s.hasOwnProperty(v)) {
+                            var h = s[v];
+                            t._WriteString(v),
+                            t._WriteInt64(o.numberToBondInt64(h))
+                        }
+                if (c)
+                    for (var v in t._WriteFieldBegin(r._BondDataType._BT_MAP, 34, null),
+                    t._WriteMapContainerBegin(c, r._BondDataType._BT_STRING, r._BondDataType._BT_DOUBLE),
+                    l)
+                        if (l.hasOwnProperty(v)) {
+                            var h = l[v];
+                            t._WriteString(v),
+                            t._WriteDouble(h)
+                        }
+                if (T)
+                    for (var v in t._WriteFieldBegin(r._BondDataType._BT_MAP, 36, null),
+                    t._WriteMapContainerBegin(T, r._BondDataType._BT_STRING, r._BondDataType._BT_STRUCT),
+                    I)
+                        if (I.hasOwnProperty(v)) {
+                            var C = I[v];
+                            t._WriteString(v),
+                            t._WriteFieldBegin(r._BondDataType._BT_INT32, 1, null),
+                            t._WriteInt32(C.cc),
+                            t._WriteFieldBegin(r._BondDataType._BT_STRING, 2, null),
+                            t._WriteString(C.value.toString()),
+                            t._WriteStructEnd(!1)
+                        }
+                t._WriteStructEnd(!1)
+            }
+            ,
+            e.base64Encode = function(e) {
+                return r._Encoding._Base64_GetString(e)
+            }
+            ,
+            e
+        }();
+        t.default = i
+    }
+    , function(e, t, n) {
+        "use strict";
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        });
+        var i = n(1)
+          , r = n(2)
+          , a = n(0)
+          , s = 6e4
+          , o = function() {
+            function e() {}
+            return e.initialize = function(e) {
+                var t = this;
+                this._sendStats = e,
+                this._isInitalized = !0,
+                r.default.addNotificationListener({
+                    eventsSent: function(e) {
+                        t._addStat("records_sent_count", e.length, e[0].apiKey)
+                    },
+                    eventsDropped: function(e, n) {
+                        n === a.AWTEventsDroppedReason.NonRetryableStatus ? (t._addStat("d_send_fail", e.length, e[0].apiKey),
+                        t._addStat("records_dropped_count", e.length, e[0].apiKey)) : n === a.AWTEventsDroppedReason.QueueFull ? t._addStat("d_queue_full", e.length, e[0].apiKey) : void 0
+                    },
+                    eventsRejected: function(e, n) {
+                        n === a.AWTEventsRejectedReason.InvalidEvent ? t._addStat("r_inv", e.length, e[0].apiKey) : n === a.AWTEventsRejectedReason.KillSwitch ? t._addStat("r_kl", e.length, e[0].apiKey) : n === a.AWTEventsRejectedReason.SizeLimitExceeded ? t._addStat("r_size", e.length, e[0].apiKey) : void 0,
+                        t._addStat("r_count", e.length, e[0].apiKey)
+                    },
+                    eventsRetrying: null
+                }),
+                setTimeout(function() {
+                    return t.flush()
+                }, s)
+            }
+            ,
+            e.teardown = function() {
+                this._isInitalized && (this.flush(),
+                this._isInitalized = !1)
+            }
+            ,
+            e.eventReceived = function(t) {
+                e._addStat("records_received_count", 1, t)
+            }
+            ,
+            e.flush = function() {
+                var e = this;
+                if (this._isInitalized) {
+                    for (var t in this._stats)
+                        this._stats.hasOwnProperty(t) && this._sendStats(this._stats[t], t);
+                    this._stats = {},
+                    setTimeout(function() {
+                        return e.flush()
+                    }, s)
+                }
+            }
+            ,
+            e._addStat = function(e, t, n) {
+                if (this._isInitalized && n !== i.StatsApiKey) {
+                    var r = i.getTenantId(n);
+                    this._stats[r] || (this._stats[r] = {}),
+                    this._stats[r][e] ? this._stats[r][e] += t : this._stats[r][e] = t
+                }
+            }
+            ,
+            e._isInitalized = !1,
+            e._stats = {},
+            e
+        }();
+        t.default = o
+    }
+    , function(e, t, n) {
+        "use strict";
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        });
+        var i = n(0)
+          , r = n(6)
+          , a = n(12)
+          , s = n(13)
+          , o = n(3)
+          , d = n(2)
+          , l = n(7)
+          , c = function() {
+            function e() {}
+            return e.initialize = function(e, t) {
+                if (void 0 === t && (t = {}),
+                !this._isInitialized)
+                    return this._isInitialized = !0,
+                    a.default.defaultTenantToken = e,
+                    this._overrideValuesFromConfig(t),
+                    this._config.disableCookiesUsage && !this._config.propertyStorageOverride && (a.default.sessionEnabled = !1),
+                    l.default.addPropertyStorageOverride(this._config.propertyStorageOverride),
+                    l.default.autoCollect(a.default.semanticContext, this._config.disableCookiesUsage, this._config.userAgent),
+                    o.default.initialize(this._config),
+                    a.default.loggingEnabled = !0,
+                    this._config.enableAutoUserSession && (this.getLogger().logSession(r.AWTSessionState.Started),
+                    window.addEventListener("beforeunload", this.flushAndTeardown)),
+                    this.getLogger()
+            }
+            ,
+            e.getSemanticContext = function() {
+                return a.default.semanticContext
+            }
+            ,
+            e.flush = function(e) {
+                this._isInitialized && !this._isDestroyed && o.default.flush(e)
+            }
+            ,
+            e.flushAndTeardown = function() {
+                this._isInitialized && !this._isDestroyed && (this._config.enableAutoUserSession && this.getLogger().logSession(r.AWTSessionState.Ended),
+                o.default.flushAndTeardown(),
+                a.default.loggingEnabled = !1,
+                this._isDestroyed = !0)
+            }
+            ,
+            e.pauseTransmission = function() {
+                this._isInitialized && !this._isDestroyed && o.default.pauseTransmission()
+            }
+            ,
+            e.resumeTransmision = function() {
+                this._isInitialized && !this._isDestroyed && o.default.resumeTransmision()
+            }
+            ,
+            e.setTransmitProfile = function(e) {
+                this._isInitialized && !this._isDestroyed && o.default.setTransmitProfile(e)
+            }
+            ,
+            e.loadTransmitProfiles = function(e) {
+                this._isInitialized && !this._isDestroyed && o.default.loadTransmitProfiles(e)
+            }
+            ,
+            e.setContext = function(e, t, n) {
+                void 0 === n && (n = i.AWTPropertyType.Unspecified),
+                a.default.logManagerContext.setProperty(e, t, n)
+            }
+            ,
+            e.setContextWithPii = function(e, t, n, r) {
+                void 0 === r && (r = i.AWTPropertyType.Unspecified),
+                a.default.logManagerContext.setPropertyWithPii(e, t, n, r)
+            }
+            ,
+            e.setContextWithCustomerContent = function(e, t, n, r) {
+                void 0 === r && (r = i.AWTPropertyType.Unspecified),
+                a.default.logManagerContext.setPropertyWithCustomerContent(e, t, n, r)
+            }
+            ,
+            e.getLogger = function(e) {
+                var t = e;
+                return t && t !== a.default.defaultTenantToken || (t = ""),
+                this._loggers[t] || (this._loggers[t] = new s.default(t)),
+                this._loggers[t]
+            }
+            ,
+            e.addNotificationListener = function(e) {
+                d.default.addNotificationListener(e)
+            }
+            ,
+            e.removeNotificationListener = function(e) {
+                d.default.removeNotificationListener(e)
+            }
+            ,
+            e._overrideValuesFromConfig = function(e) {
+                e.collectorUri && (this._config.collectorUri = e.collectorUri),
+                0 < e.cacheMemorySizeLimitInNumberOfEvents && (this._config.cacheMemorySizeLimitInNumberOfEvents = e.cacheMemorySizeLimitInNumberOfEvents),
+                e.httpXHROverride && e.httpXHROverride.sendPOST && (this._config.httpXHROverride = e.httpXHROverride),
+                e.propertyStorageOverride && e.propertyStorageOverride.getProperty && e.propertyStorageOverride.setProperty && (this._config.propertyStorageOverride = e.propertyStorageOverride),
+                e.userAgent && (this._config.userAgent = e.userAgent),
+                e.disableCookiesUsage && (this._config.disableCookiesUsage = e.disableCookiesUsage),
+                e.canSendStatEvent && (this._config.canSendStatEvent = e.canSendStatEvent),
+                e.enableAutoUserSession && "undefined" != typeof window && window.addEventListener && (this._config.enableAutoUserSession = e.enableAutoUserSession),
+                0 < e.clockSkewRefreshDurationInMins && (this._config.clockSkewRefreshDurationInMins = e.clockSkewRefreshDurationInMins)
+            }
+            ,
+            e._loggers = {},
+            e._isInitialized = !1,
+            e._isDestroyed = !1,
+            e._config = {
+                collectorUri: "https://browser.pipe.aria.microsoft.com/Collector/3.0/",
+                cacheMemorySizeLimitInNumberOfEvents: 1e4,
+                disableCookiesUsage: !1,
+                canSendStatEvent: function() {
+                    return !0
+                },
+                clockSkewRefreshDurationInMins: 0
+            },
+            e
+        }();
+        t.default = c
+    }
+    , function(e, t, n) {
+        "use strict";
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        });
+        var i = n(5)
+          , r = n(8)
+          , a = function() {
+            function e() {}
+            return e.logManagerContext = new i.default,
+            e.sessionEnabled = !0,
+            e.loggingEnabled = !1,
+            e.defaultTenantToken = "",
+            e.semanticContext = new r.default(!0,e.logManagerContext),
+            e
+        }();
+        t.default = a
+    }
+    , function(e, n, i) {
+        "use strict";
+        Object.defineProperty(n, "__esModule", {
+            value: !0
+        });
+        var r = i(0)
+          , a = i(6)
+          , s = i(5)
+          , o = i(1)
+          , d = i(10)
+          , l = i(2)
+          , c = i(3)
+          , p = i(12)
+          , m = i(15)
+          , u = i(8)
+          , g = i(7)
+          , y = function() {
+            function e(e) {
+                this._apiKey = e,
+                this._contextProperties = new s.default,
+                this._semanticContext = new u.default(!1,this._contextProperties),
+                this._sessionStartTime = 0,
+                this._createInitId()
+            }
+            return e.prototype.setContext = function(e, t, n) {
+                void 0 === n && (n = r.AWTPropertyType.Unspecified),
+                this._contextProperties.setProperty(e, t, n)
+            }
+            ,
+            e.prototype.setContextWithPii = function(e, t, n, i) {
+                void 0 === i && (i = r.AWTPropertyType.Unspecified),
+                this._contextProperties.setPropertyWithPii(e, t, n, i)
+            }
+            ,
+            e.prototype.setContextWithCustomerContent = function(e, t, n, i) {
+                void 0 === i && (i = r.AWTPropertyType.Unspecified),
+                this._contextProperties.setPropertyWithCustomerContent(e, t, n, i)
+            }
+            ,
+            e.prototype.getSemanticContext = function() {
+                return this._semanticContext
+            }
+            ,
+            e.prototype.logEvent = function(t) {
+                if (p.default.loggingEnabled) {
+                    this._apiKey || (this._apiKey = p.default.defaultTenantToken,
+                    this._createInitId());
+                    var n = !0;
+                    o.isString(t) ? t = {
+                        name: t
+                    } : t instanceof s.default && (t = t.getEvent(),
+                    n = !1),
+                    d.default.eventReceived(this._apiKey),
+                    e._logEvent(e._getInternalEvent(t, this._apiKey, n), this._contextProperties)
+                }
+            }
+            ,
+            e.prototype.logSession = function(n, i) {
+                if (p.default.sessionEnabled) {
+                    var s = {
+                        name: "session",
+                        type: "session",
+                        properties: {}
+                    };
+                    if (e._addPropertiesToEvent(s, i),
+                    s.priority = r.AWTEventPriority.High,
+                    n === a.AWTSessionState.Started) {
+                        if (0 < this._sessionStartTime)
+                            return;
+                        this._sessionStartTime = new Date().getTime(),
+                        this._sessionId = o.newGuid(),
+                        this.setContext("Session.Id", this._sessionId),
+                        s.properties["Session.State"] = "Started"
+                    } else if (n === a.AWTSessionState.Ended) {
+                        if (0 === this._sessionStartTime)
+                            return;
+                        var d = t((new Date().getTime() - this._sessionStartTime) / 1e3);
+                        s.properties["Session.Id"] = this._sessionId,
+                        s.properties["Session.State"] = "Ended",
+                        s.properties["Session.Duration"] = d.toString(),
+                        s.properties["Session.DurationBucket"] = e._getSessionDurationFromTime(d),
+                        this._sessionStartTime = 0,
+                        this.setContext("Session.Id", null),
+                        this._sessionId = void 0
+                    } else
+                        return;
+                    s.properties["Session.FirstLaunchTime"] = g.default.firstLaunchTime,
+                    this.logEvent(s)
+                }
+            }
+            ,
+            e.prototype.getSessionId = function() {
+                return this._sessionId
+            }
+            ,
+            e.prototype.logFailure = function(t, n, i, a, s) {
+                if (t && n) {
+                    var o = {
+                        name: "failure",
+                        type: "failure",
+                        properties: {}
+                    };
+                    e._addPropertiesToEvent(o, s),
+                    o.properties["Failure.Signature"] = t,
+                    o.properties["Failure.Detail"] = n,
+                    i && (o.properties["Failure.Category"] = i),
+                    a && (o.properties["Failure.Id"] = a),
+                    o.priority = r.AWTEventPriority.High,
+                    this.logEvent(o)
+                }
+            }
+            ,
+            e.prototype.logPageView = function(t, n, i, r, a, s) {
+                if (t && n) {
+                    var o = {
+                        name: "pageview",
+                        type: "pageview",
+                        properties: {}
+                    };
+                    e._addPropertiesToEvent(o, s),
+                    o.properties["PageView.Id"] = t,
+                    o.properties["PageView.Name"] = n,
+                    i && (o.properties["PageView.Category"] = i),
+                    r && (o.properties["PageView.Uri"] = r),
+                    a && (o.properties["PageView.ReferrerUri"] = a),
+                    this.logEvent(o)
+                }
+            }
+            ,
+            e.prototype._createInitId = function() {
+                !e._initIdMap[this._apiKey] && this._apiKey && (e._initIdMap[this._apiKey] = o.newGuid())
+            }
+            ,
+            e._addPropertiesToEvent = function(e, t) {
+                if (t)
+                    for (var n in t instanceof s.default && (t = t.getEvent()),
+                    t.name && (e.name = t.name),
+                    t.priority && (e.priority = t.priority),
+                    t.properties)
+                        t.properties.hasOwnProperty(n) && (e.properties[n] = t.properties[n])
+            }
+            ,
+            e._getSessionDurationFromTime = function(e) {
+                return 0 > e ? "Undefined" : 3 >= e ? "UpTo3Sec" : 10 >= e ? "UpTo10Sec" : 30 >= e ? "UpTo30Sec" : 60 >= e ? "UpTo60Sec" : 180 >= e ? "UpTo3Min" : 600 >= e ? "UpTo10Min" : 1800 >= e ? "UpTo30Min" : "Above30Min"
+            }
+            ,
+            e._logEvent = function(e, t) {
+                return e.name && o.isString(e.name) ? (e.name = e.name.toLowerCase(),
+                e.name = e.name.replace(o.EventNameDotRegex, "_"),
+                e.type = e.type && o.isString(e.type) ? e.type.toLowerCase() : "custom",
+                o.EventNameAndTypeRegex.test(e.name) && o.EventNameAndTypeRegex.test(e.type) ? void ((!o.isNumber(e.timestamp) || 0 > e.timestamp) && (e.timestamp = new Date().getTime()),
+                !e.properties && (e.properties = {}),
+                this._addContextIfAbsent(e, t.getPropertyMap()),
+                this._addContextIfAbsent(e, p.default.logManagerContext.getPropertyMap()),
+                this._setDefaultProperty(e, "EventInfo.InitId", this._getInitId(e.apiKey)),
+                this._setDefaultProperty(e, "EventInfo.Sequence", this._getSequenceId(e.apiKey)),
+                this._setDefaultProperty(e, "EventInfo.SdkVersion", m.FullVersionString),
+                this._setDefaultProperty(e, "EventInfo.Name", e.name),
+                this._setDefaultProperty(e, "EventInfo.Time", new Date(e.timestamp).toISOString()),
+                !o.isPriority(e.priority) && (e.priority = r.AWTEventPriority.Normal),
+                this._sendEvent(e)) : void l.default.eventsRejected([e], r.AWTEventsRejectedReason.InvalidEvent)) : void l.default.eventsRejected([e], r.AWTEventsRejectedReason.InvalidEvent)
+            }
+            ,
+            e._addContextIfAbsent = function(e, t) {
+                if (t)
+                    for (var n in t)
+                        t.hasOwnProperty(n) && (e.properties[n] || (e.properties[n] = t[n]))
+            }
+            ,
+            e._setDefaultProperty = function(e, t, n) {
+                e.properties[t] = {
+                    value: n,
+                    pii: r.AWTPiiKind.NotSet,
+                    type: r.AWTPropertyType.String
+                }
+            }
+            ,
+            e._sendEvent = function(e) {
+                c.default.sendEvent(e)
+            }
+            ,
+            e._getInternalEvent = function(e, t, n) {
+                if (e.properties = e.properties || {},
+                n)
+                    for (var i in e.properties)
+                        e.properties.hasOwnProperty(i) && (e.properties[i] = o.sanitizeProperty(i, e.properties[i]),
+                        null === e.properties[i] && delete e.properties[i]);
+                var r = e;
+                return r.id = o.newGuid(),
+                r.apiKey = t,
+                r
+            }
+            ,
+            e._getInitId = function(t) {
+                return e._initIdMap[t]
+            }
+            ,
+            e._getSequenceId = function(t) {
+                return void 0 === e._sequenceIdMap[t] && (e._sequenceIdMap[t] = 0),
+                (++e._sequenceIdMap[t]).toString()
+            }
+            ,
+            e._sequenceIdMap = {},
+            e._initIdMap = {},
+            e
+        }();
+        n.default = y
+    }
+    , function(e, t) {
+        "use strict";
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        }),
+        t.AWT_REAL_TIME = "REAL_TIME",
+        t.AWT_NEAR_REAL_TIME = "NEAR_REAL_TIME",
+        t.AWT_BEST_EFFORT = "BEST_EFFORT"
+    }
+    , function(e, t) {
+        "use strict";
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        }),
+        t.Version = "1.8.3",
+        t.FullVersionString = "AWT-Web-JS-" + t.Version
+    }
+    , function(e, t, n) {
+        "use strict";
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        });
+        var i = n(0);
+        t.AWTPropertyType = i.AWTPropertyType,
+        t.AWTPiiKind = i.AWTPiiKind,
+        t.AWTEventPriority = i.AWTEventPriority,
+        t.AWTEventsDroppedReason = i.AWTEventsDroppedReason,
+        t.AWTEventsRejectedReason = i.AWTEventsRejectedReason,
+        t.AWTCustomerContentKind = i.AWTCustomerContentKind;
+        var r = n(6);
+        t.AWTUserIdType = r.AWTUserIdType,
+        t.AWTSessionState = r.AWTSessionState;
+        var a = n(14);
+        t.AWT_BEST_EFFORT = a.AWT_BEST_EFFORT,
+        t.AWT_NEAR_REAL_TIME = a.AWT_NEAR_REAL_TIME,
+        t.AWT_REAL_TIME = a.AWT_REAL_TIME;
+        var s = n(5);
+        t.AWTEventProperties = s.default;
+        var o = n(13);
+        t.AWTLogger = o.default;
+        var d = n(11);
+        t.AWTLogManager = d.default;
+        var l = n(29);
+        t.AWTTransmissionManager = l.default;
+        var c = n(9);
+        t.AWTSerializer = c.default;
+        var p = n(8);
+        t.AWTSemanticContext = p.default,
+        t.AWT_COLLECTOR_URL_UNITED_STATES = "https://us.pipe.aria.microsoft.com/Collector/3.0/",
+        t.AWT_COLLECTOR_URL_GERMANY = "https://de.pipe.aria.microsoft.com/Collector/3.0/",
+        t.AWT_COLLECTOR_URL_JAPAN = "https://jp.pipe.aria.microsoft.com/Collector/3.0/",
+        t.AWT_COLLECTOR_URL_AUSTRALIA = "https://au.pipe.aria.microsoft.com/Collector/3.0/",
+        t.AWT_COLLECTOR_URL_EUROPE = "https://eu.pipe.aria.microsoft.com/Collector/3.0/",
+        t.AWT_COLLECTOR_URL_USGOV_DOD = "https://pf.pipe.aria.microsoft.com/Collector/3.0",
+        t.AWT_COLLECTOR_URL_USGOV_DOJ = "https://tb.pipe.aria.microsoft.com/Collector/3.0"
+    }
+    , function(e, t) {
+        "use strict";
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        });
+        var n;
+        (function(e) {
+            e[e._BT_STOP = 0] = "_BT_STOP",
+            e[e._BT_STOP_BASE = 1] = "_BT_STOP_BASE",
+            e[e._BT_BOOL = 2] = "_BT_BOOL",
+            e[e._BT_DOUBLE = 8] = "_BT_DOUBLE",
+            e[e._BT_STRING = 9] = "_BT_STRING",
+            e[e._BT_STRUCT = 10] = "_BT_STRUCT",
+            e[e._BT_LIST = 11] = "_BT_LIST",
+            e[e._BT_MAP = 13] = "_BT_MAP",
+            e[e._BT_INT32 = 16] = "_BT_INT32",
+            e[e._BT_INT64 = 17] = "_BT_INT64"
+        }
+        )(n = t._BondDataType || (t._BondDataType = {}))
+    }
+    , function(e, t, n) {
+        "use strict";
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        });
+        var i = n(4)
+          , r = n(19)
+          , a = n(22);
+        t._Utf8_GetBytes = function(e) {
+            for (var t = [], n = 0, r; n < e.length; ++n)
+                r = e.charCodeAt(n),
+                128 > r ? t.push(r) : 2048 > r ? t.push(192 | r >> 6, 128 | 63 & r) : 55296 > r || 57344 <= r ? t.push(224 | r >> 12, 128 | 63 & r >> 6, 128 | 63 & r) : (r = 65536 + ((1023 & r) << 10 | 1023 & e.charCodeAt(++n)),
+                t.push(240 | r >> 18, 128 | 63 & r >> 12, 128 | 63 & r >> 6, 128 | 63 & r));
+            return t
+        }
+        ,
+        t._Base64_GetString = function(e) {
+            for (var t = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", n = [], r = e.length % 3, a = function(e) {
+                return [t.charAt(63 & e >> 18), t.charAt(63 & e >> 12), t.charAt(63 & e >> 6), t.charAt(63 & e)].join("")
+            }, s = 0, o = e.length - r, d; s < o; s += 3)
+                d = (e[s] << 16) + (e[s + 1] << 8) + e[s + 2],
+                n.push(a(d));
+            switch (r) {
+            case 1:
+                var d = e[e.length - 1];
+                n.push(t.charAt(d >> 2)),
+                n.push(t.charAt(63 & d << 4)),
+                n.push("==");
+                break;
+            case 2:
+                var l = (e[e.length - 2] << 8) + e[e.length - 1];
+                n.push(t.charAt(l >> 10)),
+                n.push(t.charAt(63 & l >> 4)),
+                n.push(t.charAt(63 & l << 2)),
+                n.push("=");
+            }
+            return n.join("")
+        }
+        ,
+        t._Varint_GetBytes = function(e) {
+            for (var t = []; 4294967168 & e; )
+                t.push(128 | 127 & e),
+                e >>>= 7;
+            return t.push(127 & e),
+            t
+        }
+        ,
+        t._Varint64_GetBytes = function(e) {
+            for (var t = e.low, n = e.high, i = []; n || 4294967168 & t; )
+                i.push(128 | 127 & t),
+                t = (127 & n) << 25 | t >>> 7,
+                n >>>= 7;
+            return i.push(127 & t),
+            i
+        }
+        ,
+        t._Double_GetBytes = function(e) {
+            if (a.BrowserChecker._IsDataViewSupport()) {
+                var t = new DataView(new ArrayBuffer(8));
+                t.setFloat64(0, e, !0);
+                for (var n = [], s = 0; 8 > s; ++s)
+                    n.push(t.getUint8(s));
+                return n
+            }
+            return r.FloatUtils._ConvertNumberToArray(e, !0)
+        }
+        ,
+        t._Zigzag_EncodeZigzag32 = function(e) {
+            return e = i.Number._ToInt32(e),
+            e << 1 ^ e >> 31
+        }
+        ,
+        t._Zigzag_EncodeZigzag64 = function(e) {
+            var t = e.low
+              , n = e.high
+              , r = n << 1 | t >>> 31
+              , a = t << 1;
+            2147483648 & n && (r = ~r,
+            a = ~a);
+            var s = new i.UInt64("0");
+            return s.low = a,
+            s.high = r,
+            s
+        }
+    }
+    , function(n, i) {
+        "use strict";
+        Object.defineProperty(i, "__esModule", {
+            value: !0
+        });
+        var r = function() {
+            function n() {}
+            return n._ConvertNumberToArray = function(n, r) {
+                if (!n)
+                    return r ? this._doubleZero : this._floatZero;
+                var a = r ? 11 : 8
+                  , s = r ? 52 : 23
+                  , o = (1 << a - 1) - 1
+                  , d = 0 > n ? 1 : 0;
+                n = e(n);
+                for (var l = t(n), c = n - l, p = 2 * (o + 2) + s, m = Array(p), u = 0; u < p; )
+                    m[u++] = 0;
+                for (u = o + 2; u && l; )
+                    m[--u] = l % 2,
+                    l = t(l / 2);
+                for (u = o + 1; u < p - 1 && 0 < c; )
+                    c *= 2,
+                    1 <= c ? (m[++u] = 1,
+                    --c) : m[++u] = 0;
+                for (var g = 0; g < p && !m[g]; )
+                    g++;
+                var y = o + 1 - g
+                  , _ = g + s;
+                if (m[_ + 1]) {
+                    for (u = _; u > g && (m[u] = 1 - m[u],
+                    !m); --u)
+                        ;
+                    u === g && ++y
+                }
+                if (y > o || l)
+                    return d ? r ? this._doubleNegInifinity : this._floatNegInifinity : r ? this._doubleInifinity : this._floatInifinity;
+                if (y < 1 - o)
+                    return r ? this._doubleZero : this._floatZero;
+                if (r) {
+                    var I = 0;
+                    for (u = 0; 20 > u; ++u)
+                        I = I << 1 | m[++g];
+                    for (var T = 0; 52 > u; ++u)
+                        T = T << 1 | m[++g];
+                    I |= y + o << 20,
+                    I = d << 31 | 2147483647 & I;
+                    var v = [255 & T, 255 & T >> 8, 255 & T >> 16, T >>> 24, 255 & I, 255 & I >> 8, 255 & I >> 16, I >>> 24];
+                    return v
+                }
+                var C = 0;
+                for (u = 0; 23 > u; ++u)
+                    C = C << 1 | m[++g];
+                C |= y + o << 23,
+                C = d << 31 | 2147483647 & C;
+                var v = [255 & C, 255 & C >> 8, 255 & C >> 16, C >>> 24];
+                return v
+            }
+            ,
+            n._floatZero = [0, 0, 0, 0],
+            n._doubleZero = [0, 0, 0, 0, 0, 0, 0, 0],
+            n._floatInifinity = [0, 0, 128, 127],
+            n._floatNegInifinity = [0, 0, 128, 255],
+            n._doubleInifinity = [0, 0, 0, 0, 0, 0, 240, 127],
+            n._doubleNegInifinity = [0, 0, 0, 0, 0, 0, 240, 255],
+            n
+        }();
+        i.FloatUtils = r
+    }
+    , function(e, t, n) {
+        "use strict";
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        });
+        var i = n(4)
+          , r = function() {
+            function e() {
+                this._buffer = []
+            }
+            return e.prototype._WriteByte = function(e) {
+                this._buffer.push(i.Number._ToByte(e))
+            }
+            ,
+            e.prototype._Write = function(e, t, n) {
+                for (; n--; )
+                    this._WriteByte(e[t++])
+            }
+            ,
+            e.prototype._GetBuffer = function() {
+                return this._buffer
+            }
+            ,
+            e
+        }();
+        t.MemoryStream = r
+    }
+    , function(e, t, n) {
+        "use strict";
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        });
+        var i = n(17);
+        t._BondDataType = i._BondDataType;
+        var r = n(18);
+        t._Encoding = r;
+        var a = n(20);
+        t.IO = a;
+        var s = n(4);
+        t.Int64 = s.Int64,
+        t.UInt64 = s.UInt64,
+        t.Number = s.Number;
+        var o = function() {
+            function e(e) {
+                this._stream = e
+            }
+            return e.prototype._WriteBlob = function(e) {
+                this._stream._Write(e, 0, e.length)
+            }
+            ,
+            e.prototype._WriteBool = function(e) {
+                this._stream._WriteByte(e ? 1 : 0)
+            }
+            ,
+            e.prototype._WriteContainerBegin = function(e, t) {
+                this._WriteUInt8(t),
+                this._WriteUInt32(e)
+            }
+            ,
+            e.prototype._WriteMapContainerBegin = function(e, t, n) {
+                this._WriteUInt8(t),
+                this._WriteUInt8(n),
+                this._WriteUInt32(e)
+            }
+            ,
+            e.prototype._WriteDouble = function(e) {
+                var t = r._Double_GetBytes(e);
+                this._stream._Write(t, 0, t.length)
+            }
+            ,
+            e.prototype._WriteFieldBegin = function(e, t) {
+                5 >= t ? this._stream._WriteByte(e | t << 5) : 255 >= t ? (this._stream._WriteByte(192 | e),
+                this._stream._WriteByte(t)) : (this._stream._WriteByte(224 | e),
+                this._stream._WriteByte(t),
+                this._stream._WriteByte(t >> 8))
+            }
+            ,
+            e.prototype._WriteInt32 = function(e) {
+                e = r._Zigzag_EncodeZigzag32(e),
+                this._WriteUInt32(e)
+            }
+            ,
+            e.prototype._WriteInt64 = function(e) {
+                this._WriteUInt64(r._Zigzag_EncodeZigzag64(e))
+            }
+            ,
+            e.prototype._WriteString = function(e) {
+                if ("" === e)
+                    this._WriteUInt32(0);
+                else {
+                    var t = r._Utf8_GetBytes(e);
+                    this._WriteUInt32(t.length),
+                    this._stream._Write(t, 0, t.length)
+                }
+            }
+            ,
+            e.prototype._WriteStructEnd = function(e) {
+                this._WriteUInt8(e ? i._BondDataType._BT_STOP_BASE : i._BondDataType._BT_STOP)
+            }
+            ,
+            e.prototype._WriteUInt32 = function(e) {
+                var t = r._Varint_GetBytes(s.Number._ToUInt32(e));
+                this._stream._Write(t, 0, t.length)
+            }
+            ,
+            e.prototype._WriteUInt64 = function(e) {
+                var t = r._Varint64_GetBytes(e);
+                this._stream._Write(t, 0, t.length)
+            }
+            ,
+            e.prototype._WriteUInt8 = function(e) {
+                this._stream._WriteByte(s.Number._ToUInt8(e))
+            }
+            ,
+            e
+        }();
+        t.CompactBinaryProtocolWriter = o
+    }
+    , function(e, t) {
+        "use strict";
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        });
+        var n = function() {
+            function e() {}
+            return e._IsDataViewSupport = function() {
+                return "undefined" != typeof ArrayBuffer && "undefined" != typeof DataView
+            }
+            ,
+            e
+        }();
+        t.BrowserChecker = n
+    }
+    , function(e, t) {
+        "use strict";
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        });
+        var n = function() {
+            function e(e) {
+                this.clockSkewRefreshDurationInMins = e,
+                this._reset()
+            }
+            return e.prototype.allowRequestSending = function() {
+                return this._isFirstRequest && !this._clockSkewSet ? (this._isFirstRequest = !1,
+                this._allowRequestSending = !1,
+                !0) : this._allowRequestSending
+            }
+            ,
+            e.prototype.shouldAddClockSkewHeaders = function() {
+                return this._shouldAddClockSkewHeaders
+            }
+            ,
+            e.prototype.getClockSkewHeaderValue = function() {
+                return this._clockSkewHeaderValue
+            }
+            ,
+            e.prototype.setClockSkew = function(e) {
+                this._clockSkewSet || (e ? this._clockSkewHeaderValue = e : this._shouldAddClockSkewHeaders = !1,
+                this._clockSkewSet = !0,
+                this._allowRequestSending = !0)
+            }
+            ,
+            e.prototype._reset = function() {
+                var e = this;
+                this._isFirstRequest = !0,
+                this._clockSkewSet = !1,
+                this._allowRequestSending = !0,
+                this._shouldAddClockSkewHeaders = !0,
+                this._clockSkewHeaderValue = "use-collector-delta",
+                0 < this.clockSkewRefreshDurationInMins && setTimeout(function() {
+                    return e._reset()
+                }, 6e4 * this.clockSkewRefreshDurationInMins)
+            }
+            ,
+            e
+        }();
+        t.default = n
+    }
+    , function(e, t) {
+        "use strict";
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        });
+        var n = function() {
+            function e() {
+                this._killedTokenDictionary = {}
+            }
+            return e.prototype.setKillSwitchTenants = function(e, t) {
+                if (e && t)
+                    try {
+                        var n = e.split(",");
+                        if ("this-request-only" === t)
+                            return n;
+                        for (var r = 1000 * parseInt(t, 10), a = 0; a < n.length; ++a)
+                            this._killedTokenDictionary[n[a]] = Date.now() + r
+                    } catch (e) {
+                        return []
+                    }
+                return []
+            }
+            ,
+            e.prototype.isTenantKilled = function(e) {
+                return !!(void 0 !== this._killedTokenDictionary[e] && this._killedTokenDictionary[e] > Date.now()) || (delete this._killedTokenDictionary[e],
+                !1)
+            }
+            ,
+            e
+        }();
+        t.default = n
+    }
+    , function(e, t, n) {
+        "use strict";
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        });
+        var i = n(0)
+          , r = function() {
+            function e(e, t) {
+                this._outboundQueue = e,
+                this._maxNumberOfEvents = t,
+                this._currentBatch = {},
+                this._currentNumEventsInBatch = 0
+            }
+            return e.prototype.addEventToBatch = function(e) {
+                if (e.priority === i.AWTEventPriority.Immediate_sync) {
+                    var t = {};
+                    return t[e.apiKey] = [e],
+                    t
+                }
+                return this._currentNumEventsInBatch >= this._maxNumberOfEvents && this.flushBatch(),
+                void 0 === this._currentBatch[e.apiKey] && (this._currentBatch[e.apiKey] = []),
+                this._currentBatch[e.apiKey].push(e),
+                this._currentNumEventsInBatch++,
+                null
+            }
+            ,
+            e.prototype.flushBatch = function() {
+                0 < this._currentNumEventsInBatch && (this._outboundQueue.push(this._currentBatch),
+                this._currentBatch = {},
+                this._currentNumEventsInBatch = 0)
+            }
+            ,
+            e.prototype.hasBatch = function() {
+                return 0 < this._currentNumEventsInBatch
+            }
+            ,
+            e
+        }();
+        t.default = r
+    }
+    , function(e, n) {
+        "use strict";
+        Object.defineProperty(n, "__esModule", {
+            value: !0
+        });
+        var i = 3e3
+          , r = function() {
+            function e() {}
+            return e.shouldRetryForStatus = function(e) {
+                return !(300 <= e && 500 > e && 408 !== e || 501 === e || 505 === e)
+            }
+            ,
+            e.getMillisToBackoffForRetry = function(e) {
+                var n = 0
+                  , r = i * .8
+                  , a = t(Math.random() * (i * 1.2 - r)) + r;
+                return n = Math.pow(4, e) * a,
+                Math.min(n, 12e4)
+            }
+            ,
+            e
+        }();
+        n.default = r
+    }
+    , function(e, t, n) {
+        "use strict";
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        });
+        var r = n(0)
+          , a = n(9)
+          , s = n(26)
+          , i = n(24)
+          , o = n(23)
+          , d = n(15)
+          , l = n(1)
+          , c = n(2)
+          , p = n(3)
+          , m = "POST"
+          , u = function() {
+            function e(e, t, n, r, a) {
+                var s = this;
+                this._requestQueue = e,
+                this._queueManager = n,
+                this._httpInterface = r,
+                this._urlString = "?qsp=true&content-type=application%2Fbond-compact-binary&client-id=NO_AUTH&sdk-version=" + d.FullVersionString,
+                this._killSwitch = new i.default,
+                this._paused = !1,
+                this._useBeacons = !1,
+                this._activeConnections = 0,
+                this._clockSkewManager = new o.default(a),
+                l.isUint8ArrayAvailable() || (this._urlString += "&content-encoding=base64"),
+                this._urlString = t + this._urlString,
+                this._httpInterface || (this._useBeacons = !l.isReactNative(),
+                this._httpInterface = {
+                    sendPOST: function(e, t, n, i, r, a) {
+                        try {
+                            if (l.useXDomainRequest()) {
+                                var o = new XDomainRequest;
+                                o.open(m, e),
+                                o.onload = function() {
+                                    r(200, null)
+                                }
+                                ,
+                                o.onerror = function() {
+                                    i(400, null)
+                                }
+                                ,
+                                o.ontimeout = function() {
+                                    n(500, null)
+                                }
+                                ,
+                                o.send(t)
+                            } else if (l.isReactNative())
+                                fetch(e, {
+                                    body: t,
+                                    method: m
+                                }).then(function(e) {
+                                    var t = {};
+                                    e.headers && e.headers.forEach(function(e, n) {
+                                        t[n] = e
+                                    }),
+                                    r(e.status, t)
+                                }).catch(function() {
+                                    i(0, {})
+                                });
+                            else {
+                                var d = new XMLHttpRequest;
+                                d.open(m, e, !a),
+                                d.onload = function() {
+                                    r(d.status, s._convertAllHeadersToMap(d.getAllResponseHeaders()))
+                                }
+                                ,
+                                d.onerror = function() {
+                                    i(d.status, s._convertAllHeadersToMap(d.getAllResponseHeaders()))
+                                }
+                                ,
+                                d.ontimeout = function() {
+                                    n(d.status, s._convertAllHeadersToMap(d.getAllResponseHeaders()))
+                                }
+                                ,
+                                d.send(t)
+                            }
+                        } catch (t) {
+                            i(400, null)
+                        }
+                    }
+                })
+            }
+            return e.prototype.hasIdleConnection = function() {
+                return this._activeConnections < 2
+            }
+            ,
+            e.prototype.sendQueuedRequests = function() {
+                for (; this.hasIdleConnection() && !this._paused && 0 < this._requestQueue.length && this._clockSkewManager.allowRequestSending(); )
+                    this._activeConnections++,
+                    this._sendRequest(this._requestQueue.shift(), 0, !1);
+                this.hasIdleConnection() && p.default.scheduleTimer()
+            }
+            ,
+            e.prototype.isCompletelyIdle = function() {
+                return 0 === this._activeConnections
+            }
+            ,
+            e.prototype.teardown = function() {
+                for (; 0 < this._requestQueue.length; )
+                    this._sendRequest(this._requestQueue.shift(), 0, !0)
+            }
+            ,
+            e.prototype.pause = function() {
+                this._paused = !0
+            }
+            ,
+            e.prototype.resume = function() {
+                this._paused = !1,
+                this.sendQueuedRequests()
+            }
+            ,
+            e.prototype.removeQueuedRequests = function() {
+                this._requestQueue.length = 0
+            }
+            ,
+            e.prototype.sendSynchronousRequest = function(e, t) {
+                this._paused && (e[t][0].priority = r.AWTEventPriority.High),
+                this._activeConnections++,
+                this._sendRequest(e, 0, !1, !0)
+            }
+            ,
+            e.prototype._sendRequest = function(e, t, n, s) {
+                var o = this;
+                void 0 === s && (s = !1);
+                try {
+                    if (this._paused)
+                        return this._activeConnections--,
+                        void this._queueManager.addBackRequest(e);
+                    var d = 0
+                      , p = "";
+                    for (var m in e)
+                        e.hasOwnProperty(m) && (this._killSwitch.isTenantKilled(m) ? (c.default.eventsRejected(e[m], r.AWTEventsRejectedReason.KillSwitch),
+                        delete e[m]) : (0 < p.length && (p += ","),
+                        p += m,
+                        d++));
+                    if (0 < d) {
+                        var u = a.default.getPayloadBlob(e, d);
+                        u.remainingRequest && this._requestQueue.push(u.remainingRequest);
+                        var g = this._urlString + "&x-apikey=" + p + "&client-time-epoch-millis=" + Date.now().toString();
+                        this._clockSkewManager.shouldAddClockSkewHeaders() && (g = g + "&time-delta-to-apply-millis=" + this._clockSkewManager.getClockSkewHeaderValue());
+                        var y;
+                        for (var m in y = l.isUint8ArrayAvailable() ? new Uint8Array(u.payloadBlob) : a.default.base64Encode(u.payloadBlob),
+                        e)
+                            if (e.hasOwnProperty(m))
+                                for (var _ = 0; _ < e[m].length; ++_)
+                                    0 < e[m][_].sendAttempt ? e[m][_].sendAttempt++ : e[m][_].sendAttempt = 1;
+                        if (this._useBeacons && n && l.isBeaconsSupported() && navigator.sendBeacon(g, y))
+                            return;
+                        this._httpInterface.sendPOST(g, y, function(i, r) {
+                            o._retryRequestIfNeeded(i, r, e, d, p, t, n, s)
+                        }, function(i, r) {
+                            o._retryRequestIfNeeded(i, r, e, d, p, t, n, s)
+                        }, function(i, r) {
+                            o._retryRequestIfNeeded(i, r, e, d, p, t, n, s)
+                        }, n || s)
+                    } else
+                        n || this._handleRequestFinished(!1, {}, n, s)
+                } catch (t) {
+                    this._handleRequestFinished(!1, {}, n, s)
+                }
+            }
+            ,
+            e.prototype._retryRequestIfNeeded = function(e, t, n, a, o, d, l, m) {
+                var u = this
+                  , g = !0;
+                if ("undefined" != typeof e) {
+                    if (t) {
+                        var y = this._killSwitch.setKillSwitchTenants(t["kill-tokens"], t["kill-duration-seconds"]);
+                        this._clockSkewManager.setClockSkew(t["time-delta-millis"]);
+                        for (var _ = 0; _ < y.length; ++_)
+                            c.default.eventsRejected(n[y[_]], r.AWTEventsRejectedReason.KillSwitch),
+                            delete n[y[_]],
+                            a--
+                    } else
+                        this._clockSkewManager.setClockSkew(null);
+                    if (200 === e)
+                        return void this._handleRequestFinished(!0, n, l, m);
+                    (!s.default.shouldRetryForStatus(e) || 0 >= a) && (g = !1)
+                }
+                if (!g)
+                    this._handleRequestFinished(!1, n, l, m);
+                else if (m)
+                    this._activeConnections--,
+                    n[o][0].priority = r.AWTEventPriority.High,
+                    this._queueManager.addBackRequest(n);
+                else if (d < 1) {
+                    for (var I in n)
+                        n.hasOwnProperty(I) && c.default.eventsRetrying(n[I]);
+                    setTimeout(function() {
+                        return u._sendRequest(n, d + 1, !1)
+                    }, s.default.getMillisToBackoffForRetry(d))
+                } else
+                    this._activeConnections--,
+                    p.default.backOffTransmission(),
+                    this._queueManager.addBackRequest(n)
+            }
+            ,
+            e.prototype._handleRequestFinished = function(e, t, n, i) {
+                for (var a in e && p.default.clearBackOff(),
+                t)
+                    t.hasOwnProperty(a) && (e ? c.default.eventsSent(t[a]) : c.default.eventsDropped(t[a], r.AWTEventsDroppedReason.NonRetryableStatus));
+                this._activeConnections--,
+                i || n || this.sendQueuedRequests()
+            }
+            ,
+            e.prototype._convertAllHeadersToMap = function(e) {
+                var t = {};
+                if (e)
+                    for (var n = e.split("\n"), r = 0, a; r < n.length; ++r)
+                        a = n[r].split(": "),
+                        t[a[0]] = a[1];
+                return t
+            }
+            ,
+            e
+        }();
+        t.default = u
+    }
+    , function(e, t, n) {
+        "use strict";
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        });
+        var r = n(0)
+          , i = n(27)
+          , a = n(3)
+          , s = n(25)
+          , o = n(2)
+          , d = n(1)
+          , l = function() {
+            function e(e, t, n, a) {
+                this._queueSizeLimit = t,
+                this._isCurrentlyUploadingNow = !1,
+                this._uploadNowQueue = [],
+                this._shouldDropEventsOnPause = !1,
+                this._paused = !1,
+                this._queueSize = 0,
+                this._outboundQueue = [],
+                this._inboundQueues = {},
+                this._inboundQueues[r.AWTEventPriority.High] = [],
+                this._inboundQueues[r.AWTEventPriority.Normal] = [],
+                this._inboundQueues[r.AWTEventPriority.Low] = [],
+                this._addEmptyQueues(),
+                this._batcher = new s.default(this._outboundQueue,500),
+                this._httpManager = new i.default(this._outboundQueue,e,this,n,a)
+            }
+            return e.prototype.addEvent = function(e) {
+                d.isPriority(e.priority) || (e.priority = r.AWTEventPriority.Normal),
+                e.priority === r.AWTEventPriority.Immediate_sync ? this._httpManager.sendSynchronousRequest(this._batcher.addEventToBatch(e), e.apiKey) : this._queueSize < this._queueSizeLimit ? this._addEventToProperQueue(e) : this._dropEventWithPriorityOrLess(e.priority) ? this._addEventToProperQueue(e) : o.default.eventsDropped([e], r.AWTEventsDroppedReason.QueueFull)
+            }
+            ,
+            e.prototype.sendEventsForPriorityAndAbove = function(e) {
+                this._batchEvents(e),
+                this._httpManager.sendQueuedRequests()
+            }
+            ,
+            e.prototype.hasEvents = function() {
+                return (0 < this._inboundQueues[r.AWTEventPriority.High][0].length || 0 < this._inboundQueues[r.AWTEventPriority.Normal][0].length || 0 < this._inboundQueues[r.AWTEventPriority.Low][0].length || this._batcher.hasBatch()) && this._httpManager.hasIdleConnection()
+            }
+            ,
+            e.prototype.addBackRequest = function(e) {
+                if (!this._paused || !this._shouldDropEventsOnPause) {
+                    for (var t in e)
+                        if (e.hasOwnProperty(t))
+                            for (var n = 0; n < e[t].length; ++n)
+                                e[t][n].sendAttempt < 6 ? this.addEvent(e[t][n]) : o.default.eventsDropped([e[t][n]], r.AWTEventsDroppedReason.NonRetryableStatus);
+                    a.default.scheduleTimer()
+                }
+            }
+            ,
+            e.prototype.teardown = function() {
+                this._paused || (this._batchEvents(r.AWTEventPriority.Low),
+                this._httpManager.teardown())
+            }
+            ,
+            e.prototype.uploadNow = function(e) {
+                var t = this;
+                this._addEmptyQueues(),
+                this._isCurrentlyUploadingNow ? this._uploadNowQueue.push(e) : (this._isCurrentlyUploadingNow = !0,
+                setTimeout(function() {
+                    return t._uploadNow(e)
+                }, 0))
+            }
+            ,
+            e.prototype.pauseTransmission = function() {
+                this._paused = !0,
+                this._httpManager.pause(),
+                this.shouldDropEventsOnPause && (this._queueSize -= this._inboundQueues[r.AWTEventPriority.High][0].length + this._inboundQueues[r.AWTEventPriority.Normal][0].length + this._inboundQueues[r.AWTEventPriority.Low][0].length,
+                this._inboundQueues[r.AWTEventPriority.High][0] = [],
+                this._inboundQueues[r.AWTEventPriority.Normal][0] = [],
+                this._inboundQueues[r.AWTEventPriority.Low][0] = [],
+                this._httpManager.removeQueuedRequests())
+            }
+            ,
+            e.prototype.resumeTransmission = function() {
+                this._paused = !1,
+                this._httpManager.resume()
+            }
+            ,
+            e.prototype.shouldDropEventsOnPause = function(e) {
+                this._shouldDropEventsOnPause = e
+            }
+            ,
+            e.prototype._removeFirstQueues = function() {
+                this._inboundQueues[r.AWTEventPriority.High].shift(),
+                this._inboundQueues[r.AWTEventPriority.Normal].shift(),
+                this._inboundQueues[r.AWTEventPriority.Low].shift()
+            }
+            ,
+            e.prototype._addEmptyQueues = function() {
+                this._inboundQueues[r.AWTEventPriority.High].push([]),
+                this._inboundQueues[r.AWTEventPriority.Normal].push([]),
+                this._inboundQueues[r.AWTEventPriority.Low].push([])
+            }
+            ,
+            e.prototype._addEventToProperQueue = function(e) {
+                this._paused && this._shouldDropEventsOnPause || (this._queueSize++,
+                this._inboundQueues[e.priority][this._inboundQueues[e.priority].length - 1].push(e))
+            }
+            ,
+            e.prototype._dropEventWithPriorityOrLess = function(e) {
+                for (var t = r.AWTEventPriority.Low; t <= e; ) {
+                    if (0 < this._inboundQueues[t][this._inboundQueues[t].length - 1].length)
+                        return o.default.eventsDropped([this._inboundQueues[t][this._inboundQueues[t].length - 1].shift()], r.AWTEventsDroppedReason.QueueFull),
+                        !0;
+                    t++
+                }
+                return !1
+            }
+            ,
+            e.prototype._batchEvents = function(e) {
+                for (var t = r.AWTEventPriority.High; t >= e; ) {
+                    for (; 0 < this._inboundQueues[t][0].length; ) {
+                        var n = this._inboundQueues[t][0].pop();
+                        this._queueSize--,
+                        this._batcher.addEventToBatch(n)
+                    }
+                    t--
+                }
+                this._batcher.flushBatch()
+            }
+            ,
+            e.prototype._uploadNow = function(e) {
+                var t = this;
+                this.hasEvents() && this.sendEventsForPriorityAndAbove(r.AWTEventPriority.Low),
+                this._checkOutboundQueueEmptyAndSent(function() {
+                    t._removeFirstQueues(),
+                    null !== e && void 0 !== e && e(),
+                    0 < t._uploadNowQueue.length ? setTimeout(function() {
+                        return t._uploadNow(t._uploadNowQueue.shift())
+                    }, 0) : (t._isCurrentlyUploadingNow = !1,
+                    t.hasEvents() && a.default.scheduleTimer())
+                })
+            }
+            ,
+            e.prototype._checkOutboundQueueEmptyAndSent = function(e) {
+                var t = this;
+                this._httpManager.isCompletelyIdle() ? e() : setTimeout(function() {
+                    return t._checkOutboundQueueEmptyAndSent(e)
+                }, 250)
+            }
+            ,
+            e
+        }();
+        t.default = l
+    }
+    , function(e, t, n) {
+        "use strict";
+        Object.defineProperty(t, "__esModule", {
+            value: !0
+        });
+        var i = n(3)
+          , r = function() {
+            function e() {}
+            return e.setEventsHandler = function(e) {
+                i.default.setEventsHandler(e)
+            }
+            ,
+            e.getEventsHandler = function() {
+                return i.default.getEventsHandler()
+            }
+            ,
+            e.scheduleTimer = function() {
+                i.default.scheduleTimer()
+            }
+            ,
+            e
+        }();
+        t.default = r
+    }
+    , function(e, t, n) {
+        e.exports = n(16)
+    }
+    ])
+});
+var Microsoft;
+(function(e) {
+    var t;
+    (function(e) {
+        var t;
+        (function(t) {
+            class n {
+                constructor(e) {
+                    this.hostIFrame = e,
+                    this.provider = null,
+                    this.visibility = !0,
+                    this.preservedHeight = 0
+                }
+                setVisibility(e) {
+                    return this.visibility = e,
+                    !0
+                }
+                setHeight(e) {
+                    return !!this.hostIFrame && (this.hostIFrame.height = this.visibility ? 0 < e ? e.toString() : "calc(100% - 10px)" : "0",
+                    !0)
+                }
+                static getDefaultWidth() {
+                    return e.Constants.DEFAULT_WIDGET_WIDTH.toString()
+                }
+                setWidth(e) {
+                    return !!this.hostIFrame && (this.preservedWidth = e,
+                    this.hostIFrame.width = this.visibility ? 0 < e ? e.toString() : n.getDefaultWidth() : "0",
+                    !0)
+                }
+                getContentWindow() {
+                    return this.hostIFrame ? this.hostIFrame.contentWindow : null
+                }
+                setProvider(e) {
+                    this.provider = e
+                }
+            }
+            t.WidgetIFrameWrapper = n
+        }
+        )(t = e.Internal || (e.Internal = {}))
+    }
+    )(t = e.CIFramework || (e.CIFramework = {}))
+}
+)(Microsoft || (Microsoft = {}));
+var Microsoft;
+(function(e) {
+    var t;
+    (function(e) {
+        var t;
+        (function(e) {
+            var t;
+            (function(e) {
+                e.apiVersion = "API_Version",
+                e.appId = "App_ID",
+                e.channelOrder = "Channel_Order",
+                e.clientType = "Client_Type",
+                e.crmVersion = "CRM_Version",
+                e.orgId = "Organization_ID",
+                e.orgName = "Organization_Name",
+                e.providerId = "Provider_ID",
+                e.providerName = "Provider_Name",
+                e.startTime = "Start_Time",
+                e.timeTaken = "Time_Taken",
+                e.apiName = "API_Name",
+                e.telemetryData = "API_Perf_Markers",
+                e.isError = "Is_Error",
+                e.errorMessage = "Error_Message",
+                e.errorType = "Error_Type",
+                e.errorReportTime = "Error_Report_Time",
+                e.errorFunction = "Error_Function",
+                e.perfTable = "D365_CIF_Perf",
+                e.usageTable = "D365_CIF_Usage",
+                e.userId = "User_ID",
+                e.CIFVersion = "CIF_Version"
+            }
+            )(t = e.TelemetryConstants || (e.TelemetryConstants = {}))
+        }
+        )(t = e.Internal || (e.Internal = {}))
+    }
+    )(t = e.CIFramework || (e.CIFramework = {}))
+}
+)(Microsoft || (Microsoft = {}));
+var Microsoft;
+(function(e) {
+    var t;
+    (function(e) {
+        var t;
+        (function(e) {
+            var t;
+            (function(e) {
+                e[e.InvalidParams = 0] = "InvalidParams",
+                e[e.TimeOut = 1] = "TimeOut",
+                e[e.XrmApiError = 2] = "XrmApiError",
+                e[e.GenericError = 3] = "GenericError"
+            }
+            )(t = e.errorTypes || (e.errorTypes = {}))
+        }
+        )(t = e.Internal || (e.Internal = {}))
+    }
+    )(t = e.CIFramework || (e.CIFramework = {}))
+}
+)(Microsoft || (Microsoft = {}));
+var Microsoft;
+(function(e) {
+    var t;
+    (function(t) {
+        var n;
+        (function(t) {
+            function n() {
+                let e = window.location.host;
+                return e || (e = window.parent.location.host),
+                e
+            }
+            function i() {
+                let e = n();
+                return e.endsWith("dod-crm.microsoftdynamics.us") ? "DoD" : e.endsWith("crm9.dynamics.com") || e.endsWith("crm.microsoftdynamics.us") ? "GCCHigh" : e.endsWith("crm.microsoftdynamics.de") ? "BlackForest" : e.endsWith("crm.dynamics.cn") ? "MoonCake" : e.endsWith("crm4.dynamics.com") ? "Europe" : e.endsWith("extest.microsoft.com") || e.endsWith("crm10.dynamics.com") || e.endsWith("crm.crmlivetie.com") || e.endsWith("crm2.crmlivetie.com") || e.endsWith("contoso.com:444") || e.endsWith("microsoft.com") || e.endsWith("msmecrm.com") || e.endsWith("crm.crmlivetoday.com") || e.endsWith("crm.1boxtest.com") || e.endsWith("crm.crmifd.com") || e.endsWith("msmecrm.com:444") || 0 == e.search("localhost") ? "Dev" : "Public"
+            }
+            function r(e) {
+                let t = {
+                    disableCookiesUsage: !0
+                };
+                return "GCCHigh" === e ? t.collectorUri = o : "DoD" === e ? t.collectorUri = d : "BlackForest" === e ? t.collectorUri = s : "Europe" === e ? t.collectorUri = l : void 0,
+                t
+            }
+            function a(e) {
+                var n = new AWTEventProperties;
+                n.setName(t.TelemetryConstants.usageTable),
+                n.setProperty(t.TelemetryConstants.apiVersion, e.apiVersion ? e.apiVersion : ""),
+                n.setProperty(t.TelemetryConstants.appId, e.appId ? e.appId : ""),
+                n.setProperty(t.TelemetryConstants.channelOrder, e.sortOrder ? e.sortOrder : ""),
+                n.setProperty(t.TelemetryConstants.clientType, Xrm.Utility.getGlobalContext().client.getClient()),
+                n.setProperty(t.TelemetryConstants.crmVersion, Xrm.Utility.getGlobalContext().getVersion()),
+                n.setProperty(t.TelemetryConstants.orgId, Xrm.Utility.getGlobalContext().organizationSettings.organizationId),
+                n.setProperty(t.TelemetryConstants.orgName, Xrm.Utility.getGlobalContext().organizationSettings.uniqueName),
+                n.setProperty(t.TelemetryConstants.providerId, e.providerId ? e.providerId : ""),
+                n.setProperty(t.TelemetryConstants.providerName, e.providerName ? e.providerName : ""),
+                n.setProperty(t.TelemetryConstants.isError, !!e.isError && e.isError),
+                n.setProperty(t.TelemetryConstants.errorMessage, e.errorObject ? e.errorObject.errorMsg : ""),
+                n.setProperty(t.TelemetryConstants.errorType, e.errorObject ? t.errorTypes[e.errorObject.errorType] : ""),
+                n.setProperty(t.TelemetryConstants.errorReportTime, e.errorObject ? e.errorObject.reportTime : ""),
+                n.setProperty(t.TelemetryConstants.errorFunction, e.errorObject ? e.errorObject.sourceFunc : ""),
+                n.setProperty(t.TelemetryConstants.userId, Xrm.Utility.getGlobalContext().userSettings.userId),
+                n.setProperty(t.TelemetryConstants.apiName, e.apiName ? e.apiName : ""),
+                n.setProperty(t.TelemetryConstants.CIFVersion, e.cifVersion),
+                defaultLogger.logEvent(n)
+            }
+            let s = "https://de.pipe.aria.microsoft.com/Collector/3.0/"
+              , o = "https://tb.pipe.aria.microsoft.com/Collector/3.0/"
+              , d = "https://pf.pipe.aria.microsoft.com/Collector/3.0"
+              , l = "https://eu.pipe.aria.microsoft.com/Collector/3.0/";
+            t.initializeTelemetry = function() {
+                let e = i()
+                  , t = r(e);
+                defaultLogger = "Dev" == e ? AWTLogManager.initialize("d129926264ad4dcc891eaf004fb351de-9bb27fd5-7e89-42a5-960c-c397c94ce2af-7153", t) : AWTLogManager.initialize("0cd345da5c484bff8b75c696a3ac2159-3a768593-5759-4630-a59e-a75af2a7bf20-6631", t),
+                AWTLogManager.addNotificationListener({
+                    eventsSent: e=>{
+                        console.log("CIF Telemetry - Number of Events Sent: " + e.length)
+                    }
+                    ,
+                    eventsDropped: e=>{
+                        console.log("CIF Telemetry - Number of Events Dropped: " + e.length)
+                    }
+                })
+            }
+            ,
+            t.generateErrorObject = function(t, e, n) {
+                let i = {};
+                try {
+                    i.errorMsg = t.get("message")
+                } catch (n) {
+                    i.errorMsg = t.message
+                }
+                return i.sourceFunc = e,
+                i.errorType = n,
+                i.reportTime = new Date().toUTCString(),
+                i
+            }
+            ,
+            t.logFailure = function(t, n, i, r, s, o, d) {
+                var l = new c(o ? o : "",d ? d : "",null,r,null,t ? t : "",s,!!n && n,i ? i : null);
+                return a(l),
+                Promise.reject(e.CIFramework.Utility.createErrorMap(i.errorMsg, r))
+            }
+            ,
+            t.setUsageData = a,
+            t.logApiData = function(e, t, n, i) {
+                let r = {};
+                r.StartTime = t.toUTCString(),
+                r.TimeTaken = n,
+                e && (e[i] = r)
+            }
+            ,
+            t.setPerfData = function(e) {
+                var n = new AWTEventProperties;
+                n.setName(t.TelemetryConstants.perfTable),
+                n.setProperty(t.TelemetryConstants.providerId, e.providerData.providerId ? e.providerData.providerId : ""),
+                n.setProperty(t.TelemetryConstants.providerName, e.providerData.name ? e.providerData.name : ""),
+                n.setProperty(t.TelemetryConstants.crmVersion, e.providerData.crmVersion ? e.providerData.crmVersion : ""),
+                n.setProperty(t.TelemetryConstants.appId, e.providerData.appId ? e.providerData.appId : ""),
+                n.setProperty(t.TelemetryConstants.apiVersion, e.providerData.apiVersion ? e.providerData.apiVersion : ""),
+                n.setProperty(t.TelemetryConstants.orgId, Xrm.Utility.getGlobalContext().organizationSettings.organizationId),
+                n.setProperty(t.TelemetryConstants.orgName, e.providerData.orgName ? e.providerData.orgName : ""),
+                n.setProperty(t.TelemetryConstants.startTime, e.startTime ? e.startTime.toUTCString() : ""),
+                n.setProperty(t.TelemetryConstants.timeTaken, e.timeTaken ? e.timeTaken : ""),
+                n.setProperty(t.TelemetryConstants.apiName, e.apiName ? e.apiName : ""),
+                n.setProperty(t.TelemetryConstants.telemetryData, e.telemetryData ? JSON.stringify(e.telemetryData) : ""),
+                n.setProperty(t.TelemetryConstants.CIFVersion, e.cifVersion),
+                defaultLogger.logEvent(n)
+            }
+            ;
+            class c {
+                constructor(e, t, n, i, r, a, s, o, d) {
+                    this.providerId = e ? e : "",
+                    this.providerName = t ? t : "",
+                    this.apiVersion = n ? n : "",
+                    this.apiName = i ? i : "",
+                    this.sortOrder = r ? r : "",
+                    this.appId = a ? a : "",
+                    this.isError = !!o && o,
+                    this.errorObject = d ? d : null,
+                    this.cifVersion = s ? s : ""
+                }
+            }
+            t.UsageTelemetryData = c;
+            t.PerfTelemetryData = class {
+                constructor(e, t, n, i, r, a) {
+                    this.providerData = e ? e : null,
+                    this.startTime = t ? t : "",
+                    this.timeTaken = n ? n : "",
+                    this.apiName = i ? i : "",
+                    this.telemetryData = a ? a : null,
+                    this.cifVersion = r ? r : ""
+                }
+            }
+        }
+        )(n = t.Internal || (t.Internal = {}))
+    }
+    )(t = e.CIFramework || (e.CIFramework = {}))
+}
+)(Microsoft || (Microsoft = {}));
+var Microsoft;
+(function(Microsoft) {
+    var CIFramework;
+    (function(CIFramework) {
+        var Internal;
+        (function(Internal) {
+            function webClient() {
+                let client = {};
+                return client.registerHandler = (e,t)=>(this.eventHandlers || (this.eventHandlers = new Map),
+                t && this.eventHandlers.set(e, t),
+                !0),
+                client.removeHandler = e=>{
+                    if (!this.eventHandlers)
+                        return null;
+                    let t = this.eventHandlers.get(e);
+                    return this.eventHandlers.delete(e),
+                    t
+                }
+                ,
+                client.createRecord = (e,t,n,i)=>{
+                    if (!i) {
+                        let e = {
+                            errorMsg: "Need values to create for createRecord",
+                            errorType: Internal.errorTypes.InvalidParams,
+                            reportTime: new Date().toUTCString(),
+                            sourceFunc: "client.createRecord"
+                        };
+                        return Promise.reject(e)
+                    }
+                    let r = null;
+                    return r = "string" == typeof i ? JSON.parse(i) : i,
+                    new Promise((t,i)=>{
+                        let a = new Date;
+                        return Xrm.WebApi.createRecord(e, Microsoft.CIFramework.Utility.buildEntity(r)).then(e=>{
+                            let i = Date.now() - a.getTime();
+                            return Internal.logApiData(n, a, i, "Xrm.WebApi.createRecord"),
+                            t(Microsoft.CIFramework.Utility.buildMap(e))
+                        }
+                        , e=>{
+                            let t = Internal.generateErrorObject(e, "client.createRecord - Xrm.WebApi.createRecord", Internal.errorTypes.XrmApiError);
+                            return i(t)
+                        }
+                        )
+                    }
+                    )
+                }
+                ,
+                client.updateRecord = (e,t,n,i)=>{
+                    if (!i) {
+                        let e = {
+                            errorMsg: "Need values to Update for updateRecord",
+                            errorType: Internal.errorTypes.InvalidParams,
+                            reportTime: new Date().toUTCString(),
+                            sourceFunc: "client.updateRecord"
+                        };
+                        return Promise.reject(e)
+                    }
+                    let r = null;
+                    return r = "string" == typeof i ? JSON.parse(i) : i,
+                    new Promise((i,a)=>{
+                        let s = new Date;
+                        return Xrm.WebApi.updateRecord(e, t, Microsoft.CIFramework.Utility.buildEntity(r)).then(e=>{
+                            let t = Date.now() - s.getTime();
+                            return Internal.logApiData(n, s, t, "Xrm.WebApi.updateRecord"),
+                            i(Microsoft.CIFramework.Utility.buildMap(e))
+                        }
+                        , e=>{
+                            let t = Internal.generateErrorObject(e, "client.updateRecord - Xrm.WebApi.updateRecord", Internal.errorTypes.XrmApiError);
+                            return a(t)
+                        }
+                        )
+                    }
+                    )
+                }
+                ,
+                client.retrieveRecord = (e,t,n,i)=>new Promise((r,a)=>{
+                    let s = new Date;
+                    return Xrm.WebApi.retrieveRecord(e, t, i).then(e=>{
+                        let t = Date.now() - s.getTime();
+                        return Internal.logApiData(n, s, t, "Xrm.WebApi.retrieveRecord"),
+                        r(Microsoft.CIFramework.Utility.buildMap(e))
+                    }
+                    , e=>{
+                        let t = Internal.generateErrorObject(e, "client.retrieveRecord - Xrm.WebApi.retrieveRecord", Internal.errorTypes.XrmApiError);
+                        return a(t)
+                    }
+                    )
+                }
+                ),
+                client.getEntityMetadata = (e,t)=>{
+                    var n = t ? t : null;
+                    return new Promise((t,i)=>Xrm.Utility.getEntityMetadata(e, n).then(e=>t(JSON.stringify(Microsoft.CIFramework.Utility.flatten(e))), e=>{
+                        let t = Internal.generateErrorObject(e, "client.getEntityMetadata - Xrm.Utility.getEntityMetadata", Internal.errorTypes.XrmApiError);
+                        return i(t)
+                    }
+                    ))
+                }
+                ,
+                client.deleteRecord = (e,t,n)=>new Promise((i,r)=>{
+                    let a = new Date;
+                    return Xrm.WebApi.deleteRecord(e, t).then(e=>{
+                        let t = Date.now() - a.getTime();
+                        return Internal.logApiData(n, a, t, "Xrm.WebApi.deleteRecord"),
+                        i(Microsoft.CIFramework.Utility.buildMap(e))
+                    }
+                    , e=>{
+                        let t = Internal.generateErrorObject(e, "client.deleteRecord - Xrm.WebApi.deleteRecord", Internal.errorTypes.XrmApiError);
+                        return r(t)
+                    }
+                    )
+                }
+                ),
+                client.sizeChanged = ()=>{
+                    this.eventHandlers || (this.eventHandlers = new Map);
+                    let e = this.eventHandlers.get(CIFramework.Constants.SizeChangeHandler);
+                    if (e) {
+                        let t = new Map().set(CIFramework.Constants.value, client.getWidgetWidth())
+                          , n = new CustomEvent(CIFramework.Constants.SizeChangeHandler,{
+                            detail: t
+                        });
+                        e(n)
+                    }
+                }
+                ,
+                client.modeChanged = ()=>{
+                    this.eventHandlers || (this.eventHandlers = new Map);
+                    let e = this.eventHandlers.get(CIFramework.Constants.ModeChangeHandler);
+                    if (e) {
+                        let t = new Map().set(CIFramework.Constants.value, Xrm.Panel.state)
+                          , n = new CustomEvent(CIFramework.Constants.ModeChangeHandler,{
+                            detail: t
+                        });
+                        e(n)
+                    }
+                }
+                ,
+                client.navigationHandler = e=>{
+                    this.eventHandlers || (this.eventHandlers = new Map);
+                    let t = this.eventHandlers.get(CIFramework.Constants.NavigationHandler);
+                    if (t) {
+                        let n = "";
+                        try {
+                            let t = e.getEventArgs();
+                            n = t.pageUrl
+                        } catch (e) {}
+                        let i = new Map().set(CIFramework.Constants.value, n)
+                          , r = new CustomEvent(CIFramework.Constants.ModeChangeHandler,{
+                            detail: i
+                        });
+                        t(r)
+                    }
+                }
+                ,
+                client.getUserID = ()=>Xrm.Utility.getGlobalContext().userSettings.userId,
+                client.loadWidgets = (e,t)=>{
+                    const n = {
+                        defaultCollapsedBehavior: !1,
+                        onSizeChangeHandler: client.sizeChanged,
+                        onStateChangeHandler: client.modeChanged
+                    };
+                    return new Promise(i=>Xrm.Panel.loadPanel("/webresources/widgets_container.html", t, n).then(function() {
+                        Xrm.Navigation.addOnPreNavigation(client.navigationHandler);
+                        let t = window.parent.document.getElementById(CIFramework.Constants.widgetIframeId)
+                          , n = window.parent
+                          , r = new Map
+                          , a = t.clientHeight * (1 - .9) / e.size;
+                        return t.onload = function() {
+                            t.contentWindow.document.body.dir = window.parent.document.body.dir;
+                            var n = t.contentDocument ? t.contentDocument : t.contentWindow.document;
+                            for (let[t,o] of e) {
+                                var i = document.createElement("div");
+                                i.setAttribute("id", o.providerId),
+                                i.setAttribute("tabindex", "-1"),
+                                i.setAttribute("role", "tabpanel"),
+                                i.setAttribute("style", "height: 100%");
+                                var s = document.createElement("iframe");
+                                s.setAttribute("allow", "microphone; camera; geolocation"),
+                                s.setAttribute("sandbox", "allow-forms allow-popups allow-scripts allow-same-origin"),
+                                s.setAttribute("style", "border: 0px;"),
+                                s.height = "100%",
+                                s.width = "100%",
+                                s.src = t,
+                                s.title = o.label,
+                                o.setContainer(new Internal.WidgetIFrameWrapper(s), a),
+                                i.appendChild(s),
+                                n.getElementById("widgetControlDiv").appendChild(i),
+                                r.set(o.name, !0)
+                            }
+                        }
+                        ,
+                        i(r)
+                    }))
+                }
+                ,
+                client.openKBSearchControl = (searchString,telemetryData)=>{
+                    try {
+                        return eval("window.top.Xrm.Page.getControl('KBSearchcontrol').setFocus()"),
+                        !0
+                    } catch (e) {
+                        return !1
+                    }
+                }
+                ,
+                client.openForm = (e,t)=>{
+                    var n = JSON.parse(e)
+                      , i = t ? JSON.parse(t) : null;
+                    return new Promise((e,t)=>{
+                        const r = window.top.getCurrentXrm() || Xrm;
+                        return r.Navigation.openForm(n, i).then(function(t) {
+                            return e(new Map().set(CIFramework.Constants.value, t))
+                        }, function(e) {
+                            let n = Internal.generateErrorObject(e, "client.openForm - Xrm.Navigation.openForm", Internal.errorTypes.XrmApiError);
+                            return t(n)
+                        })
+                    }
+                    )
+                }
+                ,
+                client.retrieveMultipleAndOpenRecords = (e,t,n,i)=>new Promise((r,a)=>{
+                    let s = new Date
+                      , o = Microsoft.CIFramework.Utility.splitQueryForSearch(t);
+                    if (1 >= o[0].length) {
+                        if (n) {
+                            let e = {
+                                errorMsg: "Error. Either the seach query is empty or searchOnly is true for search query",
+                                errorType: Internal.errorTypes.InvalidParams,
+                                reportTime: new Date().toUTCString(),
+                                sourceFunc: "client.retrieveMultipleAndOpenRecords"
+                            };
+                            return a(Microsoft.CIFramework.Utility.createErrorMap(e.errorMsg, CIFramework.MessageType.searchAndOpenRecords))
+                        }
+                        return Microsoft.CIFramework.Utility.launchSearchPage(o[1], e),
+                        r(new Map().set(CIFramework.Constants.value, []))
+                    }
+                    Xrm.WebApi.retrieveMultipleRecords(e, o[0]).then(t=>{
+                        if (1 == t.entities.length) {
+                            let i = t.entities[0];
+                            !1 == n && Xrm.Utility.getEntityMetadata(e, null).then(t=>{
+                                var n = {
+                                    entityName: e,
+                                    entityId: i[t.PrimaryIdAttribute]
+                                };
+                                Xrm.Navigation.openForm(n)
+                            }
+                            , e=>{
+                                let t = Internal.generateErrorObject(e, "client.retrieveMultipleAndOpenRecords - Xrm.WebApi.retrieveMultipleRecords", Internal.errorTypes.XrmApiError);
+                                return a(Microsoft.CIFramework.Utility.createErrorMap(t.errorMsg, CIFramework.MessageType.searchAndOpenRecords))
+                            }
+                            )
+                        } else
+                            !1 == n && Microsoft.CIFramework.Utility.launchSearchPage(o[1], e);
+                        let d = Date.now() - s.getTime();
+                        return Internal.logApiData(i, s, d, "Xrm.WebApi.retrieveMultipleRecords"),
+                        r(new Map().set(CIFramework.Constants.value, t.entities))
+                    }
+                    , t=>{
+                        let i = Internal.generateErrorObject(t, "client.retrieveMultipleAndOpenRecords - Xrm.WebApi.retrieveMultipleRecords", Internal.errorTypes.XrmApiError);
+                        return !1 == n && Microsoft.CIFramework.Utility.launchSearchPage(o[1], e),
+                        a(Microsoft.CIFramework.Utility.createErrorMap(i.errorMsg, CIFramework.MessageType.searchAndOpenRecords))
+                    }
+                    )
+                }
+                ),
+                client.setWidgetMode = (e,t,n)=>{
+                    let i = new Date;
+                    Xrm.Panel.state = t;
+                    let r = Date.now() - i.getTime();
+                    return Internal.logApiData(n, i, r, "Xrm.Panel.setState"),
+                    t
+                }
+                ,
+                client.setWidgetWidth = (e,t)=>{
+                    let n = window.parent.document.getElementById(CIFramework.Constants.widgetIframeId)
+                      , i = n.contentDocument.getElementById("sessionPanel");
+                    return client.setPanelWidth("setPanelWidth", t + i.clientWidth),
+                    t
+                }
+                ,
+                client.setPanelWidth = (e,t,n)=>{
+                    let i = new Date;
+                    Xrm.Panel.width = t;
+                    let r = Date.now() - i.getTime();
+                    Internal.logApiData(n, i, r, "Xrm.Panel.setWidth")
+                }
+                ,
+                client.getWidgetMode = e=>{
+                    let t = new Date
+                      , n = Xrm.Panel.state
+                      , i = Date.now() - t.getTime();
+                    return Internal.logApiData(e, t, i, "Xrm.Panel.getState"),
+                    n
+                }
+                ,
+                client.getEnvironment = telemetryData=>{
+                    var data = new Map;
+                    try {
+                        let startTime = new Date
+                          , pageUrl = new URL(eval("window.top.Xrm.Page.getUrl()"))
+                          , timeTaken = Date.now() - startTime.getTime()
+                          , apiName = "Xrm.Page.getUrl";
+                        Internal.logApiData(telemetryData, startTime, timeTaken, apiName);
+                        for (var entry of pageUrl.searchParams.entries())
+                            data.set(entry[0], entry[1])
+                    } catch (e) {}
+                    let startTime = new Date;
+                    var context = Xrm.Utility.getGlobalContext();
+                    let timeTaken = Date.now() - startTime.getTime()
+                      , apiName = "Xrm.Utility.getGlobalContext"
+                      , xrmInstance = window.top.getCurrentXrm()
+                      , isDirtyValue = null
+                      , pageData = xrmInstance.Page.data;
+                    if (null != pageData) {
+                        let e = xrmInstance.Page.data.entity;
+                        null != e && (isDirtyValue = xrmInstance.Page.data.entity.getIsDirty())
+                    }
+                    return Internal.logApiData(telemetryData, startTime, timeTaken, apiName),
+                    data.set(CIFramework.Constants.ClientUrl, context.getClientUrl()),
+                    data.set(CIFramework.Constants.AppUrl, context.getCurrentAppUrl()),
+                    data.set(CIFramework.Constants.OrgLcid, context.organizationSettings.languageId),
+                    data.set(CIFramework.Constants.OrgUniqueName, context.organizationSettings.uniqueName),
+                    data.set(CIFramework.Constants.OrgId, context.organizationSettings.organizationId),
+                    data.set(CIFramework.Constants.UserId, context.userSettings.userId),
+                    data.set(CIFramework.Constants.UserLcid, context.userSettings.languageId),
+                    data.set(CIFramework.Constants.UserName, context.userSettings.userName),
+                    data.set(CIFramework.Constants.crmVersion, context.getVersion()),
+                    data.set(CIFramework.Constants.isDirty, isDirtyValue),
+                    data
+                }
+                ,
+                client.getWidgetWidth = ()=>{
+                    let e = new Date
+                      , t = window.parent.document.getElementById(CIFramework.Constants.widgetIframeId)
+                      , n = t.contentDocument.getElementById("widgetArea");
+                    return n.clientWidth
+                }
+                ,
+                client.checkCIFCapability = ()=>{
+                    if ("UnifiedServiceDesk" === Xrm.Utility.getGlobalContext().client.getClient())
+                        return !1;
+                    try {
+                        if (window.top.document.getElementById(CIFramework.Constants.widgetIframeId))
+                            return !1
+                    } catch (e) {
+                        return !1
+                    }
+                    return !0
+                }
+                ,
+                client.renderSearchPage = (e,t,n)=>{
+                    let i;
+                    return new Promise((r,a)=>{
+                        try {
+                            i = new Date,
+                            Xrm.Navigation.navigateTo({
+                                pageType: "search",
+                                searchText: t,
+                                searchType: 1,
+                                EntityNames: [e],
+                                EntityGroupName: ""
+                            });
+                            let a = Date.now() - i.getTime();
+                            return Internal.logApiData(n, i, a, "Xrm.Navigation.navigateTo"),
+                            r()
+                        } catch (e) {
+                            let t = Internal.generateErrorObject(e, "client.renderSearchPage - Xrm.Navigation.navigateTo", Internal.errorTypes.XrmApiError);
+                            return a(t)
+                        }
+                    }
+                    )
+                }
+                ,
+                client.addUISession = (e,t,n,i)=>{
+                    var r = window.parent.document.getElementById(CIFramework.Constants.widgetIframeId);
+                    let a = CIFramework.Utility.getElementFromIframe(r, CIFramework.Constants.sessionPanel);
+                    if (null != a) {
+                        var s = new DOMParser
+                          , o = s.parseFromString("<div class=\"uiSession flexJustify\" role=\"tab\" tabindex=\"-1\" aria-controls=\"" + i + "\" aria-label=\"" + t + "\" id=\"" + e + "\"><div class=\"flexJustify\" id=\"" + e + "UiSessionIcon\"><div class=\"iconCircle\" id=\"" + e + "IconCircle\" style=\"background-color: " + n + ";\"><span class=\"initials\">" + t + "</span></div></div><div id=\"" + e + "CrossIcon\" class=\"flexJustify\" style=\"display:none\"><span class=\"symbolFont Cancel-symbol crossIconFont\"></span></div></div>", "text/html")
+                          , d = o.getElementById(e);
+                        d.onclick = function(t) {
+                            e == Microsoft.CIFramework.Internal.SessionPanel.getInstance().getvisibleUISession() ? Microsoft.CIFramework.Internal.SessionPanel.getInstance().endUISession(t.currentTarget.id.replace("CrossIcon", "")) : Microsoft.CIFramework.Internal.SessionPanel.getInstance().switchUISession(t.currentTarget.id)
+                        }
+                        ,
+                        d.onkeydown = function(t) {
+                            if (13 == t.keyCode)
+                                e == Microsoft.CIFramework.Internal.SessionPanel.getInstance().getvisibleUISession() ? Microsoft.CIFramework.Internal.SessionPanel.getInstance().endUISession(t.currentTarget.id.replace("CrossIcon", "")) : Microsoft.CIFramework.Internal.SessionPanel.getInstance().switchUISession(t.currentTarget.id);
+                            else if (37 == t.keyCode) {
+                                if (null != d.previousElementSibling)
+                                    d.previousElementSibling.focus();
+                                else {
+                                    let e = CIFramework.Utility.getElementsByClassName(r, "uiSession");
+                                    e[e.length - 1].focus()
+                                }
+                            } else if (39 == t.keyCode)
+                                if (null != d.nextElementSibling && -1 != d.nextElementSibling.className.indexOf("uiSession"))
+                                    d.nextElementSibling.focus();
+                                else {
+                                    let e = CIFramework.Utility.getElementsByClassName(r, "uiSession");
+                                    e[0].focus()
+                                }
+                        }
+                        ;
+                        let a = CIFramework.Utility.getElementFromIframe(r, "uiSessions");
+                        a.appendChild(d)
+                    }
+                }
+                ,
+                client.removeUISession = e=>{
+                    var t = window.parent.document.getElementById(CIFramework.Constants.widgetIframeId);
+                    let n = CIFramework.Utility.getElementFromIframe(t, e);
+                    null == n || n.parentNode.removeChild(n)
+                }
+                ,
+                client.getUISessionColor = e=>{
+                    var t = window.parent.document.getElementById(CIFramework.Constants.widgetIframeId);
+                    let n = CIFramework.Utility.getElementFromIframe(t, e + "IconCircle");
+                    return null == n ? "" : CIFramework.Utility.rgb2hex(n.style.backgroundColor)
+                }
+                ,
+                client.updateUISession = (e,t)=>{
+                    var n = window.parent.document.getElementById(CIFramework.Constants.widgetIframeId);
+                    let i = CIFramework.Utility.getElementFromIframe(n, e);
+                    if (null == i)
+                        return;
+                    var r = i.getAttribute("aria-controls");
+                    let a = CIFramework.Utility.getElementFromIframe(n, r)
+                      , s = CIFramework.Utility.getElementFromIframe(n, e + "UiSessionIcon")
+                      , o = CIFramework.Utility.getElementFromIframe(n, e + "CrossIcon");
+                    t ? (i.style.backgroundColor = "#FFFFFF",
+                    i.style.boxShadow = "0px 4px 8px rgba(102, 102, 102, 0.2)",
+                    s.style.display = "none",
+                    o.style.display = "flex",
+                    i.setAttribute("tabindex", 0),
+                    a.setAttribute("aria-labelledby", e)) : (i.style.backgroundColor = "transparent",
+                    i.style.boxShadow = "none",
+                    s.style.display = "flex",
+                    o.style.display = "none",
+                    i.setAttribute("tabindex", -1),
+                    a.setAttribute("aria-labelledby", "")),
+                    i.setAttribute("aria-selected", t)
+                }
+                ,
+                client.expandFlap = ()=>{
+                    if (this.flapExpanded)
+                        return 0;
+                    let e = window.parent.document.getElementById(CIFramework.Constants.widgetIframeId)
+                      , t = e.contentDocument.getElementById("sessionPanel")
+                      , n = client.getWidgetWidth();
+                    return this.origWidth = n + t.clientWidth,
+                    this.flapExpanded = !0,
+                    client.setPanelWidth("setPanelWidth", 2 * this.origWidth - t.clientWidth),
+                    e.contentDocument.documentElement.style.setProperty("--flapAreaWidth", n.toString() + "px"),
+                    this.origWidth
+                }
+                ,
+                client.collapseFlap = ()=>{
+                    if (!this.flapExpanded)
+                        return 0;
+                    client.setPanelWidth("setPanelWidth", this.origWidth);
+                    let e = window.parent.document.getElementById(CIFramework.Constants.widgetIframeId);
+                    return e.contentDocument.documentElement.style.setProperty("--flapAreaWidth", "0px"),
+                    this.flapExpanded = !1,
+                    this.origWidth
+                }
+                ,
+                client.flapInUse = ()=>!0 === this.flapExpanded,
+                client
+            }
+            function UCIPresenceManager() {
+                return {
+                    setAgentPresence: (e,t)=>{
+                        let n = new Date
+                          , i = Microsoft.CIFramework.Internal.PresenceControl.Instance.setAgentPresence(e)
+                          , r = Date.now() - n.getTime();
+                        Internal.logApiData(t, n, r, "PresenceControl.setAgentPresence");
+                        let a = window.parent.document.getElementById(CIFramework.Constants.widgetIframeId)
+                          , s = a.contentWindow.document.getElementById("CurrentStatus");
+                        return null != s && (s.innerHTML = "",
+                        s.appendChild(i),
+                        !0)
+                    }
+                    ,
+                    initializeAgentPresenceList: (e,t)=>{
+                        let n = new Date
+                          , i = Microsoft.CIFramework.Internal.PresenceControl.Instance.setAllPresences(e)
+                          , r = Date.now() - n.getTime();
+                        Internal.logApiData(t, n, r, "PresenceControl.initializeAgentPresenceList");
+                        let a = window.parent.document.getElementById(CIFramework.Constants.widgetIframeId)
+                          , s = a.contentWindow.document.getElementById("PresenceList");
+                        return null != s && (s.innerHTML = "",
+                        s.appendChild(i),
+                        !0)
+                    }
+                }
+            }
+            Internal.webClient = webClient,
+            Internal.UCIPresenceManager = UCIPresenceManager
+        }
+        )(Internal = CIFramework.Internal || (CIFramework.Internal = {}))
+    }
+    )(CIFramework = Microsoft.CIFramework || (Microsoft.CIFramework = {}))
+}
+)(Microsoft || (Microsoft = {}));
+var Microsoft;
+(function(e) {
+    var t;
+    (function(e) {
+        var t;
+        (function(t) {
+            class n {
+                constructor() {
+                    this.counter = 0,
+                    this.UIsessions = new Map,
+                    this.visibleUISession = ""
+                }
+                static getInstance() {
+                    return n.instance || (n.instance = new n),
+                    n.instance
+                }
+                setState(e) {
+                    this.state = e
+                }
+                getvisibleUISession() {
+                    return this.visibleUISession
+                }
+                switchUISession(e) {
+                    if (this.visibleUISession == e || !this.UIsessions.has(e))
+                        return;
+                    let t = !0, n = this.UIsessions.get(e), i;
+                    "" != this.visibleUISession && (i = this.UIsessions.get(this.visibleUISession),
+                    i == n && (t = !1),
+                    i.setInvisibleUISession(this.visibleUISession, t),
+                    this.state.client.updateUISession(this.visibleUISession, !1)),
+                    this.visibleUISession = e,
+                    n.setVisibleUISession(this.visibleUISession, t);
+                    this.state.client.getUISessionColor(this.visibleUISession);
+                    this.state.client.updateUISession(this.visibleUISession, !0)
+                }
+                canAddUISession() {
+                    return !!(this.UIsessions.size < e.Constants.MaxUISessions)
+                }
+                addUISession(t, n, i) {
+                    this.UIsessions.set(t, n);
+                    let r = e.Constants.sessionColors[this.counter++ % e.Constants.sessionColors.length];
+                    this.state.client.addUISession(t, i, r, n.providerId),
+                    "" == this.visibleUISession && this.switchUISession(t),
+                    this.UIsessions.size == e.Constants.MaxUISessions
+                }
+                removeUISession(e) {
+                    this.UIsessions.has(e) && (this.UIsessions.delete(e),
+                    this.state.client.removeUISession(e),
+                    this.visibleUISession == e && (this.visibleUISession = "",
+                    0 < this.UIsessions.size && this.switchUISession(Array.from(this.UIsessions.keys()).pop())))
+                }
+                endUISession(n) {
+                    if (this.UIsessions.has(n)) {
+                        let i = this.UIsessions.get(n);
+                        t.endUISession(new Map().set(e.Constants.sessionId, n).set(e.Constants.originURL, i.landingUrl))
+                    }
+                }
+            }
+            t.SessionPanel = n
+        }
+        )(t = e.Internal || (e.Internal = {}))
+    }
+    )(t = e.CIFramework || (e.CIFramework = {}))
+}
+)(Microsoft || (Microsoft = {}));
+var Microsoft;
+(function(e) {
+    var t;
+    (function(t) {
+        var n;
+        (function(t) {
+            t.postMsgWrapper = class {
+                constructor(e, n, i, r) {
+                    this.pendingPromises = new Map,
+                    this.messageHandlers = new Map,
+                    this.responseTargetWindow = null,
+                    e && (e.removeEventListener(t.messageConstant, this.processMessage.bind(this)),
+                    e.addEventListener(t.messageConstant, this.processMessage.bind(this))),
+                    this.listWhitelistedDomains = n,
+                    i && (this.messageHandlers = i),
+                    this.responseTargetWindow = r
+                }
+                addHandler(e, t) {
+                    this.messageHandlers.has(e) ? this.messageHandlers.get(e).add(t) : this.messageHandlers.set(e, new Set().add(t))
+                }
+                getHandlers(e) {
+                    return this.messageHandlers.has(e) ? this.messageHandlers.get(e) : null
+                }
+                removeHandler(e, t) {
+                    this.messageHandlers.has(e) && this.messageHandlers.get(e).delete(t)
+                }
+                getCorrelationId() {
+                    return (Math.random() + 1).toString(36).substring(7)
+                }
+                createDeferred(n) {
+                    const i = {
+                        promise: null,
+                        resolve: null,
+                        reject: null,
+                        timerId: null
+                    };
+                    let r = new Promise((e,t)=>{
+                        i.resolve = e,
+                        i.reject = t
+                    }
+                    )
+                      , a = [r];
+                    if (!n) {
+                        let n = new Promise((n,r)=>{
+                            i.timerId = setTimeout(()=>{
+                                r(e.CIFramework.Utility.createErrorMap("Timeout occurred as no response was received from listener window"))
+                            }
+                            , t.promiseTimeOut)
+                        }
+                        );
+                        a.push(n)
+                    }
+                    return i.promise = Promise.race(a).then(e=>(i.timerId && clearTimeout(i.timerId),
+                    this.removePromise(i),
+                    e)).catch(e=>{
+                        throw i.timerId && clearTimeout(i.timerId),
+                        this.removePromise(i),
+                        e
+                    }
+                    ),
+                    i
+                }
+                removePromise(e) {
+                    let t = null;
+                    for (let[n,i] of this.pendingPromises)
+                        if (i == e) {
+                            t = n;
+                            break
+                        }
+                    t && this.pendingPromises.delete(t)
+                }
+                postMsg(e, n, i, r, a) {
+                    if (e && "*" != i) {
+                        let r = this.createDeferred(a)
+                          , s = this.getCorrelationId()
+                          , o = n;
+                        return o[t.messageCorrelationId] = s,
+                        this.pendingPromises.set(s, r),
+                        this.postMsgInternal(e, o, i, r)
+                    }
+                    return t.rejectWithErrorMessage("Receiving window or targetOrigin cannot be unspecified")
+                }
+                postMsgInternal(e, n, i, r) {
+                    for (let a = 0; ; )
+                        try {
+                            return e.postMessage(n, i),
+                            r ? r.promise : void 0
+                        } catch (e) {
+                            if (++a == t.retryCount)
+                                return t.rejectWithErrorMessage("Not able to post the request to receiving window after multiple tries.")
+                        }
+                }
+                sendResponseMsg(e, t, n) {
+                    e && "*" != n && e.postMessage(t, n)
+                }
+                processMessage(n) {
+                    try {
+                        let i = this.responseTargetWindow || n.source, r = this.listWhitelistedDomains.find(e=>{
+                            var t = new URL(n.origin), i = decodeURIComponent(t.hostname), r = "", a;
+                            return (null != e && (a = new URL(e),
+                            r = decodeURIComponent(a.hostname)),
+                            "" != r && r == i) || !!(null != e && r.startsWith("*")) && i.endsWith(r.substr(2))
+                        }
+                        ), a = n.data[t.messageCorrelationId], s = null, o;
+                        if (n.origin && "*" !== n.origin && n.source || (s = e.CIFramework.Utility.createErrorMap("Origin/Source of the message cant be null or all")),
+                        r || (s = e.CIFramework.Utility.createErrorMap("Sender domain is not a recognised or is invalid and hence the message cant be processed")),
+                        !a) {
+                            if (s)
+                                return void console.trace("Ignoring message from unknown event source: " + n.origin);
+                        } else if (s)
+                            return o = {
+                                messageOutcome: t.messageFailure,
+                                messageData: s,
+                                messageCorrelationId: a,
+                                messageType: "CIF_Response"
+                            },
+                            this.sendResponseMsg(i, o, n.origin);
+                        let d;
+                        if (a && this.pendingPromises && (d = this.pendingPromises.get(a)),
+                        !d) {
+                            let s = n.data;
+                            if(s.messageType === "CIF_Response")
+                                return;
+                            if ("string" != typeof s.messageData && s.messageData.set(t.originURL, r),
+                            !this.messageHandlers.get(s.messageType))
+                                return void (a && (o = {
+                                    messageOutcome: t.messageSuccess,
+                                    messageData: e.CIFramework.Utility.createErrorMap("No handlers found to process the request."),
+                                    messageCorrelationId: a,
+                                    messageType: "CIF_Response"
+                                },
+                                this.sendResponseMsg(i, o, n.origin)));
+                            this.messageHandlers.get(s.messageType).forEach(e=>{
+                                e(s.messageData).then(function(e) {
+                                    a && (o = {
+                                        messageOutcome: t.messageSuccess,
+                                        messageData: e,
+                                        messageCorrelationId: a,
+                                        messageType: "CIF_Response"
+                                    },
+                                    this.sendResponseMsg(i, o, n.origin))
+                                }
+                                .bind(this), function(e) {
+                                    a && (o = {
+                                        messageOutcome: t.messageFailure,
+                                        messageData: e,
+                                        messageCorrelationId: a,
+                                        messageType: "CIF_Response"
+                                    },
+                                    this.sendResponseMsg(i, o, n.origin))
+                                }
+                                .bind(this))
+                            }
+                            )
+                        } else {
+                            let e = n.data;
+                            e.messageOutcome === t.messageSuccess ? d.resolve(e.messageData) : d.reject(e.messageData)
+                        }
+                    } catch (t) {
+                        console.error("Error in PostMsgWrapper - processMessage. " + t)
+                    }
+                }
+            }
+        }
+        )(n = t.postMessageNamespace || (t.postMessageNamespace = {}))
+    }
+    )(t = e.CIFramework || (e.CIFramework = {}))
+}
+)(Microsoft || (Microsoft = {}));
+var Microsoft;
+(function(e) {
+    var t;
+    (function(t) {
+        var n;
+        (function(n) {
+            n.ProviderManager = class {
+                constructor(e, t, n) {
+                    this._client = e,
+                    this.ciProviders = new Map,
+                    this.ciProviders.set(t, n),
+                    this._defaultProvider = n
+                }
+                addProvider(e, t) {
+                    this.ciProviders.set(e, t)
+                }
+                setActiveProvider(e) {
+                    this._activeProvider = e
+                }
+                getActiveProvider() {
+                    return this._activeProvider || this._defaultProvider
+                }
+            }
+            ;
+            n.CIProvider = class {
+                constructor(e, n, i) {
+                    this._state = n,
+                    this.name = e[t.Constants.name],
+                    this.providerId = e[t.Constants.providerId],
+                    this.label = e[t.Constants.label],
+                    this.landingUrl = e[t.Constants.landingUrl],
+                    this.clickToAct = e[t.Constants.clickToActAttributeName],
+                    this._widgetContainer = null,
+                    this.sortOrder = e[t.Constants.SortOrder],
+                    this.apiVersion = e[t.Constants.APIVersion],
+                    this.trustedDomain = e[t.Constants.trustedDomain],
+                    this.customParams = e.msdyn_customparams,
+                    this.orgId = i.orgId,
+                    this.orgName = i.orgName,
+                    this.crmVersion = i.crmVersion,
+                    this.appId = i.appId,
+                    this.uiSessions = new Map
+                }
+                raiseEvent(n, i, r) {
+                    const a = {
+                        messageType: i,
+                        messageData: JSON.stringify(e.CIFramework.Utility.buildEntity(n))
+                    };
+                    switch (i) {
+                    case t.MessageType.onClickToAct:
+                        if (!this.clickToAct)
+                            return Promise.resolve(new Map().set(t.Constants.value, !1));
+                    }
+                    return this.getContainer() ? this._state.messageLibrary.postMsg(this.getContainer().getContentWindow(), a, this.trustedDomain || this.landingUrl, !0, r) : Promise.resolve(new Map().set(t.Constants.value, !1))
+                }
+                getContainer() {
+                    return this._widgetContainer
+                }
+                setContainer(e, t) {
+                    this._widgetContainer = e,
+                    this._minimizedHeight = t
+                }
+                startUISession(e, i) {
+                    if (!n.SessionPanel.getInstance().canAddUISession()) {
+                        let e = {
+                            reportTime: new Date().toUTCString(),
+                            errorMsg: "Cannot add the UISession. Maximum UISessions limit reached. Limit: " + t.Constants.MaxUISessions,
+                            errorType: n.errorTypes.GenericError,
+                            sourceFunc: n.startUISession.name
+                        };
+                        return [null, e]
+                    }
+                    let r = this._state.messageLibrary.getCorrelationId();
+                    return this.uiSessions.set(r, {
+                        sessionId: r,
+                        context: e,
+                        applicationTabs: null,
+                        initials: i
+                    }),
+                    n.SessionPanel.getInstance().addUISession(r, this, i),
+                    this.raiseEvent(new Map().set("sessionId", r).set("visible", this.visibleUISession == r).set("context", e), t.MessageType.onUISessionStarted),
+                    [r, null]
+                }
+                switchUISession(e) {
+                    if (!this.uiSessions.has(e)) {
+                        let t = {
+                            reportTime: new Date().toUTCString(),
+                            errorMsg: "Session with ID:" + e + " does not exist",
+                            errorType: n.errorTypes.GenericError,
+                            sourceFunc: n.switchUISession.name
+                        };
+                        return [null, t]
+                    }
+                    if (n.SessionPanel.getInstance().getvisibleUISession() == e) {
+                        let t = {
+                            reportTime: new Date().toUTCString(),
+                            errorMsg: "Session with ID:" + e + " is already visible",
+                            errorType: n.errorTypes.GenericError,
+                            sourceFunc: n.switchUISession.name
+                        };
+                        return [null, t]
+                    }
+                    return n.SessionPanel.getInstance().switchUISession(e),
+                    [e, null]
+                }
+                endUISession(e) {
+                    if (!this.uiSessions.has(e)) {
+                        let t = {
+                            reportTime: new Date().toUTCString(),
+                            errorMsg: "Session with ID:" + e + "does not exist",
+                            errorType: n.errorTypes.GenericError,
+                            sourceFunc: n.endUISession.name
+                        };
+                        return [null, t]
+                    }
+                    return this.raiseEvent(new Map().set("sessionId", e).set("visible", this.visibleUISession == e).set("context", this.uiSessions.get(e).context), t.MessageType.onUISessionEnded, !0).then(function() {
+                        this.uiSessions.delete(e),
+                        n.SessionPanel.getInstance().removeUISession(e)
+                    }
+                    .bind(this)),
+                    [e, null]
+                }
+                setVisibleUISession(e, n) {
+                    this.raiseEvent(new Map().set("sessionId", e).set("visible", !0).set("context", this.uiSessions.get(e).context), t.MessageType.onUISessionVisibilityChanged),
+                    this.visibleUISession = e,
+                    n && this._state.providerManager.setActiveProvider(this)
+                }
+                setInvisibleUISession(e, n) {
+                    this.raiseEvent(new Map().set("sessionId", e).set("visible", !1).set("context", this.uiSessions.get(e).context), t.MessageType.onUISessionVisibilityChanged),
+                    this.visibleUISession = "",
+                    n && this._state.providerManager.setActiveProvider(null)
+                }
+            }
+        }
+        )(n = t.Internal || (t.Internal = {}))
+    }
+    )(t = e.CIFramework || (e.CIFramework = {}))
+}
+)(Microsoft || (Microsoft = {}));
+var Microsoft;
+(function(e) {
+    var t;
+    (function(t) {
+        var n;
+        (function(n) {
+            function r(e, n, r, d, l) {
+                let c = o.document.getElementById(s.widgetIframeId)
+                  , p = c.contentWindow.document.getElementById("toastDiv")
+                  , m = 0
+                  , u = !1
+                  , g = new Map;
+                if (-1 != d[0].search(t.MessageType.softNotification))
+                    g = a(e, n, d[1]);
+                else {
+                    -1 == l.search(s.Chat) ? -1 == l.search(s.Call) ? -1 != l.search(s.Case) && p.insertAdjacentHTML("beforeend", "<div id=\"CIFToast\" tabindex=\"0\" aria-label=\"Notification Window\" class=\"CIFToastDiv\"><div tabindex=\"0\" class=\"header_NotificationType_CIF\"></div><div aria-label=\"Notification Header\" tabindex=\"0\" class=\"header_CIF\"><div class=\"CIFHeaderIconDiv\"><img class=\"CIFHeaderImage\" src=\"/webresources/case_icon.svg\"></div><div tabindex=\"0\" class=\"headerKeyCIF\"></div><div tabindex=\"0\" id=\"headerTimerCIFId\" class=\"headerTimerCIF\"></div><div tabindex=\"0\" class=\"headerNameCIF\"></div><div tabindex=\"0\" class=\"headerDetailsCIF\"></div></div><div></div><div tabindex=\"0\" aria-label=\"Notification Body\" class=\"bodyDivCIF\"><div class=\"bodyDivider_CIF\"></div><p tabindex=\"0\" class=\"body_CIF\"><div></div><p><br></p></div></div>") : p.insertAdjacentHTML("beforeend", "<div id=\"CIFToast\" tabindex=\"0\" aria-label=\"Notification Window\" class=\"CIFToastDiv\"><div tabindex=\"0\" class=\"header_NotificationType_CIF\"></div><div aria-label=\"Notification Header\" tabindex=\"0\" class=\"header_CIF\"><div class=\"CIFHeaderIconDiv\"><img class=\"CIFHeaderImage\" src=\"/webresources/call_icon.svg\"></div><div tabindex=\"0\" class=\"headerKeyCIF\"></div><div tabindex=\"0\" id=\"headerTimerCIFId\" class=\"headerTimerCIF\"></div><div tabindex=\"0\" class=\"headerNameCIF\"></div><div tabindex=\"0\" class=\"headerDetailsCIF\"></div></div><div></div><div tabindex=\"0\" aria-label=\"Notification Body\" class=\"bodyDivCIF\"><div class=\"bodyDivider_CIF\"></div><p tabindex=\"0\" class=\"body_CIF\"><div></div><p><br></p></div></div>") : p.insertAdjacentHTML("beforeend", "<div id=\"CIFToast\" tabindex=\"0\" aria-label=\"Notification Window\" class=\"CIFToastDiv\"><div tabindex=\"0\" class=\"header_NotificationType_CIF\"></div><div aria-label=\"Notification Header\" tabindex=\"0\" class=\"header_CIF\"><div class=\"CIFHeaderIconDiv\"><img class=\"CIFHeaderImage\" src=\"/webresources/chat_icon.svg\"></div><div tabindex=\"0\" class=\"headerKeyCIF\"></div><div tabindex=\"0\" id=\"headerTimerCIFId\" class=\"headerTimerCIF\"></div><div tabindex=\"0\" class=\"headerNameCIF\"></div><div tabindex=\"0\" class=\"headerDetailsCIF\"></div></div><div></div><div tabindex=\"0\" aria-label=\"Notification Body\" class=\"bodyDivCIF\"><div class=\"bodyDivider_CIF\"></div><p tabindex=\"0\" class=\"body_CIF\"><div></div><p><br></p></div></div>");
+                    let i = p.getElementsByClassName("CIFToastDiv").length
+                      , a = p.getElementsByClassName("CIFToastDiv")[i - 1];
+                    p.getElementsByClassName("CIFToastDiv")[i - 1].id = "CIFToastDiv_" + i;
+                    let o = "100%";
+                    if (c.contentWindow.document.getElementById("CIFToastDiv_" + i).style.width = "100%",
+                    null != d && "undefined" != d && 0 < d.length) {
+                        let e = p.getElementsByClassName("header_NotificationType_CIF")[i - 1];
+                        if (-1 != d[0].search(t.MessageType.broadCast) && 3 == d.length) {
+                            e.classList.add("header_NotificationType_CIF_Broadcast"),
+                            p.getElementsByClassName("header_NotificationType_CIF_Broadcast")[i - 1].id = "CIFToastType_" + i,
+                            c.contentWindow.document.getElementById("CIFToastType_" + i).style.width = o;
+                            var y = document.createElement("label");
+                            e.appendChild(y),
+                            y.classList.add("broadCastLabel1"),
+                            y.innerText = d[1],
+                            y.setAttribute("aria-label", d[1]);
+                            var _ = document.createElement("label");
+                            e.appendChild(_),
+                            _.classList.add("broadCastLabel2"),
+                            _.innerText = d[2],
+                            _.setAttribute("aria-label", d[2])
+                        } else if (-1 != (-1 != d[0].search(t.MessageType.notification) || d[0].search(t.MessageType.escalation)) && 2 == d.length) {
+                            e.classList.add("header_NotificationType_CIF_notification"),
+                            p.getElementsByClassName("header_NotificationType_CIF_notification")[i - 1].id = "CIFToastType_" + i,
+                            c.contentWindow.document.getElementById("CIFToastType_" + i).style.width = o;
+                            var I = document.createElement("span");
+                            e.appendChild(I),
+                            e.getElementsByTagName("span")[0].classList.add("notificationSpan"),
+                            -1 == d[0].search(t.MessageType.escalation) ? e.getElementsByTagName("span")[0].classList.add("FontIcons_notificationSpan") : e.getElementsByTagName("span")[0].classList.add("FontIcons_escalationSpan");
+                            var T = document.createElement("label");
+                            e.appendChild(T),
+                            T.classList.add("notificationLabel"),
+                            T.innerText = d[1],
+                            T.setAttribute("aria-label", d[1])
+                        } else if (-1 != d[0].search(t.MessageType.transfer) && 2 == d.length) {
+                            e.classList.add("header_NotificationType_CIF_transfer"),
+                            p.getElementsByClassName("header_NotificationType_CIF_transfer")[i - 1].id = "CIFToastType_" + i,
+                            c.contentWindow.document.getElementById("CIFToastType_" + i).style.width = o;
+                            var y = document.createElement("label");
+                            e.appendChild(y),
+                            y.classList.add("transferLabel"),
+                            y.innerText = d[1],
+                            y.setAttribute("aria-label", d[1])
+                        } else if (-1 != d[0].search(t.MessageType.internalCommunication) && 2 == d.length) {
+                            e.classList.add("header_NotificationType_CIF_internalCommunication"),
+                            p.getElementsByClassName("header_NotificationType_CIF_internalCommunication")[i - 1].id = "CIFToastType_" + i,
+                            c.contentWindow.document.getElementById("CIFToastType_" + i).style.width = o;
+                            var I = document.createElement("span");
+                            e.appendChild(I),
+                            e.getElementsByTagName("span")[0].classList.add("internalCommunicationSpan"),
+                            e.getElementsByTagName("span")[0].classList.add("FontIcons_internalCommunicationSpan");
+                            var T = document.createElement("label");
+                            e.appendChild(T),
+                            T.classList.add("internalCommunicationLabel"),
+                            T.innerText = d[1],
+                            T.setAttribute("aria-label", d[1]),
+                            a.classList.add("internalCommunication_CIFToastDiv")
+                        } else if (-1 != d[0].search(t.MessageType.notification)) {
+                            e.classList.add("header_NotificationType_CIF_Broadcast"),
+                            p.getElementsByClassName("header_NotificationType_CIF_Broadcast")[i - 1].id = "CIFToastType_" + i,
+                            c.contentWindow.document.getElementById("CIFToastType_" + i).style.width = o;
+                            var y = document.createElement("label");
+                            e.appendChild(y),
+                            y.classList.add("broadCastLabel1");
+                            var _ = document.createElement("label");
+                            e.appendChild(_),
+                            _.innerText = "secs remaining",
+                            _.classList.add("hardNotificationLabel2"),
+                            _.setAttribute("aria-label", "secs remaining")
+                        }
+                    }
+                    let f = "";
+                    for (m = 0; m < e.length; m++)
+                        for (let t in e[m]) {
+                            p.getElementsByClassName("headerKeyCIF")[i - 1].innerHTML = t;
+                            for (let n = 0; n < e[m][t].length; n++)
+                                0 == n ? p.getElementsByClassName("headerNameCIF")[i - 1].innerHTML = e[m][t][n] : f += e[m][t][n] + "\n"
+                        }
+                    if (null != n && "undefined" != n)
+                        for (m = 0; m < n.length; m++)
+                            for (let e in n[m]) {
+                                let t = p.getElementsByClassName("body_CIF")[i - 1];
+                                var y = document.createElement("label");
+                                t.appendChild(y),
+                                y.classList.add("body_CIFLabel1");
+                                var _ = document.createElement("label");
+                                _.classList.add("body_CIFLabel2"),
+                                y.innerText = e,
+                                y.setAttribute("aria-label", e),
+                                _.innerText = n[m][e],
+                                _.setAttribute("aria-label", n[m][e]),
+                                _.addEventListener("mouseover", function() {
+                                    this.classList.add("body_CIFLabel2_mouseover"),
+                                    _.style.width = "calc(70% - 20px)"
+                                }),
+                                _.addEventListener("mouseout", function() {
+                                    this.classList.add("body_CIFLabel2_mouseout"),
+                                    _.style.width = "calc(70% - 20px)"
+                                }),
+                                y.style.width = "30%",
+                                _.style.width = "calc(70% - 20px)",
+                                t.appendChild(_);
+                                var v = document.createElement("div");
+                                v.appendChild(document.createElement("br")),
+                                t.appendChild(v)
+                            }
+                    else
+                        p.getElementsByClassName("bodyDivider_CIF")[i - 1].classList.add("bodyDivider_CIF_invisible");
+                    p.getElementsByClassName("bodyDivider_CIF")[i - 1].id = "CIFToastDivider_" + i,
+                    c.contentWindow.document.getElementById("CIFToastDivider_" + i).style.width = "100%",
+                    p.getElementsByClassName("bodyDivider_CIF")[i - 1].id = "CIFToastDividerInvisible_" + i,
+                    c.contentWindow.document.getElementById("CIFToastDividerInvisible_" + i).style.width = "100%",
+                    p.getElementsByClassName("headerDetailsCIF")[i - 1].innerHTML = f,
+                    p.getElementsByClassName("headerDetailsCIF")[i - 1].setAttribute("aria-label", f);
+                    let E = p.getElementsByClassName("bodyDivCIF")[i - 1];
+                    if (null != r && "undefined" != r) {
+                        let e = !1
+                          , t = !1;
+                        for (m = 0; m < r.length; m++)
+                            for (let n in r[m])
+                                -1 != n.search(s.actionType) && (-1 != r[m][n].search(s.Accept) && (e = !0),
+                                -1 != r[m][n].search(s.Reject) && (t = !0));
+                        for (m = 0; m < r.length; m++) {
+                            var C = document.createElement("BUTTON")
+                              , I = document.createElement("span");
+                            E.appendChild(C);
+                            let n = new Map;
+                            u = !1;
+                            let i = !1, o, d;
+                            for (let n in !0 == e && !0 == t && (i = !0),
+                            r[m])
+                                if (-1 != n.search(s.actionType) && (-1 == r[m][n].search(s.Accept) ? -1 == r[m][n].search(s.Reject) ? -1 != r[m][n].search(s.Timeout) && (C.classList.add("timeOutCIF"),
+                                u = !0) : (!1 == i ? (C.classList.add("bothButtonsReject_CIF"),
+                                C.style.width = "calc(100% - 30px)") : (C.classList.add("singleButtonReject_CIF"),
+                                C.style.width = "calc(50% - 20px)"),
+                                C.appendChild(I),
+                                C.getElementsByTagName("span")[0].classList.add("rejectButtonSpan_CIF"),
+                                C.getElementsByTagName("span")[0].classList.add("FontIcons-rejectHardNotification_CIF")) : (!1 == i ? (C.classList.add("bothButtonsAccept_CIF"),
+                                C.style.width = "calc(100% - 30px)") : (C.classList.add("singleButtonAccept_CIF"),
+                                C.style.width = "calc(50% - 20px)"),
+                                C.appendChild(I),
+                                C.getElementsByTagName("span")[0].classList.add("acceptButtonSpan_CIF"),
+                                C.getElementsByTagName("span")[0].classList.add("FontIcons_acceptButtonSpan_CIF"))),
+                                -1 != n.search(s.actionDisplayText)) {
+                                    var I = document.createElement("span");
+                                    I.innerText = r[m][n],
+                                    I.classList.add("actionDisplayText_CIF"),
+                                    I.tabIndex = 0,
+                                    I.setAttribute("aria-label", r[m][n]),
+                                    C.appendChild(I)
+                                } else
+                                    -1 == n.search(s.actionName) ? -1 == n.search(s.actionReturnValue) ? -1 != n.search(s.actionColor) && (C.style.backgroundColor = r[m][n]) : d = r[m][n] : o = r[m][n];
+                            n.set(s.actionName, o),
+                            n.set(s.actionReturnValue, d),
+                            u ? g.set(a, n) : g.set(C, n)
+                        }
+                    }
+                    p.getElementsByClassName("header_CIF")[i - 1].addEventListener("click", function() {
+                        if (h = p.getElementsByTagName("div"),
+                        null != h) {
+                            for (m = 0; m < h.length; m++) {
+                                let e = h[m];
+                                null != e.getElementsByClassName("bodyDivCIF")[0] && (e.getElementsByClassName("bodyDivCIF")[0].setAttribute("style", "display:none;"),
+                                e.getElementsByClassName("headerTimerCIF")[0].setAttribute("style", "display:block;")),
+                                null != e.getElementsByClassName("headerDetailsCIF")[0] && e.getElementsByClassName("headerDetailsCIF")[0].setAttribute("style", "display:none;"),
+                                null != e.getElementsByClassName("header_NotificationType_CIF")[0] && e.getElementsByClassName("header_NotificationType_CIF")[0].setAttribute("style", "display:none;")
+                            }
+                            this.parentElement.getElementsByClassName("bodyDivCIF")[0].setAttribute("style", "display:block;"),
+                            this.parentElement.getElementsByClassName("headerTimerCIF")[0].style.display = "none",
+                            this.parentElement.getElementsByClassName("headerDetailsCIF")[0].setAttribute("style", "display:block;"),
+                            this.parentElement.getElementsByClassName("header_NotificationType_CIF")[0].setAttribute("style", "display:block;"),
+                            !1 == u && this.parentElement.getElementsByClassName("header_NotificationType_CIF")[0].setAttribute("style", "display:none;")
+                        }
+                    })
+                }
+                var h = p.getElementsByTagName("div");
+                if (null != h) {
+                    let e = 0
+                      , t = 0;
+                    for (m = 0; m < h.length; m++) {
+                        let n = h[m];
+                        null != n.getElementsByClassName("bodyDivCIF")[0] && (0 == e ? (n.getElementsByClassName("bodyDivCIF")[0].setAttribute("style", "display:block;"),
+                        n.getElementsByClassName("headerTimerCIF")[0].setAttribute("style", "display:none;")) : (n.getElementsByClassName("bodyDivCIF")[0].setAttribute("style", "display:none;"),
+                        n.getElementsByClassName("headerTimerCIF")[0].setAttribute("style", "display:block;")),
+                        e++),
+                        null != n.getElementsByClassName("headerDetailsCIF")[0] && n.getElementsByClassName("headerDetailsCIF")[0].setAttribute("style", "display:none;"),
+                        null != n.getElementsByClassName("header_NotificationType_CIF")[0] && (0 == t ? !0 == u && n.getElementsByClassName("header_NotificationType_CIF")[0].setAttribute("style", "display:block;") : n.getElementsByClassName("header_NotificationType_CIF")[0].setAttribute("style", "display:none;"),
+                        t++)
+                    }
+                    for (m = 0; m < h.length; m++) {
+                        let e = h[m];
+                        if (null != e.getElementsByClassName("headerDetailsCIF")[0]) {
+                            e.getElementsByClassName("headerDetailsCIF")[0].setAttribute("style", "display:block;"),
+                            e.getElementsByClassName("headerTimerCIF")[0].setAttribute("style", "display:none;");
+                            break
+                        }
+                    }
+                }
+                return g
+            }
+            function a(e, t, n) {
+                let r = new Map
+                  , a = o.document.getElementById(s.widgetIframeId)
+                  , d = a.contentWindow.document.getElementById("softToastDiv");
+                var l = d.getElementsByTagName("div");
+                let c = 0;
+                if (null != l)
+                    for (c = 0; c < l.length; c++) {
+                        let e = l[c];
+                        null != e && e.setAttribute("style", "display:none;")
+                    }
+                d.insertAdjacentHTML("afterbegin", "<div tabindex=\"0\" id=\"CIFSoftToast\" class=\"CIFSoftNotificationToast\"><div tabindex=\"0\" id=\"header_SoftNotification_CIF\" class=\"headerSoftNotification_CIF\"><div><br></div></div><div tabindex=\"0\" id=\"bodyDivSoftToastCIF\" class=\"bodyDivSoftToast_CIF\"></div></div>");
+                let p = a.contentWindow.document.getElementById("header_SoftNotification_CIF");
+                var m = document.createElement("span");
+                p.appendChild(m),
+                p.getElementsByTagName("span")[0].classList.add("chatWindowHeaderSpan_CIF"),
+                a.contentWindow.document.getElementById("CIFSoftToast").style.width = "100%",
+                -1 == n.search(s.SMS) ? -1 == n.search(s.Chat) ? -1 == n.search(s.Informational) ? -1 != n.search(s.Failure) && p.getElementsByTagName("span")[0].classList.add("FontIcons_linkToConversationFailWindowHeaderSpan_CIF") : p.getElementsByTagName("span")[0].classList.add("FontIcons_linkToConversationSuccessWindowHeaderSpan_CIF") : p.getElementsByTagName("span")[0].classList.add("FontIcons_chatWindowHeaderSpan_CIF") : p.getElementsByTagName("span")[0].classList.add("FontIcons_smsWindowHeaderSpan_CIF");
+                var u = document.createElement("label");
+                p.appendChild(u),
+                u.classList.add("chatWindowHeaderLabel_CIF"),
+                u.innerText = e[0],
+                u.setAttribute("aria-label", e[0]),
+                m = document.createElement("span"),
+                m.classList.add("closeSoftNotification_CIF"),
+                m.classList.add("FontIcons-closeSoftNotification_CIF"),
+                m.setAttribute("aria-label", "Close"),
+                p.appendChild(m),
+                p.getElementsByTagName("span")[1].id = "closeSoftNotificationCIF";
+                var g = document.createElement("div");
+                if (g.classList.add("chatWindowHeaderDiv_CIF"),
+                p.appendChild(g),
+                null != t && "undefined" != t) {
+                    let e = a.contentWindow.document.getElementById("bodyDivSoftToastCIF");
+                    if ("string" == typeof t) {
+                        g = document.createElement("div"),
+                        g.classList.add("chatWindowHeaderDiv_CIF"),
+                        e.appendChild(g);
+                        var y = document.createElement("label");
+                        e.appendChild(y),
+                        y.classList.add("notificationBodyCIF"),
+                        y.innerText = t,
+                        y.setAttribute("aria-label", t),
+                        g = document.createElement("div"),
+                        g.classList.add("chatWindowHeaderDiv_CIF"),
+                        e.appendChild(g)
+                    } else
+                        for (g = document.createElement("div"),
+                        g.classList.add("chatWindowHeaderDiv_CIF"),
+                        e.appendChild(g),
+                        c = 0; c < t.length; c++)
+                            for (let n in t[c]) {
+                                var y = document.createElement("label");
+                                e.appendChild(y),
+                                y.classList.add("notificationBodyLabel1_CIF");
+                                var _ = document.createElement("label");
+                                e.appendChild(_),
+                                _.classList.add("notificationBodyLabel2_CIF"),
+                                y.innerText = n,
+                                y.setAttribute("aria-label", n),
+                                _.innerText = t[c][n],
+                                _.setAttribute("aria-label", t[c][n]),
+                                y.style.width = "30%",
+                                _.style.width = "calc(70% - 30px)",
+                                g = document.createElement("div"),
+                                g.classList.add("chatWindowHeaderDiv_CIF"),
+                                e.appendChild(g)
+                            }
+                }
+                return r.set(a.contentWindow.document.getElementById("closeSoftNotificationCIF"), d),
+                r.set(a.contentWindow.document.getElementById("CIFSoftToast"), d),
+                r
+            }
+            function i(e) {
+                let n = o.document.getElementById(s.widgetIframeId), a = n.contentWindow.document.getElementById("toastDiv"), c = 0, p = -1, m = [], u, g, y, _;
+                for (let[t,n] of e)
+                    if (-1 != t.search(s.eventType) && (console.log(n),
+                    _ = n),
+                    -1 != t.search(s.notificationUXObject))
+                        for (let[e,t] of n)
+                            -1 == e.search(s.headerDataCIF) ? -1 == e.search(s.bodyDataCIF) ? -1 == e.search(s.actionsCIF) ? -1 != e.search(s.notificationType) && (m = t) : y = t : g = t : u = t;
+                if (null == u || "undefined" == u)
+                    return t.postMessageNamespace.rejectWithErrorMessage("The header value is blank. Provide a value to the parameter.");
+                if (-1 != m[0].search(t.MessageType.softNotification) && (null == g || "undefined" == g))
+                    return t.postMessageNamespace.rejectWithErrorMessage("The body value is blank. Provide a value to the parameter.");
+                if (null == m || "undefined" == m || 0 >= m.length)
+                    return t.postMessageNamespace.rejectWithErrorMessage("The notificationType value is blank. Provide a value to the parameter.");
+                -1 == m[0].search(t.MessageType.softNotification) && (d++,
+                5 < d && (a.removeChild(a.getElementsByClassName("CIFToastDiv")[a.getElementsByClassName("CIFToastDiv").length - 1]),
+                d--));
+                let I = new Map;
+                if (I = r(u, g, y, m, _),
+                null != y && "undefined" != y)
+                    for (c = 0; c < y.length; c++)
+                        for (let e in y[c])
+                            -1 != e.search(s.Timer) && (p = y[c][e]);
+                return new Promise(function(e) {
+                    if (-1 != m[0].search(t.MessageType.softNotification))
+                        for (let[t,i] of I)
+                            t == n.contentWindow.document.getElementById("CIFSoftToast") ? t.addEventListener("click", function n() {
+                                t.removeEventListener("click", n),
+                                t.parentElement.removeChild(t);
+                                var i = new Map().set(s.value, new Map().set(s.value, s.Accept));
+                                return e(i)
+                            }) : (t.addEventListener("click", function n() {
+                                t.removeEventListener("click", n),
+                                t.parentElement.parentElement.parentElement.removeChild(t.parentElement.parentElement);
+                                var i = new Map().set(s.value, new Map().set(s.value, s.Reject));
+                                return e(i)
+                            }),
+                            setTimeout(function() {
+                                if (null != t.parentElement.parentElement.parentElement) {
+                                    t.parentElement.parentElement.parentElement.removeChild(t.parentElement.parentElement);
+                                    var n = new Map().set(s.value, new Map().set(s.value, s.Reject));
+                                    return e(n)
+                                }
+                            }, 2e4));
+                    else {
+                        l = a.getElementsByClassName("CIFToastDiv").length,
+                        -1 == p && a.getElementsByClassName("header_NotificationType_CIF")[a.getElementsByClassName("CIFToastDiv").length - 1].setAttribute("style", "display:none;");
+                        for (let[t,n] of I)
+                            if (t != a.getElementsByClassName("CIFToastDiv")[a.getElementsByClassName("CIFToastDiv").length - 1])
+                                t.addEventListener("click", function i() {
+                                    t.removeEventListener("click", i),
+                                    t.parentElement.parentElement.style.display = "none",
+                                    t.parentElement.parentElement.parentElement.removeChild(t.parentElement.parentElement),
+                                    d--;
+                                    var r = a.getElementsByTagName("div");
+                                    if (null != r) {
+                                        let e = 0
+                                          , t = 0
+                                          , n = 0;
+                                        for (c = 0; c < r.length; c++) {
+                                            let i = r[c];
+                                            if (null != i.getElementsByClassName("bodyDivCIF")[0] && (i.getElementsByClassName("bodyDivCIF")[0].setAttribute("style", "display:block;"),
+                                            i.getElementsByClassName("headerTimerCIF")[0].setAttribute("style", "display:none;"),
+                                            e = 1),
+                                            null != i.getElementsByClassName("headerDetailsCIF")[0] && (i.getElementsByClassName("headerDetailsCIF")[0].setAttribute("style", "display:block;"),
+                                            t = 1),
+                                            null != i.getElementsByClassName("header_NotificationType_CIF")[0] && (-1 != p && i.getElementsByClassName("header_NotificationType_CIF")[0].setAttribute("style", "display:block;"),
+                                            n = 1),
+                                            1 == e && 1 == t && 1 == n)
+                                                break
+                                        }
+                                    }
+                                    let o = a.getElementsByClassName("CIFToastDiv").length
+                                      , l = 0;
+                                    for (l = 1; l <= o; l++)
+                                        a.getElementsByClassName("CIFToastDiv")[l - 1].id = "CIFToastDiv_" + l;
+                                    var m = new Map().set(s.value, n);
+                                    return e(m)
+                                });
+                            else if (-1 != p) {
+                                var i = p / 1e3;
+                                t.getElementsByClassName("broadCastLabel1")[0].innerHTML = i + "",
+                                t.getElementsByClassName("headerTimerCIF")[0].innerHTML = i + " sec ";
+                                var r = setInterval(function() {
+                                    var i = +t.getElementsByClassName("broadCastLabel1")[0].innerHTML;
+                                    if (i--,
+                                    t.getElementsByClassName("broadCastLabel1")[0].innerHTML = i + "",
+                                    t.getElementsByClassName("headerTimerCIF")[0].innerHTML = i + " sec ",
+                                    0 > i) {
+                                        if (clearInterval(r),
+                                        null != t && null != t.parentElement) {
+                                            t.parentElement.removeChild(t),
+                                            d--;
+                                            var o = a.getElementsByTagName("div");
+                                            if (null != o) {
+                                                for (c = 0; c < o.length; c++) {
+                                                    let e = o[c];
+                                                    null != e.getElementsByClassName("bodyDivCIF")[0] && e.getElementsByClassName("bodyDivCIF")[0].setAttribute("style", "display:none;"),
+                                                    null != e.getElementsByClassName("headerDetailsCIF")[0] && e.getElementsByClassName("headerDetailsCIF")[0].setAttribute("style", "display:none;"),
+                                                    null != e.getElementsByClassName("header_NotificationType_CIF")[0] && e.getElementsByClassName("header_NotificationType_CIF")[0].setAttribute("style", "display:none;")
+                                                }
+                                                let e = 0
+                                                  , t = 0
+                                                  , n = 0;
+                                                for (c = 0; c < o.length; c++) {
+                                                    let i = o[c];
+                                                    if (null != i.getElementsByClassName("bodyDivCIF")[0] && (i.getElementsByClassName("bodyDivCIF")[0].setAttribute("style", "display:block;"),
+                                                    i.getElementsByClassName("headerTimerCIF")[0].setAttribute("style", "display:none;"),
+                                                    e = 1),
+                                                    null != i.getElementsByClassName("headerDetailsCIF")[0] && (i.getElementsByClassName("headerDetailsCIF")[0].setAttribute("style", "display:block;"),
+                                                    t = 1),
+                                                    null != i.getElementsByClassName("header_NotificationType_CIF")[0] && (i.getElementsByClassName("header_NotificationType_CIF")[0].setAttribute("style", "display:block;"),
+                                                    n = 1),
+                                                    1 == e && 1 == t && 1 == n)
+                                                        break
+                                                }
+                                            }
+                                        }
+                                        let i = a.getElementsByClassName("CIFToastDiv").length
+                                          , p = 0;
+                                        for (p = 1; p <= i; p++)
+                                            a.getElementsByClassName("CIFToastDiv")[p - 1].id = "CIFToastDiv_" + p;
+                                        var l = new Map().set(s.value, n);
+                                        return e(l)
+                                    }
+                                }, 1e3)
+                            }
+                    }
+                }
+                )
+            }
+            let s = e.CIFramework.Constants;
+            const o = window.parent;
+            let d = 0
+              , l = 0;
+            n.renderEventNotification = r,
+            n.renderSoftNotification = a,
+            n.notifyEventClient = i
+        }
+        )(n = t.Internal || (t.Internal = {}))
+    }
+    )(t = e.CIFramework || (e.CIFramework = {}))
+}
+)(Microsoft || (Microsoft = {}));
+var Microsoft;
+(function(e) {
+    var t;
+    (function(t) {
+        var n;
+        (function(n) {
+            function i(e, t) {
+                let i, r, s, o, d;
+                for (let[n,l] of e)
+                    -1 == n.search(a.entityName) ? -1 == n.search(a.originURL) ? -1 == n.search(a.entityId) ? -1 == n.search(a.entitySetName) ? -1 != n.search(a.annotationId) && (d = l) : o = l : s = l : r = l : i = l;
+                let l = t.value
+                  , c = new Map().set(a.notetext, l)
+                  , p = ""
+                  , m = new Map().set(a.entityName, a.annotation).set(a.value, c).set(a.originURL, r);
+                return new Promise(function(e) {
+                    if ("" == d)
+                        n.createRecord(m).then(function(t) {
+                            for (let[e,n] of t)
+                                if (-1 != e.search(a.value))
+                                    for (let[e,t] of n)
+                                        -1 != e.search(a.Id) && (d = t);
+                            var l = new Map;
+                            let c = o + "(" + s + ")"
+                              , p = "objectid_" + i + "@odata.bind"
+                              , m = new Map().set(p, c)
+                              , u = new Map().set(a.entityName, a.annotation).set(a.entityId, d).set(a.value, m).set(a.originURL, r);
+                            n.updateRecord(u).then(function(t) {
+                                for (let[e,n] of t)
+                                    -1 != e.search(a.value) && (l = n);
+                                var n = new Map().set(a.value, d);
+                                e(n)
+                            })
+                        });
+                    else {
+                        let t = "?$select=notetext&$filter=_objectid_value eq " + s
+                          , i = new Map().set(a.entityName, a.annotation).set(a.queryParameters, t).set(a.originURL, r);
+                        n.search(i).then(function(t) {
+                            for (let[e,n] of t)
+                                if (-1 != e.search(a.value))
+                                    for (let e = 0; e < n.length; e++)
+                                        for (let t in n[e])
+                                            -1 != t.search(a.notetext) && (p = n[e][t]);
+                            let i = new Map().set(a.notetext, p + " " + l)
+                              , s = new Map().set(a.entityName, a.annotation).set(a.entityId, d).set(a.value, i).set(a.originURL, r);
+                            n.updateRecord(s).then(function(t) {
+                                for (let[e,n] of t)
+                                    if (-1 != e.search(a.value))
+                                        for (let[e,t] of n)
+                                            -1 != e.search(a.Id) && (d = t);
+                                var n = new Map().set(a.value, d);
+                                e(n)
+                            })
+                        })
+                    }
+                }
+                )
+            }
+            function r() {
+                let e = s.document.getElementById(a.widgetIframeId)
+                  , n = e.contentWindow.document.getElementById("notesDiv");
+                t.isNullOrUndefined(n) || n.removeChild(n.getElementsByClassName("CIFNotes")[0])
+            }
+            let a = e.CIFramework.Constants;
+            const s = window.parent;
+            n.toggleNotesVisibility = function() {
+                let e = s.document.getElementById(a.widgetIframeId)
+                  , t = e.contentWindow.document.getElementById("notesDiv");
+                t.style.visibility = "hidden" == t.style.visibility ? "visible" : "hidden"
+            }
+            ,
+            n.insertNotesClient = function(e) {
+                let n = s.document.getElementById(a.widgetIframeId), o = n.contentWindow.document.getElementById("notesDiv"), d, l, c, p;
+                var m = o.getElementsByTagName("div");
+                if (null != m && 0 < m.length)
+                    return t.postMessageNamespace.rejectWithErrorMessage("This conversation already has a note opened.");
+                for (let[t,n] of e)
+                    -1 == t.search(a.entityName) ? -1 == t.search(a.originURL) ? -1 == t.search(a.entityId) ? -1 != t.search(a.entitySetName) && (p = n) : c = n : l = n : d = n;
+                return new Promise(function(t) {
+                    o.insertAdjacentHTML("beforeend", "<div id=\"CIFActivityNotes\" tabindex=\"0\" class=\"CIFNotes\"><div id=\"notesHeaderIdCIF\" tabindex=\"0\" class=\"notesHeader\"><div class=\"notesHeaderSpan_CIF\" aria-label=\"Add Notes\" style=\"margin-left:18px\"><br/>Add Notes</div></div></div>"),
+                    o.getElementsByClassName("CIFNotes")[0].classList.add("notesDivCIF"),
+                    o.getElementsByClassName("notesHeader")[0].classList.add("notesHeaderCIF");
+                    let s = n.clientHeight - 26;
+                    n.contentWindow.document.getElementById("notesHeaderIdCIF").style.height = .14 * s + "px";
+                    var d = document.createElement("span");
+                    d.classList.add("closeNotes_CIF"),
+                    d.classList.add("FontIcons-closeSoftNotification_CIF"),
+                    d.setAttribute("aria-label", "Close"),
+                    o.getElementsByClassName("notesHeaderSpan_CIF")[0].appendChild(d);
+                    var l = document.createElement("TextArea");
+                    let c = o.getElementsByClassName("CIFNotes")[0];
+                    c.appendChild(l),
+                    n.contentWindow.document.getElementById("CIFActivityNotes").style.width = "calc(100% - 7px)",
+                    n.contentWindow.document.getElementById("CIFActivityNotes").style.height = s.toString() + "px",
+                    l.setAttribute("placeholder", "Start adding notes"),
+                    l.classList.add("newTextAreaCIF");
+                    l.id = "notesTextAreaCIF",
+                    l.style.width = "calc(87.5% - 15px)",
+                    l.style.height = .7 * s + "px";
+                    var p = document.createElement("BUTTON");
+                    c.appendChild(p),
+                    p.classList.add("notesSaveButtonCIF"),
+                    p.innerText = "Add Note",
+                    p.tabIndex = 0,
+                    p.setAttribute("aria-label", "Add Note");
+                    var m = document.createElement("a");
+                    m.setAttribute("href", "#"),
+                    c.appendChild(m),
+                    m.classList.add("notesCancelButtonCIF"),
+                    m.innerText = "Cancel",
+                    m.tabIndex = 0,
+                    m.setAttribute("aria-label", "Cancel"),
+                    p.addEventListener("click", function() {
+                        i(e, l).then(function(e) {
+                            return r(),
+                            t(new Map().set(a.value, e))
+                        })
+                    }),
+                    m.addEventListener("click", function() {
+                        return r(),
+                        t(new Map().set(a.value, new Map().set(a.value, "")))
+                    }),
+                    d.addEventListener("click", function() {
+                        return r(),
+                        t(new Map().set(a.value, new Map().set(a.value, "")))
+                    })
+                }
+                )
+            }
+            ,
+            n.saveNotes = i,
+            n.cancelNotes = r
+        }
+        )(n = t.Internal || (t.Internal = {}))
+    }
+    )(t = e.CIFramework || (e.CIFramework = {}))
+}
+)(Microsoft || (Microsoft = {}));
+var Microsoft;
+(function(e) {
+    var t;
+    (function(t) {
+        var n;
+        (function(n) {
+            function i() {
+                let e = [];
+                Xrm.WebApi.retrieveMultipleRecords(H.providerLogicalName, "?$filter=statecode eq 0 and contains(" + H.appSelectorFieldName + ",'" + appId + "')&$orderby=" + H.sortOrderFieldName + " asc&$top=1").then(i=>{
+                    if (i && i.entities) {
+                        q.removeEventListener(H.CIClickToAct, g),
+                        q.addEventListener(H.CIClickToAct, g),
+                        q.removeEventListener(H.CISendKBArticle, y),
+                        q.addEventListener(H.CISendKBArticle, y),
+                        q.removeEventListener(H.SetPresenceEvent, _),
+                        q.addEventListener(H.SetPresenceEvent, _),
+                        G.client.registerHandler(H.ModeChangeHandler, m),
+                        G.client.registerHandler(H.SizeChangeHandler, p),
+                        G.client.registerHandler(H.NavigationHandler, u);
+                        var r = G.client.getWidgetMode({})
+                          , a = !0
+                          , s = [];
+                        s.orgId = Xrm.Utility.getGlobalContext().organizationSettings.organizationId,
+                        s.orgName = Xrm.Utility.getGlobalContext().organizationSettings.uniqueName,
+                        s.crmVersion = Xrm.Utility.getGlobalContext().getVersion(),
+                        s.appId = appId;
+                        for (var o of i.entities) {
+                            cifVersion = o[H.cifSolVersion];
+                            var d = o[H.roleSelectorFieldName];
+                            d = null == d ? null : d.split(";"),
+                            e.push(o[H.landingUrl]),
+                            "" != o[H.trustedDomain] && e.push(o[H.trustedDomain]);
+                            var l = new n.CIProvider(o,G,s)
+                              , c = "";
+                            a ? (G.providerManager = new n.ProviderManager(G.client,o[H.landingUrl],l),
+                            a = !1,
+                            c = l.label) : G.providerManager.addProvider(o[H.landingUrl], l);
+                            var I = new n.UsageTelemetryData(o[H.providerId],o[H.name],o[H.APIVersion],"loadProvider",o[H.SortOrder],appId,cifVersion,!1,null);
+                            n.setUsageData(I)
+                        }
+                        G.messageLibrary = new t.postMessageNamespace.postMsgWrapper(q,Array.from(e),V),
+                        G.client.loadWidgets(G.providerManager.ciProviders, c).then(function() {
+                            var e = new n.UsageTelemetryData(l.providerId,l.name,l.apiVersion,"loadProvider - loadWidgets",l.sortOrder,appId,cifVersion,!1,null);
+                            n.setUsageData(e)
+                        })
+                    }
+                }
+                , e=>{
+                    let t = n.generateErrorObject(e, "loadProvider - Xrm.WebApi.retrieveMultipleRecords", n.errorTypes.XrmApiError);
+                    n.logFailure(appId, !0, t, "loadProvider", cifVersion)
+                }
+                )
+            }
+            function r(i, r, a, s) {
+                Date.now();
+                ({
+                    messageType: r,
+                    messageData: JSON.stringify(e.CIFramework.Utility.buildEntity(i))
+                });
+                if (t.isNullOrUndefined(s))
+                    for (let[e,t] of G.providerManager.ciProviders) {
+                        var o = {};
+                        if (t.raiseEvent(i, r).then(function(e) {
+                            this.result = e
+                        }
+                        .bind(o), function(e) {
+                            this.error = e;
+                            let i = n.generateErrorObject(e, r + " - raiseEvent", n.errorTypes.GenericError);
+                            n.logFailure(appId, !0, i, r + " - raiseEvent", cifVersion, t.providerId, t.name)
+                        }
+                        .bind(o)),
+                        o.result)
+                            break
+                    }
+                else
+                    s.raiseEvent(i, r)
+            }
+            function a(e, i) {
+                if (!e) {
+                    let e = {
+                        reportTime: new Date().toUTCString(),
+                        errorMsg: "Parameter list cannot be empty",
+                        errorType: n.errorTypes.InvalidParams,
+                        sourceFunc: "getProvider"
+                    };
+                    return [null, e]
+                }
+                if (!e.get(H.originURL)) {
+                    let e = {
+                        reportTime: new Date().toUTCString(),
+                        errorMsg: "Paramter:url cannot be empty",
+                        errorType: n.errorTypes.InvalidParams,
+                        sourceFunc: "getProvider"
+                    };
+                    return [null, e]
+                }
+                i && i.forEach(function(i) {
+                    if (t.isNullOrUndefined(e.get(i))) {
+                        let e = {
+                            reportTime: new Date().toUTCString(),
+                            errorMsg: "Parameter: " + i + " cannot be empty",
+                            errorType: n.errorTypes.InvalidParams,
+                            sourceFunc: "getProvider"
+                        };
+                        return [null, e]
+                    }
+                });
+                let r = G.providerManager.ciProviders.get(e.get(H.originURL));
+                if (r && r.providerId)
+                    return [r, null];
+                else {
+                    let e = {
+                        reportTime: new Date().toUTCString(),
+                        errorMsg: "Associated Provider record not found",
+                        errorType: n.errorTypes.InvalidParams,
+                        sourceFunc: "getProvider"
+                    };
+                    return [null, e]
+                }
+            }
+            function s(e) {
+                let t = {}
+                  , i = new Date;
+                const [r,s] = a(e);
+                if (r) {
+                    let e;
+                    e = G.client.getEnvironment(t),
+                    e.set(H.customParamsKey, r.customParams);
+                    var o = new n.PerfTelemetryData(r,i,Date.now() - i.getTime(),"getEnvironment",cifVersion,t);
+                    return n.setPerfData(o),
+                    Promise.resolve(new Map().set(H.value, e))
+                }
+                return n.logFailure(appId, !0, s, "getEnvironment", cifVersion)
+            }
+            function o(e) {
+                return 0 <= Object.keys(t.MessageType).indexOf(e)
+            }
+            function d(e) {
+                let t = new Date;
+                const [i,r] = a(e);
+                if (i) {
+                    let r = e.get(H.eventType);
+                    var s = new n.PerfTelemetryData(i,t,Date.now() - t.getTime(),"addGenericHandler",cifVersion,{});
+                    if (n.setPerfData(s),
+                    !o(r))
+                        if (z.has(r) && 0 < z.get(r).length)
+                            z.get(r).push(i);
+                        else {
+                            let e = [];
+                            e[0] = i,
+                            z.set(r, e),
+                            q.addEventListener(r, c)
+                        }
+                    return Promise.resolve(new Map().set(H.value, !0))
+                }
+                return n.logFailure(appId, !0, r, "addGenericHandler", cifVersion)
+            }
+            function l(e) {
+                let t = new Date;
+                const [r,i] = a(e, [H.eventType]);
+                if (r) {
+                    let a = e.get(H.eventType);
+                    var s = new n.PerfTelemetryData(r,t,Date.now() - t.getTime(),"removeGenericHandler",cifVersion,{});
+                    if (n.setPerfData(s),
+                    !o(a)) {
+                        if (z.has(a))
+                            for (let e = 0; e < z.get(a).length; e++)
+                                z.get(a)[e] == r && z.get(a).splice(e, 1);
+                        0 == z.get(a).length && q.removeEventListener(a, c)
+                    }
+                    return Promise.resolve(new Map().set(H.value, !0))
+                }
+                return n.logFailure(appId, !0, i, "removeGenericHandler", cifVersion)
+            }
+            function c(t) {
+                if (z.has(t.type))
+                    for (let n = 0; n < z.get(t.type).length; n++)
+                        r(e.CIFramework.Utility.buildMap(t.detail), t.type, "Generic event raised", z.get(t.type)[n])
+            }
+            function p(e) {
+                G.client.flapInUse() || r(e.detail, t.MessageType.onSizeChanged, "onSizeChanged invoked", G.providerManager.getActiveProvider())
+            }
+            function m(e) {
+                r(e.detail, t.MessageType.onModeChanged, "onModeChanged invoked")
+            }
+            function u(e) {
+                r(e.detail, t.MessageType.onPageNavigate, "onPageNavigation invoked")
+            }
+            function g(n) {
+                r(e.CIFramework.Utility.buildMap(n.detail), t.MessageType.onClickToAct, "onClickToAct event recieved from client with event data as " + JSON.stringify(n.detail))
+            }
+            function y(n) {
+                r(e.CIFramework.Utility.buildMap(n.detail), t.MessageType.onSendKBArticle, "onSendKBArticle event recieved from client")
+            }
+            function _(n) {
+                let i = e.CIFramework.Utility.buildMap(n.detail);
+                j.setAgentPresence(i.get("presenceInfo")),
+                r(i, t.MessageType.onSetPresenceEvent, "onSetPresence event received from client")
+            }
+            function I(e) {
+                let t = {}
+                  , i = new Date;
+                const [r,s] = a(e, [H.value]);
+                return r ? new Promise((a,s)=>G.client.updateRecord(H.providerLogicalName, r.providerId, t, new Map([[H.clickToActAttributeName, e.get(H.value)]])).then(s=>{
+                    r.clickToAct = e.get(H.value),
+                    G.providerManager.ciProviders.set(e.get(H.originURL), r);
+                    var o = new n.PerfTelemetryData(r,i,Date.now() - i.getTime(),"setClickToAct",cifVersion,t);
+                    return n.setPerfData(o),
+                    a(s)
+                }
+                , e=>(n.logFailure(appId, !0, e, "setClickToAct", cifVersion, r.providerId, r.name),
+                s(new Map().set(H.value, e))))) : n.logFailure(appId, !0, s, "setClickToAct", cifVersion)
+            }
+            function T(e) {
+                let t = new Date;
+                const [i,r] = a(e);
+                if (i) {
+                    var s = new n.PerfTelemetryData(i,t,Date.now() - t.getTime(),"getClickToAct",cifVersion);
+                    return n.setPerfData(s),
+                    Promise.resolve(new Map().set(H.value, i.clickToAct))
+                }
+                return n.logFailure(appId, !0, r, "getClickToAct", cifVersion)
+            }
+            function v(e) {
+                let t = {}
+                  , i = new Date;
+                const [r,s] = a(e, [H.value]);
+                if (r) {
+                    let a = G.client.setWidgetMode("setWidgetMode", e.get(H.value), t);
+                    var o = new n.PerfTelemetryData(r,i,Date.now() - i.getTime(),"setMode",cifVersion,t);
+                    return n.setPerfData(o),
+                    Promise.resolve(new Map().set(H.value, a))
+                }
+                return n.logFailure(appId, !0, s, "setMode", cifVersion)
+            }
+            function C(e) {
+                let t = {}
+                  , i = new Date;
+                const [r,s] = a(e);
+                if (r) {
+                    let e = G.client.getWidgetMode(t);
+                    var o = new n.PerfTelemetryData(r,i,Date.now() - i.getTime(),"getMode",cifVersion,t);
+                    return n.setPerfData(o),
+                    Promise.resolve(new Map().set(H.value, e))
+                }
+                return n.logFailure(appId, !0, s, "getMode", cifVersion)
+            }
+            function h(e) {
+                let t = {}
+                  , i = new Date;
+                const [r,s] = a(e, [H.value]);
+                if (r) {
+                    let a = G.client.setWidgetWidth("setWidgetWidth", e.get(H.value), t);
+                    var o = new n.PerfTelemetryData(r,i,Date.now() - i.getTime(),"setWidth",cifVersion,t);
+                    return n.setPerfData(o),
+                    Promise.resolve(new Map().set(H.value, a))
+                }
+                return n.logFailure(appId, !0, s, "setWidth", cifVersion)
+            }
+            function f(e) {
+                let t = {}
+                  , i = new Date;
+                const [r,s] = a(e);
+                if (r) {
+                    let e = G.client.getWidgetWidth(t);
+                    var o = new n.PerfTelemetryData(r,i,Date.now() - i.getTime(),"getWidth",cifVersion,t);
+                    return n.setPerfData(o),
+                    Promise.resolve(new Map().set(H.value, e))
+                }
+                return n.logFailure(appId, !0, s, "getWidth", cifVersion)
+            }
+            function E(e) {
+                let t = {}
+                  , i = new Date;
+                const [r,s] = a(e, [H.SearchString]);
+                if (r) {
+                    let a = G.client.openKBSearchControl(e.get(H.SearchString), t);
+                    var o = new n.PerfTelemetryData(r,i,Date.now() - i.getTime(),"openKBSearchControl",cifVersion,t);
+                    return n.setPerfData(o),
+                    Promise.resolve(new Map().set(H.value, a))
+                }
+                return n.logFailure(appId, !0, s, "openKBSearchControl", cifVersion)
+            }
+            function S(e) {
+                const [t,i] = a(e);
+                return t ? b(e, !1, "searchAndOpenRecords") : n.logFailure(appId, !0, i, "searchAndOpenRecords", cifVersion)
+            }
+            function b(e, t, i) {
+                let r = {}
+                  , s = new Date;
+                const [o,d] = a(e, [H.entityName, H.queryParameters]);
+                if (o) {
+                    let a = G.client.retrieveMultipleAndOpenRecords(e.get(H.entityName), e.get(H.queryParameters), t, r);
+                    var l = new n.PerfTelemetryData(o,s,Date.now() - s.getTime(),i ? i : "doSearch",cifVersion,r);
+                    return n.setPerfData(l),
+                    a
+                }
+                return n.logFailure(appId, !0, d, "doSearch", cifVersion)
+            }
+            function A(e) {
+                const [t,i] = a(e);
+                return t ? b(e, !0, "search") : n.logFailure(appId, !0, i, "search", cifVersion)
+            }
+            function P(e) {
+                let t = {}
+                  , i = new Date;
+                const [r,s] = a(e, [H.entityName]);
+                return r ? new Promise((a,s)=>{
+                    G.client.renderSearchPage(e.get(H.entityName), e.get(H.SearchString)).then(function(e) {
+                        var s = new n.PerfTelemetryData(r,i,Date.now() - i.getTime(),"renderSearchPage",cifVersion,t);
+                        return n.setPerfData(s),
+                        a(new Map().set(H.value, e))
+                    }, e=>(n.logFailure(appId, !0, e, "renderSearchPage", cifVersion, r.providerId, r.name),
+                    s(new Map().set(H.value, e))))
+                }
+                ) : n.logFailure(appId, !0, s, "renderSearchPage", cifVersion)
+            }
+            function N(e) {
+                let t = {}
+                  , i = new Date
+                  , [r,s] = a(e, [H.entityName, H.value]);
+                return r ? new Promise((a,s)=>{
+                    G.client.createRecord(e.get(H.entityName), null, t, e.get(H.value)).then(function(e) {
+                        var s = new n.PerfTelemetryData(r,i,Date.now() - i.getTime(),"createRecord",cifVersion,t);
+                        return n.setPerfData(s),
+                        a(new Map().set(H.value, e))
+                    }, e=>(n.logFailure(appId, !0, e, "createRecord", cifVersion, r.providerId, r.name),
+                    s(new Map().set(H.value, e))))
+                }
+                ) : n.logFailure(appId, !0, s, "createRecord", cifVersion)
+            }
+            function F(e) {
+                let t = {}
+                  , i = new Date;
+                const [r,s] = a(e, [H.entityName, H.entityId, H.queryParameters]);
+                return r ? new Promise((a,s)=>{
+                    G.client.retrieveRecord(e.get(H.entityName), e.get(H.entityId), t, e.get(H.queryParameters)).then(function(e) {
+                        var s = new n.PerfTelemetryData(r,i,Date.now() - i.getTime(),"retrieveRecord",cifVersion,t);
+                        return n.setPerfData(s),
+                        a(new Map().set(H.value, e))
+                    }, e=>(n.logFailure(appId, !0, e, "retrieveRecord", cifVersion, r.providerId, r.name),
+                    s(new Map().set(H.value, e))))
+                }
+                ) : n.logFailure(appId, !0, s, "retrieveRecord", cifVersion)
+            }
+            function W(e) {
+                let t = {}
+                  , i = new Date;
+                const [r,s] = a(e, [H.entityName, H.entityId, H.value]);
+                return r ? new Promise((a,s)=>{
+                    G.client.updateRecord(e.get(H.entityName), e.get(H.entityId), t, e.get(H.value)).then(function(e) {
+                        var s = new n.PerfTelemetryData(r,i,Date.now() - i.getTime(),"updateRecord",cifVersion,t);
+                        return n.setPerfData(s),
+                        a(new Map().set(H.value, e))
+                    }, e=>(n.logFailure(appId, !0, e, "updateRecord", cifVersion, r.providerId, r.name),
+                    s(new Map().set(H.value, e))))
+                }
+                ) : n.logFailure(appId, !0, s, "updateRecord", cifVersion)
+            }
+            function B(e) {
+                let t = {}
+                  , i = new Date;
+                const [r,s] = a(e, [H.entityName, H.entityId]);
+                return r ? new Promise((a,s)=>{
+                    G.client.deleteRecord(e.get(H.entityName), e.get(H.entityId), t).then(function(e) {
+                        var s = new n.PerfTelemetryData(r,i,Date.now() - i.getTime(),"deleteRecord",cifVersion,t);
+                        return n.setPerfData(s),
+                        a(new Map().set(H.value, e))
+                    }, e=>(n.logFailure(appId, !0, e, "deleteRecord", cifVersion, r.providerId, r.name),
+                    s(new Map().set(H.value, e))))
+                }
+                ) : n.logFailure(appId, !0, s, "deleteRecord", cifVersion)
+            }
+            function D(e) {
+                const [t,i] = a(e, [H.entityFormOptions, H.entityFormParameters]);
+                return t ? G.client.openForm(e.get(H.entityFormOptions), e.get(H.entityFormParameters)) : n.logFailure(appId, !0, i, "openForm", cifVersion)
+            }
+            function w(e) {
+                let t = {}
+                  , i = new Date;
+                const [r,s] = a(e, [H.entityName]);
+                return r ? new Promise((a,s)=>{
+                    G.client.getEntityMetadata(e.get(H.entityName), e.get(H.Attributes)).then(function(e) {
+                        var s = new n.PerfTelemetryData(r,i,Date.now() - i.getTime(),"getEntityMetadata",cifVersion,t);
+                        return n.setPerfData(s),
+                        a(new Map().set(H.value, e))
+                    }, e=>(n.logFailure(appId, !0, e, "getEntityMetadata", cifVersion, r.providerId, r.name),
+                    s(new Map().set(H.value, e))))
+                }
+                ) : n.logFailure(appId, !0, s, "getEntityMetadata", cifVersion)
+            }
+            function U(i) {
+                let r = {}
+                  , s = new Date;
+                const [o,d] = a(i, [H.value]);
+                return o ? new Promise((a,d)=>{
+                    n.notifyEventClient(i).then(function(e) {
+                        var t = new n.PerfTelemetryData(o,s,Date.now() - s.getTime(),"notifyEvent",cifVersion,r);
+                        return n.setPerfData(t),
+                        a(e)
+                    }, i=>(n.logFailure(appId, !0, i, "notifyEvent", cifVersion, o.providerId, o.name),
+                    d(e.CIFramework.Utility.createErrorMap(i.errorMsg, t.MessageType.notifyEvent))))
+                }
+                ) : n.logFailure(appId, !0, d, "notifyEvent", cifVersion)
+            }
+            function k(e) {
+                let t = {}
+                  , i = new Date;
+                const [r,s] = a(e, [H.value]);
+                return r ? new Promise((a,s)=>{
+                    let o = G.client.expandFlap();
+                    return o ? void n.insertNotesClient(e).then(function(e) {
+                        var s = new n.PerfTelemetryData(r,i,Date.now() - i.getTime(),"insertNotes",cifVersion,t);
+                        return n.setPerfData(s),
+                        G.client.collapseFlap(),
+                        a(e)
+                    }, e=>(G.client.collapseFlap(),
+                    n.logFailure(appId, !0, e, "insertNotes", cifVersion, r.providerId, r.name),
+                    s(new Map().set(H.value, e)))) : s(new Map().set(H.value, "Flap already expanded"))
+                }
+                ) : n.logFailure(appId, !0, s, "insertNotes", cifVersion)
+            }
+            function M(e) {
+                let t = {}
+                  , i = new Date;
+                const [r,s] = a(e, [H.entityName]);
+                if (r) {
+                    let a = j.setAgentPresence(JSON.parse(e.get(H.presenceInfo)), t);
+                    var o = new n.PerfTelemetryData(r,i,Date.now() - i.getTime(),"setAgentPresence",cifVersion,t);
+                    return n.setPerfData(o),
+                    Promise.resolve(new Map().set(H.value, a))
+                }
+                return n.logFailure(appId, !0, s, "setAgentPresence", cifVersion)
+            }
+            function R(e) {
+                let t = {}
+                  , i = new Date;
+                const [r,s] = a(e, [H.entityName]);
+                if (r) {
+                    let a = j.initializeAgentPresenceList(JSON.parse(e.get(H.presenceList)), t);
+                    var o = new n.PerfTelemetryData(r,i,Date.now() - i.getTime(),"initializeAgentPresenceList",cifVersion,t);
+                    return n.setPerfData(o),
+                    Promise.resolve(new Map().set(H.value, a))
+                }
+                return n.logFailure(appId, !0, s, "initializeAgentPresenceList", cifVersion)
+            }
+            function x(e) {
+                let t = new Date;
+                const [i,r] = a(e);
+                if (i) {
+                    const [r,a] = i.startUISession(e.get(H.context), e.get(H.initials));
+                    var s = new n.PerfTelemetryData(i,t,Date.now() - t.getTime(),"startUISession",cifVersion,{});
+                    return n.setPerfData(s),
+                    null == r ? n.logFailure(appId, !0, a, "startUISession", cifVersion, i.providerId, i.name) : Promise.resolve(new Map().set(H.value, r))
+                }
+                return n.logFailure(appId, !0, r, "startUISession", cifVersion)
+            }
+            function L(e) {
+                let t = new Date;
+                const [i,r] = a(e);
+                if (i) {
+                    const [r,a] = i.switchUISession(e.get(H.sessionId));
+                    var s = new n.PerfTelemetryData(i,t,Date.now() - t.getTime(),"switchUISession",cifVersion,{});
+                    return n.setPerfData(s),
+                    null == r ? n.logFailure(appId, !0, a, "switchUISession", cifVersion, i.providerId, i.name) : Promise.resolve(new Map().set(H.value, r))
+                }
+                return n.logFailure(appId, !0, r, "switchUISession", cifVersion)
+            }
+            function O(e) {
+                let t = new Date;
+                const [i,r] = a(e);
+                if (i) {
+                    const [r,a] = i.endUISession(e.get(H.sessionId));
+                    var s = new n.PerfTelemetryData(i,t,Date.now() - t.getTime(),"endUISession",cifVersion,{});
+                    return n.setPerfData(s),
+                    null == r ? n.logFailure(appId, !0, a, "endUISession", cifVersion, i.providerId, i.name) : Promise.resolve(new Map().set(H.value, r))
+                }
+                return n.logFailure(appId, !0, r, "endUISession", cifVersion)
+            }
+            let H = e.CIFramework.Constants;
+            const V = new Map([["setclicktoact", [I]], ["getclicktoact", [T]], ["getEntityMetadata", [w]], ["getenvironment", [s]], ["createrecord", [N]], ["retrieverecord", [F]], ["updaterecord", [W]], ["deleterecord", [B]], ["openform", [D]], ["setmode", [v]], ["getmode", [C]], ["setwidth", [h]], ["getwidth", [f]], ["addGenericHandler", [d]], ["removeGenericHandler", [l]], ["setAgentPresence", [M]], ["initializeAgentPresenceList", [R]], ["search", [A]], ["searchandopenrecords", [S]], ["renderSearchPage", [P]], ["openkbsearchcontrol", [E]], ["notifyEvent", [U]], ["insertNotes", [k]], ["startUISession", [x]], ["switchUISession", [L]], ["endUISession", [O]]]);
+            let z = new Map
+              , G = {}
+              , j = {};
+            const q = window.parent;
+            cifVersion = "",
+            n.initializeCI = function(e) {
+                new Date;
+                return (n.initializeTelemetry(),
+                G.client = n.setClient(e),
+                !!G.client.checkCIFCapability()) && (n.SessionPanel.getInstance().setState(G),
+                j = n.GetPresenceManager(e),
+                appId = top.location.search.split("appid=")[1].split("&")[0],
+                i(),
+                !1)
+            }
+            ,
+            n.getEnvironment = s,
+            n.addGenericHandler = d,
+            n.removeGenericHandler = l,
+            n.onClickToAct = g,
+            n.onSendKBArticle = y,
+            n.onSetPresence = _,
+            n.setClickToAct = I,
+            n.getClickToAct = T,
+            n.setMode = v,
+            n.getMode = C,
+            n.setWidth = h,
+            n.getWidth = f,
+            n.openKBSearchControl = E,
+            n.searchAndOpenRecords = S,
+            n.search = A,
+            n.renderSearchPage = P,
+            n.createRecord = N,
+            n.retrieveRecord = F,
+            n.updateRecord = W,
+            n.deleteRecord = B,
+            n.openForm = D,
+            n.getEntityMetadata = w,
+            n.notifyEvent = U,
+            n.insertNotes = k,
+            n.setAgentPresence = M,
+            n.initializeAgentPresenceList = R,
+            n.startUISession = x,
+            n.switchUISession = L,
+            n.endUISession = O
+        }
+        )(n = t.Internal || (t.Internal = {}))
+    }
+    )(t = e.CIFramework || (e.CIFramework = {}))
+}
+)(Microsoft || (Microsoft = {}));
+var Microsoft;
+(function(e) {
+    var t;
+    (function(t) {
+        var e;
+        (function(e) {
+            class n {
+                constructor() {}
+                static get Instance() {
+                    return null == this.instance && (this.instance = new n),
+                    this.instance
+                }
+                setAllPresences(e) {
+                    if (null != e) {
+                        var t = document.createElement("div");
+                        t.classList.add("PresenceListInnerNode");
+                        for (var n = 0, r; n < e.length; n++) {
+                            r = document.createElement("div"),
+                            r.id = e[n].presenceId,
+                            r.classList.add("PresenceListItem");
+                            var a = document.createElement("div");
+                            a.classList.add("ColorNode"),
+                            a.style.backgroundColor = e[n].presenceColor,
+                            r.appendChild(a);
+                            var s = document.createElement("div");
+                            s.classList.add("textNode"),
+                            s.innerText = e[n].presenceText,
+                            r.appendChild(s);
+                            var o = document.createElement("br");
+                            r.appendChild(o),
+                            t.appendChild(r)
+                        }
+                        return t.addEventListener("click", this.raiseSetPresence, !1),
+                        t
+                    }
+                    var t = document.createElement("div");
+                    return t
+                }
+                setAgentPresence(e) {
+                    var t = document.createElement("div");
+                    t.classList.add("agentPresenceDiv"),
+                    t.title = e.presenceText,
+                    t.addEventListener("click", this.toggleList, !1);
+                    var n = document.createElement("div");
+                    n.classList.add("innerDiv");
+                    var i = document.createElement("div");
+                    i.classList.add("backgroundColorDiv");
+                    var r = document.createElement("img");
+                    r.classList.add("userImageNode"),
+                    r.src = "/_imgs/svg_2.svg",
+                    i.appendChild(r),
+                    n.appendChild(i);
+                    var a = document.createElement("div");
+                    a.style.backgroundColor = e.presenceColor,
+                    a.innerText = " ",
+                    a.classList.add("agentPresenceColorNode"),
+                    n.appendChild(a);
+                    var s = document.createElement("div");
+                    return s.innerText = e.presenceText,
+                    s.id = "TextNode",
+                    s.classList.add("textNode"),
+                    t.appendChild(n),
+                    t.appendChild(s),
+                    t
+                }
+                toggleList() {
+                    var e = window.top.document.getElementById("SidePanelIFrame").contentDocument.getElementById("PresenceList");
+                    e.style.display = "none" === window.getComputedStyle(e).display ? "block" : "none"
+                }
+                raiseSetPresence(n) {
+                    var e = window.top.document.getElementById("SidePanelIFrame").contentDocument.getElementById("PresenceList");
+                    e.style.display = "none";
+                    let i = {}
+                      , r = n.target;
+                    t.isNullOrUndefined(r.getAttribute("id")) || "" == r.getAttribute("id") ? (i.presenceId = r.parentElement.getAttribute("id"),
+                    i.presenceText = r.parentElement.firstElementChild.nextSibling.innerText,
+                    i.presenceColor = r.parentElement.firstChild.style.backgroundColor,
+                    i.basePresenceStatus = r.parentElement.firstElementChild.nextSibling.innerText) : (i.presenceId = r.getAttribute("id"),
+                    i.presenceText = r.firstElementChild.nextSibling.innerText,
+                    i.presenceColor = r.firstChild.style.backgroundColor,
+                    i.basePresenceStatus = r.firstElementChild.nextSibling.innerText);
+                    var a = new CustomEvent("setPresenceEvent",{
+                        detail: {
+                            presenceId: n.target.parentElement.getAttribute("id"),
+                            presenceInfo: i
+                        }
+                    });
+                    window.parent.dispatchEvent(a)
+                }
+            }
+            e.PresenceControl = n
+        }
+        )(e = t.Internal || (t.Internal = {}))
+    }
+    )(t = e.CIFramework || (e.CIFramework = {}))
+}
+)(Microsoft || (Microsoft = {}));
+var Microsoft;
+(function(e) {
+    var t;
+    (function(e) {
+        var t;
+        (function(e) {
+            e.setClient = function(t) {
+                return 0 === t ? e.webClient() : e.webClient()
+            }
+            ,
+            e.GetPresenceManager = function(t) {
+                return 0 === t ? e.UCIPresenceManager() : e.UCIPresenceManager()
+            }
+        }
+        )(t = e.Internal || (e.Internal = {}))
+    }
+    )(t = e.CIFramework || (e.CIFramework = {}))
+}
+)(Microsoft || (Microsoft = {}));
