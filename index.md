@@ -9,6 +9,7 @@ This repo is made to bypass some of the file containing errors from Microsoft Dy
 4. Then click Options and Load rules
 
  ![image](https://user-images.githubusercontent.com/11160065/137467329-4b539565-1256-4b56-b247-8507fa5400ee.png)
+
 5. [Optional but safer] Go to Dynamics page, hit F12 and go to Application tab, select storage and click Clear Site data including Third party cookies
 6. You should have a setup like this:
 
